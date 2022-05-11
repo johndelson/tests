@@ -72,7 +72,8 @@ class NewsPage extends StatelessWidget {
         body: ListView(
           children: [
             for (final p in route.data)
-              ListTile(title: Text('News: ${p.title}'), onTap: () => onTap(p))
+              ListTile(
+                  title: Text('Category: ${p.title}'), onTap: () => onTap(p))
           ],
         ),
       );
@@ -80,20 +81,30 @@ class NewsPage extends StatelessWidget {
 
 class NewsCategoryPage extends StatelessWidget {
   final PageRouting route;
-  final PageSubRouting sub;
-  const NewsCategoryPage({required this.route, required this.sub, Key? key})
+  final PageSubRouting cat;
+  final ValueChanged<PageSubRouting> onTap;
+  const NewsCategoryPage(
+      {required this.route, required this.cat, required this.onTap, Key? key})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) => Scaffold(
-      appBar: AppBar(title: Text(sub.title)),
-      body: Text('NEWS CATEGORY: ${sub.title} ${route.title} is here'));
+        appBar: AppBar(title: Text('Category: ${cat.title}')),
+        body: ListView(
+          children: [
+            for (final p in cat.data)
+              ListTile(title: Text('News: ${p.title}'), onTap: () => onTap(p))
+          ],
+        ),
+      );
 }
 
 class ArticlePage extends StatelessWidget {
   final PageRouting route;
+  final PageSubRouting cat;
   final PageSubRouting sub;
-  const ArticlePage({required this.route, required this.sub, Key? key})
+  const ArticlePage(
+      {required this.route, required this.cat, required this.sub, Key? key})
       : super(key: key);
 
   @override

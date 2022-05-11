@@ -72,7 +72,6 @@ class AppRouterDelegate extends RouterDelegate<AppRouteConfig>
   PageSubRouting? _selectedSub;
   PageSubRouting? _selectedSubSub;
 
-  Profile? _selectedProfile;
   // ignore: non_constant_identifier_names
   String? _404message;
 
@@ -83,11 +82,16 @@ class AppRouterDelegate extends RouterDelegate<AppRouteConfig>
   AppRouteConfig get currentConfiguration => _404message != null
       ? AppRouteConfig.unknown()
       : _selectedSub != null
-          ? ((_selectedPage?.slug == 'profile')
+          ? (_selectedPage?.slug == 'profile')
               ? AppRouteConfig.person(
                   fid: _selectedPage!.slug, pid: _selectedSub!.slug)
-              : AppRouteConfig.newscategory(
-                  fid: _selectedPage!.slug, pid: _selectedSub!.slug))
+              : _selectedSubSub != null
+                  ? AppRouteConfig.article(
+                      fid: _selectedPage!.slug,
+                      pid: _selectedSub!.slug,
+                      sub: _selectedSubSub!.slug)
+                  : AppRouteConfig.newscategory(
+                      fid: _selectedPage!.slug, pid: _selectedSub!.slug)
           : _selectedPage != null
               ? ((_selectedPage?.slug == 'profile')
                   ? AppRouteConfig.profile(fid: _selectedPage!.slug)
@@ -144,7 +148,18 @@ class AppRouterDelegate extends RouterDelegate<AppRouteConfig>
                 key: ValueKey(_selectedSub),
                 child: NewsCategoryPage(
                   route: _selectedPage!,
-                  sub: _selectedSub!,
+                  cat: _selectedSub!,
+                  onTap: _routeSubSubTapped,
+                ),
+              ),
+          if (_selectedSubSub != null)
+            if (_selectedPage?.slug == 'news')
+              MaterialPage<ArticlePage>(
+                key: ValueKey(_selectedSubSub),
+                child: ArticlePage(
+                  route: _selectedPage!,
+                  cat: _selectedSub!,
+                  sub: _selectedSubSub!,
                 ),
               ),
         ],
@@ -156,10 +171,15 @@ class AppRouterDelegate extends RouterDelegate<AppRouteConfig>
               route.settings is MaterialPage<NewsPage>) {
             _selectedPage = null;
             _selectedSub = null;
+            _selectedSubSub = null;
             notifyListeners();
           } else if (route.settings is MaterialPage<PersonPage> ||
               route.settings is MaterialPage<NewsCategoryPage>) {
             _selectedSub = null;
+            _selectedSubSub = null;
+            notifyListeners();
+          } else if (route.settings is MaterialPage<Article>) {
+            _selectedSubSub = null;
             notifyListeners();
           }
 
@@ -177,8 +197,8 @@ class AppRouterDelegate extends RouterDelegate<AppRouteConfig>
     notifyListeners();
   }
 
-  void _profileTapped(Profile profile) {
-    _selectedProfile = profile;
+  void _routeSubSubTapped(PageSubRouting subroute) {
+    _selectedSubSub = subroute;
     notifyListeners();
   }
 
@@ -201,23 +221,44 @@ class AppRouterDelegate extends RouterDelegate<AppRouteConfig>
         _selectedPage =
             _routes.singleWhereOrNull((f) => f.slug == configuration.fid);
         _selectedSub = null;
-        _404message =
-            _selectedPage == null ? 'unknown fid ${configuration.fid}' : null;
+        _404message = _selectedPage == null
+            ? 'news: unknown fid ${configuration.fid}'
+            : null;
         break;
       case AppRouteConfigKind.newscategory:
         _selectedPage =
             _routes.singleWhereOrNull((f) => f.slug == configuration.fid);
         _selectedSub = _selectedPage?.data
             .singleWhereOrNull((p) => p.slug == configuration.pid);
-        _404message =
-            _selectedPage == null ? 'unknown fid ${configuration.fid}' : null;
+        _404message = _selectedPage == null
+            ? 'newscat: unknown fid ${configuration.fid}'
+            : null;
         break;
+      case AppRouteConfigKind.article:
+        _selectedPage =
+            _routes.singleWhereOrNull((f) => f.slug == configuration.fid);
+        _selectedSub = _selectedPage?.data
+            .singleWhereOrNull((p) => p.slug == configuration.pid);
+        _selectedSubSub = _selectedSub?.data
+            .singleWhereOrNull((p) => p.slug == configuration.sub);
+        print(
+            'fid: ${configuration.fid} selected: ${_selectedPage!.slug} sub: ${_selectedSub!.slug} pid: ${_selectedSubSub!.slug}');
+        _404message = _selectedPage == null
+            ? 'article: unknown fid ${configuration.fid}'
+            : _selectedSub == null
+                ? 'article: unknown pid ${configuration.pid}'
+                : null;
+        break;
+
       case AppRouteConfigKind.profile:
         _selectedPage =
             _routes.singleWhereOrNull((f) => f.slug == configuration.fid);
+        print(
+            'fid: ${configuration.fid} selected: ${_selectedPage} pid: ${configuration.pid}');
         _selectedSub = null;
-        _404message =
-            _selectedPage == null ? 'unknown fid ${configuration.fid}' : null;
+        _404message = _selectedPage == null
+            ? 'profile: unknown fid ${configuration.fid}'
+            : null;
         break;
 
       case AppRouteConfigKind.person:
@@ -226,22 +267,9 @@ class AppRouterDelegate extends RouterDelegate<AppRouteConfig>
         _selectedSub = _selectedPage?.data
             .singleWhereOrNull((p) => p.slug == configuration.pid);
         _404message = _selectedPage == null
-            ? 'unknown fid ${configuration.fid}'
+            ? 'person: unknown fid ${configuration.fid}'
             : _selectedSub == null
-                ? 'unknown pid ${configuration.pid}'
-                : null;
-        break;
-      case AppRouteConfigKind.article:
-        _selectedPage =
-            _routes.singleWhereOrNull((f) => f.slug == configuration.fid);
-        _selectedSub = _selectedPage?.data
-            .singleWhereOrNull((p) => p.slug == configuration.pid);
-        _selectedSubSub = _selectedPage?.data
-            .singleWhereOrNull((p) => p.slug == configuration.pid);
-        _404message = _selectedPage == null
-            ? 'unknown fid ${configuration.fid}'
-            : _selectedSub == null
-                ? 'unknown pid ${configuration.pid}'
+                ? 'person: unknown pid ${configuration.pid}'
                 : null;
         break;
     }
@@ -254,56 +282,38 @@ class AppRouteInformationParser extends RouteInformationParser<AppRouteConfig> {
       RouteInformation routeInformation) async {
     final uri = Uri.parse(routeInformation.location ?? '/');
 
-    // Handle '/'
+    // Handle '/ '
     if (uri.pathSegments.isEmpty) return AppRouteConfig.home();
     print('uri: ${uri.pathSegments}');
+
     // Handle '/profile/:id'
-    if (uri.pathSegments.length == 2) {
-      if (uri.pathSegments[0] == 'profile' || uri.pathSegments[0] == 'news') {
-        final fid = uri.pathSegments[1];
-        if (fid.isEmpty) return AppRouteConfig.unknown();
+    if (uri.pathSegments.length > 0) {
+      final fid = uri.pathSegments[0];
+      if (fid.isEmpty) return AppRouteConfig.unknown();
 
-        if (uri.pathSegments[0] == 'profile')
-          return AppRouteConfig.profile(fid: fid);
-        else if (uri.pathSegments[0] == 'news')
-          return AppRouteConfig.news(fid: fid);
-      } else {
-        return AppRouteConfig.unknown();
-      }
-    }
-// Handle '/profile/:id/person/:id'
-    if (uri.pathSegments.length == 3) {
-      if (uri.pathSegments[0] == 'profile' || uri.pathSegments[0] == 'news') {
-        final fid = uri.pathSegments[1];
-        if (fid.isEmpty) return AppRouteConfig.unknown();
-
-        final pid = uri.pathSegments[2];
-        if (pid.isEmpty) return AppRouteConfig.unknown();
-
-        if (uri.pathSegments[0] == 'profile')
-          return AppRouteConfig.person(fid: fid, pid: pid);
-        else if (uri.pathSegments[0] == 'news')
-          return AppRouteConfig.newscategory(fid: fid, pid: pid);
-      } else {
-        return AppRouteConfig.unknown();
-      }
-    }
-    // Handle '/profile/:id/person/:id'
-    if (uri.pathSegments.length == 4) {
-      if (uri.pathSegments[0] == 'profile' || uri.pathSegments[0] == 'news') {
-        final fid = uri.pathSegments[1];
-        if (fid.isEmpty) return AppRouteConfig.unknown();
-
-        final pid = uri.pathSegments[3];
-        final sub = uri.pathSegments[2];
-        if (pid.isEmpty) return AppRouteConfig.unknown();
-
-        if (uri.pathSegments[0] == 'profile')
-          return AppRouteConfig.person(fid: fid, pid: pid);
-        else if (uri.pathSegments[0] == 'news')
-          return AppRouteConfig.article(fid: fid, sub: sub, pid: pid);
-      } else {
-        return AppRouteConfig.unknown();
+      final pid = uri.pathSegments.length > 1 && uri.pathSegments[1].isNotEmpty
+          ? uri.pathSegments[1]
+          : null;
+      final sub = uri.pathSegments.length > 2 && uri.pathSegments[2].isNotEmpty
+          ? uri.pathSegments[2]
+          : null;
+      switch (fid) {
+        case 'home':
+          return AppRouteConfig.home();
+        case 'profile':
+          if (pid != null) {
+            return AppRouteConfig.person(fid: fid, pid: pid);
+          } else
+            return AppRouteConfig.profile(fid: fid);
+        case 'news':
+          print('uri: ${fid} ${pid} ${sub}');
+          if (pid != null) {
+            if (sub != null) {
+              return AppRouteConfig.article(fid: fid, sub: sub, pid: pid);
+            }
+            return AppRouteConfig.newscategory(fid: fid, pid: pid);
+          } else
+            return AppRouteConfig.news(fid: fid);
       }
     }
 

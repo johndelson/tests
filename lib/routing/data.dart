@@ -108,7 +108,7 @@ class PageSubRouting {
   final String id;
   final String title;
   final String slug;
-  final List<Object> data;
+  final List<PageSubRouting> data;
   PageSubRouting(
       {required this.id,
       required this.slug,
@@ -129,11 +129,11 @@ class Routes {
       title: 'Profile',
       slug: 'profile',
       data: [
-        PageSubRouting(id: 'p1', slug: 'Gomez', title: 'Gomez', data: []),
-        PageSubRouting(id: 'p2', slug: 'Morticia', title: 'Morticia', data: []),
-        PageSubRouting(id: 'p3', slug: 'Pugsley', title: 'Pugsley', data: []),
+        PageSubRouting(id: 'p1', slug: 'gomez', title: 'Gomez', data: []),
+        PageSubRouting(id: 'p2', slug: 'morticia', title: 'Morticia', data: []),
+        PageSubRouting(id: 'p3', slug: 'pugsley', title: 'Pugsley', data: []),
         PageSubRouting(
-            id: 'p4', slug: 'Wednesday', title: 'Wednesday', data: []),
+            id: 'p4', slug: 'wednesday', title: 'Wednesday', data: []),
       ],
     ),
     PageRouting(
@@ -141,10 +141,73 @@ class Routes {
       title: 'News',
       slug: 'news',
       data: [
-        PageSubRouting(id: 'p1', slug: 'Alert', title: 'Alert', data: []),
-        PageSubRouting(id: 'p2', slug: 'Success', title: 'Success', data: []),
-        PageSubRouting(id: 'p3', slug: 'Warning', title: 'Warning', data: []),
-        PageSubRouting(id: 'p4', slug: 'Danger', title: 'Danger', data: []),
+        PageSubRouting(id: 'p1', slug: 'alert', title: 'Alert', data: [
+          PageSubRouting(
+              id: 'p1',
+              slug: 'aticle4alert',
+              title: 'aticle tITLEAlert',
+              data: []),
+          PageSubRouting(
+              id: 'p2',
+              slug: 'aticle4success',
+              title: 'aticle tITLESuccess',
+              data: []),
+          PageSubRouting(
+              id: 'p3',
+              slug: 'aticle4warning',
+              title: 'aticle tITLEWarning',
+              data: []),
+          PageSubRouting(
+              id: 'p4',
+              slug: 'aticle4danger',
+              title: 'aticle tITLEDanger',
+              data: []),
+        ]),
+        PageSubRouting(id: 'p2', slug: 'success', title: 'Success', data: [
+          PageSubRouting(
+              id: 'p1',
+              slug: 'aticle2alert',
+              title: 'aticle tITLEAlert',
+              data: []),
+          PageSubRouting(
+              id: 'p2',
+              slug: 'aticle2success',
+              title: 'aticle tITLESuccess',
+              data: []),
+          PageSubRouting(
+              id: 'p3',
+              slug: 'aticle2warning',
+              title: 'aticle tITLEWarning',
+              data: []),
+          PageSubRouting(
+              id: 'p4',
+              slug: 'aticle2danger',
+              title: 'aticle tITLEDanger',
+              data: []),
+        ]),
+        PageSubRouting(id: 'p3', slug: 'warning', title: 'Warning', data: [
+          PageSubRouting(
+              id: 'p1',
+              slug: 'aticle1alert',
+              title: 'aticle3 tITLE Alert',
+              data: []),
+          PageSubRouting(
+              id: 'p2',
+              slug: 'aticle1success',
+              title: 'aticle3 tITLESuccess',
+              data: []),
+          PageSubRouting(
+              id: 'p3',
+              slug: 'aticle1warning',
+              title: 'aticle 3tITLEWarning',
+              data: []),
+          PageSubRouting(
+              id: 'p4',
+              slug: 'aticle1danger',
+              title: 'aticle3 tITLEDanger',
+              data: []),
+        ]),
+        PageSubRouting(id: 'p4', slug: 'danger', title: 'Danger', data: []),
       ],
     )
   ];
