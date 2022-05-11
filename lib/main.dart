@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
-import 'routing.dart';
+import 'includes/url_strategy.dart';
+import 'routing/routing.dart';
 
-void main() => runApp(const App());
+void main() {
+  usePathUrlStrategy();
+  runApp(App());
+}
 
 class App extends StatelessWidget {
   const App({Key? key}) : super(key: key);
