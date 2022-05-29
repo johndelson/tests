@@ -112,6 +112,7 @@ class HoledoDatabase extends GetxController {
     await GetStorage.init();
     print('starting website... ');
     final model = getModel();
+    // ignore: unnecessary_null_comparison
     if (model.settings != null) {
       print('cache: ${box.read('model').toString()}');
     } else {
@@ -136,7 +137,7 @@ class HoledoDatabase extends GetxController {
 
   DataModel getModel() {
     //print('model: ${box.read('model')}');
-    final map = box.read('model');
+    final map = box.read('model') ?? {'test': 'data'};
 
     return DataModel.fromJson(map as Map<String, dynamic>);
   }
