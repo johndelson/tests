@@ -1,6 +1,6 @@
 export 'package:get/get.dart';
 export 'holedoapi/holedoapi.dart';
-import 'dart:convert';
+import 'package:flutter/src/widgets/framework.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
@@ -10,7 +10,7 @@ import 'package:holedo/models/holedoapi/article_category.dart';
 
 import 'package:holedo/models/holedoapi/user.dart';
 import 'package:holedo/models/holedoapi/job.dart';
-import '../services/holedo_api_services.dart';
+import 'package:holedo/services/holedo_api_services.dart';
 import 'holedoapi/data.dart';
 
 class AppState extends ChangeNotifier {
@@ -44,6 +44,8 @@ class AppState extends ChangeNotifier {
     _profiles.add(data);
     notifyListeners();
   }
+
+  NewsController get news => Get.put(NewsController());
 }
 
 class Book {
@@ -108,22 +110,18 @@ class HoledoDatabase extends GetxController {
   final NewsController news = NewsController();
   final UsersController users = UsersController();
   final JobsController jobs = JobsController();
+
   Future<void> init() async {
     await GetStorage.init();
     print('starting website... ');
-    final model = getModel();
-    // ignore: unnecessary_null_comparison
-    if (model.settings != null) {
-      print('cache: ${box.read('model').toString()}');
-    } else {
-      final model = await this.fetchSettings();
-      print('after: ${model}');
-    }
 
+    final model = await this.fetchSettings();
     // final model = getModel();
-    if (model!.user?.fullName != null) {
+    if (model.user?.fullName != null) {
       print('cached user: ${model.user?.fullName}');
     }
+
+    print('finish Init');
   }
 
   void setModel(DataModel model) {
@@ -137,33 +135,41 @@ class HoledoDatabase extends GetxController {
 
   DataModel getModel() {
     //print('model: ${box.read('model')}');
-    final map = box.read('model') ?? {'test': 'data'};
+    final map = box.read('model');
 
-    return DataModel.fromJson(map as Map<String, dynamic>);
+    return map != null
+        ? DataModel.fromJson(map as Map<String, dynamic>)
+        : new DataModel();
   }
 
   Future<dynamic> fetchSettings() async {
     try {
       isLoading(true);
-      DataModel data;
 
-      var response = await _api.getSettings();
-      data = response.data as DataModel;
-      print('set cache: ${data}');
-      this.setModel(data);
+      var data = getModel();
 
-      if (data != null) {
-        settingsList = data;
-        print('set: ${settingsList}');
-
-        articleCategories = data.articleCategories as List<ArticleCategory>;
-        for (final category in articleCategories
-            .where((category) => category.menuItem == true)) {
-          articlePaths.add(category.slug as String);
-        }
-        print('articlePaths: ${articlePaths}');
-        return data;
+      if (data.articleCategories?.length != null) {
+        print('cache articles cat: ${data.articleCategories?.length} ');
+        print('cache test:  ${data.articleCategories?.first.slug} ');
       }
+
+      if (data.articleCategories?.length == null) {
+        print('getting new settings: ${data}');
+        var response = await _api.getSettings();
+        data = response.data as DataModel;
+        print('set cache: ${data}');
+        this.setModel(data);
+      }
+
+      settingsList = data;
+
+      articleCategories = data.articleCategories as List<ArticleCategory>;
+      for (final category
+          in articleCategories.where((category) => category.menuItem == true)) {
+        articlePaths.add(category.slug as String);
+      }
+
+      return data;
     } finally {
       isLoading(false);
     }
@@ -225,23 +231,25 @@ class UsersController extends GetxController {
   Future<User> login({required String email, required String password}) async {
     try {
       isLoading(true);
-      var response = await _api.login(email: email, password: password);
-      print('log: ${response.data?.token}');
-      if (response == null) {
-        return response as User;
-      }
+      var user = new User();
+      //var response = await _api.login(email: email, password: password);
+
+      var response = await _api.GET(
+          target: '/users/login', data: {'email': email, 'password': password});
+
       if (response.success == true) {
+        print('login: ${response.data!.user!.email.toString()}');
         isLogin.value = true;
         token.value = response.data?.token as String;
 
         user = response.data?.user as User;
         final model = Get.put(HoledoDatabase()).getModel();
         model.token = response.data?.token;
-        model.user = user as User;
+        model.user = user;
         print('db save: ${model.user}');
         Get.find<HoledoDatabase>().setModel(model);
       }
-      return user as User;
+      return user;
     } finally {
       isLoading(false);
     }
@@ -250,12 +258,15 @@ class UsersController extends GetxController {
   Future<User> getProfileData({String? slug, String? id, String? token}) async {
     try {
       isLoading(true);
+      var user = new User();
       final model = Get.put(HoledoDatabase()).getModel();
       if (model.user?.slug == slug) {
         print('natch: ${slug} token: ${model.token}');
         token = model.token;
       }
-      User? user = await _api.getUserData(id: id, slug: slug, token: token);
+      var response = await _api.GET(
+          target: '/users/get', data: {'id': id, 'slug': slug, 'token': token});
+      user = response.data?.user as User;
       print('log: ${user.firstName}');
 
       if (model.user?.slug == slug) {
@@ -274,17 +285,16 @@ class UsersController extends GetxController {
     try {
       isLoading(true);
 
-      var response = await _api.getUsersList(
-          category: category,
-          type: type,
-          limit: limit == null ? this.limit : limit,
-          page: page == null ? this.page : page);
+      var response = await _api.GET(target: '/users/index', data: {
+        'category': category,
+        'type': type,
+        'limit': limit == null ? this.limit : limit,
+        'page': page == null ? this.page : page
+      });
 
-      if (response != null) {
-        userList.value = response;
-      }
+      userList.value = response.data!.users as List<User>;
 
-      return response;
+      return userList.value as List<User>;
     } finally {
       isLoading(false);
     }
@@ -295,9 +305,7 @@ class UsersController extends GetxController {
       isLoading(true);
       var response = await _api.getUserData(id: id, slug: slug);
       print('log: ${response}');
-      if (response != null) {
-        user = response;
-      }
+      user = response;
     } finally {
       isLoading(false);
     }
@@ -312,56 +320,102 @@ class NewsController extends GetxController {
   var page = 1;
   var limit = 10;
   final ApiServices _api = ApiServices();
-  @override
-  void onInit() {
-    //fetch();
-    super.onInit();
-  }
+  //@override
+  //void onInit() {
+  //fetch();
+  //super.onInit();
+  //r}
 
   Future<Article> getArticle({String? slug, String? id}) async {
     try {
       isLoading(true);
-      //var check = articleList.firstWhere((e) => e.slug == slug);
-      //if (check != null) {
-      //  print('cache: ${check.title}');
-      //   return check;
-      // }
-      var response = await _api.getArticle(id: id, slug: slug);
+
+      //var response2 = await _api.getArticle(id: id, slug: slug);
+      var response = await _api
+          .GET(target: '/articles/get/', data: {'id': id, 'slug': slug});
       print('res: ${response.data?.article}');
-      if (response != null) {
-        article.value = response.data?.article as Article;
+
+      if (response.success == true) {
+        article.value = response.data!.article as Article;
       }
-      // if (articleList.any((e) => e.id != article.value.id))
-      // articleList.add(article.value);
+
       return article.value;
     } finally {
       isLoading(false);
     }
   }
 
-  Future<List<Article>> fetchArticles(
+  Future<List<Article>> fetchArticlesType(
       {String? category, String? type, int? limit, int? page}) async {
     try {
       isLoading(true);
+      var params = {
+        'category': category,
+        'type': type,
+        'limit': limit == null ? this.limit : limit,
+        'page': page == null ? this.page : page
+      };
+      print('type: ${type} cat: ${category}');
+      var response = await _api.GET(target: '/articles/index', data: params);
 
-      var response = await _api.getArticleList(
-          category: category,
-          type: type,
-          limit: limit == null ? this.limit : limit,
-          page: page == null ? this.page : page);
+      if (response.success == true) {
+        var list = response.data!.articles as List<Article>;
+        dataList.value = list;
 
-      if (response != null) {
-        dataList.value = response;
+        //print('log: ${list}');
+        for (final data in list) {
+          //articleList.add(data);
+          // print('c ${data.id} ${(articleList.any((e) => e.id == data.id))}');
+
+          if ((articleList.any((e) => e.id == data.id)) != true) {
+            // print('adding ${data.id}');
+            articleList.add(data);
+          }
+        }
+        print(
+            'localcache: count: ${articleList.length} ${articleList.toString()}');
       }
-      for (final data in response) {
-        // print('data: ${data.title}');
-        // print('uu: ${data.user}');
+      return dataList.value as List<Article>;
+    } finally {
+      isLoading(false);
+      return dataList.value as List<Article>;
+    }
+  }
+
+  Future<List<Article>> fetchArticles(
+      {String? category,
+      String? type,
+      int? limit,
+      int? page,
+      required BuildContext context}) async {
+    try {
+      isLoading(true);
+      var params = {
+        'category': category,
+        'type': type,
+        'limit': limit == null ? this.limit : limit,
+        'page': page == null ? this.page : page
+      };
+      print('context: ${context} type: ${type} cat: ${category}');
+      var response = await _api.GET(target: '/articles/index', data: params);
+
+      if (response.success == true) {
+        var list = response.data!.articles as List<Article>;
+        dataList.value = list;
+
+        //print('log: ${list}');
+        for (final data in list) {
+          //articleList.add(data);
+          // print('c ${data.id} ${(articleList.any((e) => e.id == data.id))}');
+
+          if ((articleList.any((e) => e.id == data.id)) != true) {
+            // print('adding ${data.id}');
+            articleList.add(data);
+          }
+        }
+        print('localcache: count: ${articleList.length}');
       }
-      //for (final data in response
-      //  .where((data) => articleList.any((e) => e.id == data.id))) {
-      //articleList.add(dataList.value);
-      //}
-      return response;
+      return dataList.value as List<Article>;
     } finally {
       isLoading(false);
     }
@@ -386,9 +440,7 @@ class JobsController extends GetxController {
     try {
       isLoading(true);
       var response = await _api.getJob(id: id, slug: slug);
-      if (response != null) {
-        job.value = response.data?.job as Job;
-      }
+      job.value = response.data?.job as Job;
       return job.value;
     } finally {
       isLoading(false);
@@ -406,9 +458,7 @@ class JobsController extends GetxController {
           limit: limit == null ? this.limit : limit,
           page: page == null ? this.page : page);
 
-      if (response != null) {
-        dataList.value = response;
-      }
+      dataList.value = response;
 
       return response;
     } finally {

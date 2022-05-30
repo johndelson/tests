@@ -1,11 +1,10 @@
-import 'package:holedo/includes/page_scaffold.dart';
+import 'package:holedo/layouts/page_scaffold.dart';
 import 'package:flutter/material.dart';
 
 import 'package:holedo/models/holedoapi/job.dart';
-import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:routemaster/routemaster.dart';
-import '../cards/holedo_cards.dart';
-import '../models/models.dart';
+
+import 'package:holedo/models/models.dart';
 
 class JobsfrontPage extends StatelessWidget {
   const JobsfrontPage({Key? key}) : super(key: key);
@@ -26,7 +25,7 @@ class JobsfrontPage extends StatelessWidget {
               controller: tabState.controller,
               tabs: [
                 Tab(icon: Icon(Icons.list), text: 'All Jobs'),
-                Tab(icon: Icon(Icons.star), text: 'Featured'),
+                Tab(icon: Icon(Icons.star), text: 'Premium'),
               ],
             ),
           ),

@@ -17,6 +17,8 @@ class Settings {
                 json['GeneralSettings'] as Map<String, dynamic>),
       );
 
+  get length => null;
+
   Map<String, dynamic> toJson() => {
         'HeaderLinks': headerLinks?.toJson(),
         'GeneralSettings': generalSettings?.toJson(),

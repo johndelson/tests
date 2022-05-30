@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../colorPicker/color_picker.dart';
+import 'package:holedo/constant/colorPicker/color_picker.dart';
 
 class FontTextStyle {
   static TextStyle kWhite16W600PR = TextStyle(

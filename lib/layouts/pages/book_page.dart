@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import '../models/models.dart';
-import '../includes/page_scaffold.dart';
+import 'package:holedo/models/models.dart';
+import 'package:holedo/layouts/page_scaffold.dart';
 
 class BookPage extends StatelessWidget {
   final String id;

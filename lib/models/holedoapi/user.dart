@@ -250,10 +250,10 @@ class User {
         companyRoleId: json['company_role_id'] as int?,
         countryId: json['country_id'] as int?,
         userTitleTypesId: json['user_title_types_id'] as int?,
-        currencyId: json['currency_id'] as dynamic?,
-        contactNumberTypesId: json['contact_number_types_id'] as dynamic?,
-        maritalStatusId: json['marital_status_id'] as dynamic?,
-        genderId: json['gender_id'] as dynamic?,
+        currencyId: json['currency_id'] as dynamic,
+        contactNumberTypesId: json['contact_number_types_id'] as dynamic,
+        maritalStatusId: json['marital_status_id'] as dynamic,
+        genderId: json['gender_id'] as dynamic,
         currentMembershipGradeId: json['current_membership_grade_id'] as int?,
         nextMembershipGradeId: json['next_membership_grade_id'] as int?,
         slug: json['slug'] as String?,
@@ -261,7 +261,7 @@ class User {
         lastName: json['last_name'] as String?,
         email: json['email'] as String?,
         emailVisibility: json['email_visibility'] as int?,
-        dateOfBirth: json['date_of_birth'] as dynamic?,
+        dateOfBirth: json['date_of_birth'] as dynamic,
         avatar: json['avatar'] as String?,
         banner: json['banner'] as String?,
         professionalTitle: json['professional_title'] as String?,
@@ -270,9 +270,9 @@ class User {
         contactNumberVisibility: json['contact_number_visibility'] as bool?,
         contactableWhatsapp: json['contactable_whatsapp'] as int?,
         contactableSms: json['contactable_sms'] as int?,
-        website: json['website'] as dynamic?,
+        website: json['website'] as dynamic,
         websiteVisibility: json['website_visibility'] as bool?,
-        skype: json['skype'] as dynamic?,
+        skype: json['skype'] as dynamic,
         skypeVisibility: json['skype_visibility'] as bool?,
         facebook: json['facebook'] as String?,
         facebookVisibility: json['facebook_visibility'] as bool?,
@@ -284,16 +284,16 @@ class User {
         xingVisibility: json['xing_visibility'] as bool?,
         linkedin: json['linkedin'] as String?,
         linkedinVisibility: json['linkedin_visibility'] as bool?,
-        proxycurlWhodis: json['proxycurl_whodis'] as dynamic?,
+        proxycurlWhodis: json['proxycurl_whodis'] as dynamic,
         allowRecruiterAccess: json['allow_recruiter_access'] as bool?,
-        address1: json['address_1'] as dynamic?,
-        address2: json['address_2'] as dynamic?,
-        addressPostalCode: json['address_postal_code'] as dynamic?,
-        addressArea: json['address_area'] as dynamic?,
-        workPermits: json['work_permits'] as dynamic?,
+        address1: json['address_1'] as dynamic,
+        address2: json['address_2'] as dynamic,
+        addressPostalCode: json['address_postal_code'] as dynamic,
+        addressArea: json['address_area'] as dynamic,
+        workPermits: json['work_permits'] as dynamic,
         relocate: json['relocate'] as bool?,
-        nextJob: json['next_job'] as dynamic?,
-        salaryExpectation: json['salary_expectation'] as dynamic?,
+        nextJob: json['next_job'] as dynamic,
+        salaryExpectation: json['salary_expectation'] as dynamic,
         profileSummary: json['profile_summary'] as String?,
         active: json['active'] as bool?,
         profileVideoTitle: json['profile_video_title'] as String?,
@@ -307,8 +307,8 @@ class User {
             json['membership_grade_percent_accomplished'] as int?,
         membershipGradeEligibility:
             json['membership_grade_eligibility'] as bool?,
-        matrixUid: json['matrix_uid'] as dynamic?,
-        matrixRoomSync: json['matrix_room_sync'] as dynamic?,
+        matrixUid: json['matrix_uid'] as dynamic,
+        matrixRoomSync: json['matrix_room_sync'] as dynamic,
         allowApiLogin: json['allow_api_login'] as bool?,
         savedSearches: json['saved_searches'] as List<dynamic>?,
         nextMembershipGrade: json['next_membership_grade'] == null
@@ -341,8 +341,8 @@ class User {
         likes: json['likes'] as List<dynamic>?,
         jobApplications: json['job_applications'] as List<dynamic>?,
         invites: json['invites'] as List<dynamic>?,
-        gender: json['gender'] as dynamic?,
-        maritalStatus: json['marital_status'] as dynamic?,
+        gender: json['gender'] as dynamic,
+        maritalStatus: json['marital_status'] as dynamic,
         userTags: json['user_tags'] == null
             ? null
             : (json['user_tags'] as List<dynamic>?)
@@ -360,8 +360,8 @@ class User {
         articles: json['articles'] == null
             ? null
             : json['articles'] as List<dynamic>?,
-        contactNumberType: json['contact_number_type'] as dynamic?,
-        currency: json['currency'] as dynamic?,
+        contactNumberType: json['contact_number_type'] as dynamic,
+        currency: json['currency'] as dynamic,
         userTitleType: json['user_title_type'] == null
             ? null
             : UserTitleType.fromJson(
@@ -375,7 +375,7 @@ class User {
             : (json['experiences'] as List<dynamic>?)
                 ?.map((e) => Experience.fromJson(e as Map<String, dynamic>))
                 .toList(),
-        currentExperience: json['current_experience'] as dynamic?,
+        currentExperience: json['current_experience'] as dynamic,
         educations: json['educations'] == null
             ? null
             : (json['educations'] as List<dynamic>?)

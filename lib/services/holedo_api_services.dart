@@ -1,11 +1,9 @@
-import 'dart:convert';
-
 //import 'package:get_storage/get_storage.dart';
 //import 'package:holedo/controller/auth_controller.dart';
 import 'package:holedo/models/holedoapi/article.dart';
 import 'package:holedo/models/holedoapi/job.dart';
 import 'package:holedo/models/holedoapi/user.dart';
-import '../models/models.dart';
+import 'package:holedo/models/models.dart';
 //import 'package:http/http.dart' as http;
 import 'package:dio/dio.dart' as dio;
 import 'package:dio_http_cache/dio_http_cache.dart';
@@ -15,6 +13,71 @@ final baseUrl = 'https://${Get.put(HoledoDatabase()).apiHost}/rest';
 
 class ApiServices {
   dio.Dio _dio = dio.Dio();
+
+  Future<Holedoapi> POST(
+      {String? target,
+      Map<String, dynamic>? data,
+      Map<String, dynamic>? headers,
+      String? token}) async {
+    try {
+      var model = new Holedoapi();
+      token = token == null ? Get.put(HoledoDatabase()).apiKey : token;
+      dio.Response response = await _dio.post(
+        '${baseUrl}${target}',
+        data: data,
+        options: dio.Options(
+          headers: headers == null
+              ? <String, dynamic>{
+                  'AuthApi': 'Bearer ${token}',
+                  'Content-Type': 'application/json; charset=UTF-8',
+                  'Accept': 'application/json',
+                }
+              : headers,
+        ),
+        queryParameters: {'apikey': token},
+      );
+      print('POST URL: ${target} data: ${data}');
+
+      if (response.statusCode == 200) {
+        model = Holedoapi.fromJson(response.data as Map<String, dynamic>);
+      }
+      return model;
+    } on dio.DioError catch (e) {
+      throw Exception(e);
+    }
+  }
+
+  Future<Holedoapi> GET(
+      {String? target,
+      Map<String, dynamic>? data,
+      Map<String, dynamic>? headers,
+      String? token}) async {
+    try {
+      var model = new Holedoapi();
+      token = token == null ? Get.put(HoledoDatabase()).apiKey : token;
+      dio.Response response = await _dio.get(
+        '${baseUrl}${target}',
+        options: dio.Options(
+          headers: headers == null
+              ? <String, dynamic>{
+                  'AuthApi': 'Bearer ${token}',
+                  'Content-Type': 'application/json; charset=UTF-8',
+                  'Accept': 'application/json',
+                }
+              : headers,
+        ),
+        queryParameters: data,
+      );
+      print('GET URL: ${target} param: ${data}');
+
+      if (response.statusCode == 200) {
+        model = Holedoapi.fromJson(response.data as Map<String, dynamic>);
+      }
+      return model;
+    } on dio.DioError catch (e) {
+      throw Exception(e);
+    }
+  }
 
   /*Future<dynamic> registerUser(Map<String, dynamic>? data) async {
     try {
@@ -144,17 +207,17 @@ class ApiServices {
       required int limit,
       required int page}) async {
     var url = "${baseUrl}" +
-        "/users/index?limit=${limit}&page=${page}&category=${category}&type=${type}";
+        "/users/index?keyword=john&limit=${limit}&page=${page}&category=${category}&type=${type}";
     var token = 'Bearer ${Get.put(HoledoDatabase()).token}';
     dio.Response response = await _dio.get(url,
         options: dio.Options(
           headers: {
-            'AuthApi': '${token}',
             'Content-Type': 'application/json; charset=UTF-8',
             'Accept': 'application/json',
           },
         ));
     print('URL: ${url}');
+    // print('token ${token} : ${response.data['data']['users']}');
     if (response.statusCode == 200 && response.data['success'] == true) {
       var data = response.data as Map<String, dynamic>;
 
@@ -242,23 +305,17 @@ class ApiServices {
 
   Future<Holedoapi> getSettings() async {
     try {
-      Holedoapi data;
+      var data = new Holedoapi();
       var url = "${baseUrl}" + "/site-settings/?type=2";
       //_dio.interceptors.add(DioCacheManager(CacheConfig(baseUrl: "http://www.google.com")).interceptor);
       dio.Response response = await _dio.get(url);
       print('URL: ${url}');
-      //print('data: ${response.data}');
-
       if (response.statusCode == 200 && response.data['success'] == true) {
-        //var data = response.data as Map<String, dynamic>;
         data = Holedoapi.fromJson(response.data as Map<String, dynamic>);
-        //rreturn Holedoapi.fromJson(json.encode(response.data));
-      } else {
-        throw Exception();
       }
       return data;
     } catch (e) {
-      throw Exception();
+      throw Exception(e.toString());
     }
   }
 

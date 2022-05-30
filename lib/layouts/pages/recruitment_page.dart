@@ -1,8 +1,7 @@
-import '../models/holedoapi/user.dart';
-import '../models/models.dart';
-import '../includes/page_scaffold.dart';
+import 'package:holedo/models/holedoapi/user.dart';
+import 'package:holedo/models/models.dart';
+import 'package:holedo/layouts/page_scaffold.dart';
 import 'package:flutter/material.dart';
-import 'package:holedo/cards/holedo_cards.dart';
 
 class RecruitmentPage extends StatelessWidget {
   const RecruitmentPage({Key? key}) : super(key: key);

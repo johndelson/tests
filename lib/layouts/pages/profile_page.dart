@@ -1,14 +1,7 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
-import 'package:holedo/controller/auth_controller.dart';
-import 'package:holedo/models/holedoapi/article.dart';
-import 'package:holedo/models/holedoapi/job.dart';
-import '../models/holedoapi/user.dart';
-import '../models/models.dart';
-import '../includes/page_scaffold.dart';
-import 'package:holedo/cards/holedo_cards.dart';
-import 'dart:developer' as developer;
+import 'package:holedo/models/holedoapi/user.dart';
+import 'package:holedo/models/models.dart';
+import 'package:holedo/layouts/page_scaffold.dart';
 
 class ProfilePage extends StatelessWidget {
   final String? id;

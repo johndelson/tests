@@ -1,4 +1,4 @@
-import 'package:holedo/includes/page_scaffold.dart';
+import 'package:holedo/layouts/page_scaffold.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:holedo/models/holedoapi/user.dart';
@@ -6,8 +6,7 @@ import 'package:provider/provider.dart';
 import 'package:routemaster/routemaster.dart';
 import 'package:collection/collection.dart';
 
-import '../cards/holedo_cards.dart';
-import '../models/models.dart';
+import 'package:holedo/models/models.dart';
 
 class ProfileHomePage extends StatelessWidget {
   const ProfileHomePage({Key? key}) : super(key: key);

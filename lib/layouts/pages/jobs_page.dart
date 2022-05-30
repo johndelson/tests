@@ -1,25 +1,20 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
-import 'package:holedo/controller/auth_controller.dart';
-import 'package:holedo/models/holedoapi/article.dart';
-import '../models/models.dart';
-import '../includes/page_scaffold.dart';
-import 'package:holedo/cards/holedo_cards.dart';
-import 'dart:developer' as developer;
+import 'package:holedo/models/holedoapi/job.dart';
+import 'package:holedo/models/models.dart';
+import 'package:holedo/layouts/page_scaffold.dart';
 
-class NewsPage extends StatelessWidget {
+class JobsPage extends StatelessWidget {
   final String? id;
   final String? slug;
-  const NewsPage({Key? key, this.id, this.slug}) : super(key: key);
+  const JobsPage({Key? key, this.id, this.slug}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    final NewsController newsController = Get.put(NewsController());
+    final JobsController controller = Get.put(JobsController());
     return PageScaffold(
-        title: "News Content",
+        title: "Job Content",
         body: FutureBuilder(
-            future: newsController.getArticle(slug: slug),
-            builder: (context, AsyncSnapshot<Article> snapshot) {
+            future: controller.getJob(slug: slug),
+            builder: (context, AsyncSnapshot<Job> snapshot) {
               if (!snapshot.hasData) {
                 return Center(
                   child: CircularProgressIndicator(),
@@ -32,7 +27,7 @@ class NewsPage extends StatelessWidget {
                     child: ListTile(
                       contentPadding: const EdgeInsets.all(10),
                       title: Text(snapshot.data!.title.toString()),
-                      subtitle: Text(snapshot.data!.content.toString()),
+                      subtitle: Text(snapshot.data!.companyName.toString()),
                     ),
                   ),
                 );

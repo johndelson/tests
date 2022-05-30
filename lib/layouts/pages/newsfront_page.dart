@@ -1,10 +1,10 @@
-import 'package:holedo/includes/page_scaffold.dart';
+import 'package:holedo/layouts/page_scaffold.dart';
 import 'package:flutter/material.dart';
 import 'package:holedo/models/holedoapi/article.dart';
-import 'package:percent_indicator/circular_percent_indicator.dart';
+import 'package:holedo/models/holedoapi/article_category.dart';
 import 'package:routemaster/routemaster.dart';
-import '../cards/holedo_cards.dart';
-import '../models/models.dart';
+import 'package:holedo/layouts/cards/holedo_cards.dart';
+import 'package:holedo/models/models.dart';
 
 class NewsfrontPage extends StatelessWidget {
   const NewsfrontPage({Key? key}) : super(key: key);
@@ -17,6 +17,16 @@ class NewsfrontPage extends StatelessWidget {
       title: 'Newsfronts',
       body: ListView(
         children: [
+          Wrap(
+            children: [
+              //for (final book in Get.put(HoledoDatabase()).books)
+              //  BookCard(book: book),
+              for (final category in Get.put(HoledoDatabase())
+                  .articleCategories
+                  .where((category) => category.menuItem == true))
+                NewsCategoryCard(category: category),
+            ],
+          ),
           Container(
             color: Color(0xff202f3f),
             height: 70,
@@ -47,21 +57,24 @@ class NewsfrontPage extends StatelessWidget {
 
 class NewsfrontListPage extends StatelessWidget {
   final String mode;
+  final ArticleCategory? category;
 
   const NewsfrontListPage({
     Key? key,
     required this.mode,
+    this.category,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     //final articles = HoledoDatabase().articles(slug: mode);
-    final NewsController controller = Get.put(HoledoDatabase().news);
+    // final NewsController controller = Get.put(HoledoDatabase().news);
     //newsController.fetchArticles(category: mode);
 
     return Scaffold(
         body: FutureBuilder(
-            future: controller.fetchArticles(type: mode),
+            future: Get.put(HoledoDatabase().news).fetchArticles(
+                context: context, type: mode, category: category?.slug),
             builder: (context, AsyncSnapshot<List<Article>> snapshot) {
               if (!snapshot.hasData) {
                 return Center(

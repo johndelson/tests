@@ -1,13 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:get_storage/get_storage.dart';
 import 'package:holedo/models/holedoapi/job.dart';
 import 'package:holedo/models/holedoapi/article.dart';
 import 'package:holedo/models/holedoapi/article_category.dart';
 import 'package:routemaster/routemaster.dart';
 import 'package:intl/intl.dart';
-import '../models/holedoapi/user.dart';
-import '../models/models.dart';
+import 'package:holedo/models/holedoapi/user.dart';
+import 'package:holedo/models/models.dart';
 
 class CustomCard extends StatelessWidget {
   final Widget child;
@@ -28,6 +27,39 @@ class CustomCard extends StatelessWidget {
         child: Material(
           color: Color.fromARGB(255, 216, 72, 16),
           borderRadius: BorderRadius.circular(8),
+          clipBehavior: Clip.antiAlias,
+          child: InkWell(
+            onTap: onTap,
+            child: Padding(
+              padding: const EdgeInsets.all(16),
+              child: child,
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class SmallCard extends StatelessWidget {
+  final Widget child;
+  final void Function() onTap;
+
+  const SmallCard({
+    Key? key,
+    required this.onTap,
+    required this.child,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: SizedBox(
+        width: 250,
+        child: Material(
+          color: Color.fromARGB(255, 219, 212, 228),
+          borderRadius: BorderRadius.circular(2),
           clipBehavior: Clip.antiAlias,
           child: InkWell(
             onTap: onTap,
@@ -130,11 +162,16 @@ class JobsCard extends StatelessWidget {
             ),
             height: 100,
             width: 75,
-            child: Icon(
-              CupertinoIcons.clock,
-              size: 55,
-              color: Colors.grey,
-            ),
+            child: data.logo != null
+                ? CircleAvatar(
+                    radius: 30,
+                    backgroundImage: NetworkImage(data.logo.toString()),
+                  )
+                : Icon(
+                    CupertinoIcons.news,
+                    size: 55,
+                    color: Colors.grey,
+                  ),
           ),
           SizedBox(width: 20),
           Expanded(
@@ -182,17 +219,18 @@ class UserCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Container(
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(8),
-            ),
             height: 100,
             width: 75,
-            child: Icon(
-              CupertinoIcons.news,
-              size: 55,
-              color: Colors.grey,
-            ),
+            child: data.avatarCdn != null
+                ? CircleAvatar(
+                    radius: 30,
+                    backgroundImage: NetworkImage(data.avatarCdn.toString()),
+                  )
+                : Icon(
+                    CupertinoIcons.news,
+                    size: 55,
+                    color: Colors.grey,
+                  ),
           ),
           SizedBox(width: 20),
           Expanded(
@@ -204,6 +242,9 @@ class UserCard extends StatelessWidget {
                   style: TextStyle(fontSize: 16),
                 ),
                 Text('${data.avatarCdn}'),
+                Text(data.dateOfBirth != null
+                    ? _formatter.format(data.dateOfBirth as DateTime)
+                    : '')
               ],
             ),
           ),
@@ -233,23 +274,30 @@ class NewsCard extends StatelessWidget {
       onTap: () {
         Routemaster.of(context).push(pathBuilder != null
             ? pathBuilder!(article.slug as String)
-            : '/news/${article.articleCategories?.first.slug}/${article.slug}');
+            : '/article/${article.articleCategories?.first.slug}/${article.slug}');
       },
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Container(
             decoration: BoxDecoration(
+              image: DecorationImage(
+                image: NetworkImage(article.bannerImage.toString()),
+                fit: BoxFit.cover,
+                repeat: ImageRepeat.noRepeat,
+              ),
               color: Colors.white,
-              borderRadius: BorderRadius.circular(8),
+              borderRadius: BorderRadius.circular(0),
             ),
             height: 100,
             width: 75,
-            child: Icon(
-              CupertinoIcons.news,
-              size: 55,
-              color: Colors.grey,
-            ),
+            child: article.bannerImage != null
+                ? null
+                : Icon(
+                    CupertinoIcons.news,
+                    size: 55,
+                    color: Colors.grey,
+                  ),
           ),
           SizedBox(width: 20),
           Expanded(
@@ -258,8 +306,16 @@ class NewsCard extends StatelessWidget {
               children: [
                 Text(
                   article.title as String,
-                  style: TextStyle(fontSize: 16),
+                  style: TextStyle(
+                    fontSize: 16,
+                  ),
                 ),
+                Text('------------------'),
+                for (final cat in article.articleCategories!)
+                  Text(
+                    cat.title as String,
+                    style: TextStyle(fontSize: 12),
+                  ),
                 if (showReleaseDate)
                   Text(_formatter.format(article.created as DateTime)),
               ],
@@ -287,25 +343,25 @@ class NewsCategoryCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return CustomCard(
+    return SmallCard(
       onTap: () {
         Routemaster.of(context).push(pathBuilder != null
             ? pathBuilder!(category.slug as String)
-            : '/news/${category.slug}/');
+            : '/news/all/${category.slug}/');
       },
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Container(
             decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(8),
+              color: Color.fromARGB(255, 0, 0, 0),
+              borderRadius: BorderRadius.circular(3),
             ),
-            height: 50,
-            width: 45,
+            height: 30,
+            width: 25,
             child: Icon(
               CupertinoIcons.news,
-              size: 25,
+              size: 15,
               color: Colors.grey,
             ),
           ),

@@ -1,11 +1,11 @@
 import 'package:holedo/models/models.dart';
-import 'package:holedo/includes/page_scaffold.dart';
+import 'package:holedo/layouts/page_scaffold.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:routemaster/routemaster.dart';
 
-import '../models/holedoapi/user.dart';
+import 'package:holedo/models/holedoapi/user.dart';
 
 class LoginPage extends StatefulWidget {
   static const usernameFieldKey = Key('username-field');
@@ -41,7 +41,7 @@ class _LoginPageState extends State<LoginPage> {
           email: _usernameController.text, password: _passwordController.text);
       print('cjec: ${controller.isLogin.value}');
       //
-      if (controller.isLogin.value && user != null) {
+      if (controller.isLogin.value) {
         Provider.of<AppState>(context, listen: false).username =
             _usernameController.text;
         Provider.of<AppState>(context, listen: false).profile = user;

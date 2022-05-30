@@ -1,9 +1,8 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import '../constant/colorPicker/color_picker.dart';
-import '../constant/fontStyle/font_style.dart';
-import '../constant/sizedbox.dart';
+import 'package:holedo/constant/colorPicker/color_picker.dart';
+import 'package:holedo/constant/fontStyle/font_style.dart';
+import 'package:holedo/constant/sizedbox.dart';
 
 class TextFieldAndFieldName {
   /// build field Name Common start

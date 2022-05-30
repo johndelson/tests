@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:routemaster/routemaster.dart';
 import 'package:collection/collection.dart';
-import '../cards/holedo_cards.dart';
-import '../models/models.dart';
-import '../includes/page_scaffold.dart';
+
+import 'package:holedo/models/models.dart';
+import 'package:holedo/layouts/page_scaffold.dart';
 
 enum SortOrder { name, date }
 

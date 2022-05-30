@@ -4,6 +4,22 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:routemaster/routemaster.dart';
 export 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+export 'package:holedo/layouts/cards/holedo_cards.dart';
+
+export 'package:holedo/layouts/pages/home_page.dart';
+export 'package:holedo/layouts/pages/recruitment_page.dart';
+
+export 'package:holedo/layouts/pages/profile_page.dart';
+export 'package:holedo/layouts/pages/category_page.dart';
+export 'package:holedo/layouts/pages/search_page.dart';
+export 'package:holedo/layouts/pages/login_page.dart';
+export 'package:holedo/layouts/pages/newsfront_page.dart';
+export 'package:holedo/layouts/pages/news_page.dart';
+
+export 'package:holedo/layouts/pages/jobsfront_page.dart';
+export 'package:holedo/layouts/pages/jobs_page.dart';
+
+import 'appbar/appbar.dart';
 
 class PageScaffold extends StatefulWidget {
   final String title;
@@ -55,6 +71,39 @@ class _PageScaffoldState extends State<PageScaffold> {
     );
   }
 
+  void showSnackBar(BuildContext context, String text) {
+    final snackBar = SnackBar(
+      content: Text(text),
+      duration: Duration(seconds: 1), //default is 4s
+    );
+    // Find the Scaffold in the widget tree and use it to show a SnackBar.
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+  }
+
+  void showPurchaseDialog(BuildContext context) {
+    showDialog(
+        context: context,
+        barrierDismissible:
+            false, // disables popup to close if tapped outside popup (need a button to close)
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text(
+              "title",
+            ),
+            content: Text("your text here"),
+            //buttons?
+            actions: <Widget>[
+              FlatButton(
+                child: Text("Close"),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                }, //closes popup
+              ),
+            ],
+          );
+        });
+  }
+
   @override
   Widget build(BuildContext context) {
     final appState = Provider.of<AppState>(context);
@@ -77,42 +126,7 @@ class _PageScaffoldState extends State<PageScaffold> {
                 ),
               )
             : null,
-        appBar: PreferredSize(
-          preferredSize: Size(double.infinity, 70),
-          child: isMobile
-              ? AppBar(
-                  automaticallyImplyLeading: isMobile,
-                  title: Padding(
-                    padding: const EdgeInsets.only(top: 10),
-                    child: Image.asset(
-                      'assets/icons/logo.png',
-                      width: 200,
-                    ),
-                  ),
-                )
-              : AppBar(
-                  automaticallyImplyLeading: isMobile,
-                  title: Padding(
-                    padding: const EdgeInsets.only(top: 10),
-                    child: Row(
-                      children: [
-                        SizedBox(
-                          height: 200,
-                          child: Image.asset(
-                            'assets/icons/logo.png',
-                            width: 200,
-                          ),
-                        ),
-                        Expanded(
-                          child: Center(
-                            child: Text(widget.title),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-        ),
+        appBar: AppBarTop(),
         body: Column(
           children: [
             Container(

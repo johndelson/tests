@@ -1,18 +1,11 @@
-import 'dart:developer' as developer;
-import 'dart:js';
-
 import 'package:flutter/material.dart';
-import 'package:holedo/includes/page_scaffold.dart';
+import 'package:holedo/layouts/page_scaffold.dart';
 import 'package:holedo/models/models.dart';
-import 'package:holedo/pages/pages.dart';
+
 import 'package:provider/provider.dart';
 import 'package:routemaster/routemaster.dart';
 
-//import 'controller/auth_controller.dart';
 import 'includes/url_strategy.dart';
-import 'models/holedoapi/article_category.dart';
-import 'models/holedoapi/data.dart';
-import 'models/holedoapi/user.dart';
 
 void main() async {
   usePathUrlStrategy();
@@ -79,9 +72,19 @@ RouteMap _buildRouteMap(BuildContext context) {
       '/news/featured': (route) => NoAnimationPage(
             child: NewsfrontListPage(mode: 'featured'),
           ),
-      '/news/:category/:id': (route) =>
-          NoAnimationPage(child: NewsPage(slug: route.pathParameters['id'])),
-      '/news/:category': (route) =>
+      '/news/all/:category': (route) =>
+          _isValidCategory(route.pathParameters['category'])
+              ? NoAnimationPage(
+                  child: NewsfrontListPage(
+                      mode: 'all',
+                      category: Get.put(HoledoDatabase())
+                          .articleCategories
+                          .firstWhere(
+                            (e) => e.slug == route.pathParameters['category'],
+                          )),
+                )
+              : NotFound(),
+      '/category/:category': (route) =>
           _isValidCategory(route.pathParameters['category'])
               ? NoAnimationPage(
                   child: CategoryPage(
@@ -92,6 +95,8 @@ RouteMap _buildRouteMap(BuildContext context) {
                   ),
                 )
               : NotFound(),
+      '/article/:category/:id': (route) =>
+          NoAnimationPage(child: NewsPage(slug: route.pathParameters['id'])),
       '/news2/:category/:id': (route) => _isValidCategory(
                   route.pathParameters['category']) &&
               _isValidBookId(route.pathParameters['id'])
@@ -99,14 +104,14 @@ RouteMap _buildRouteMap(BuildContext context) {
           : NotFound(),
       '/jobs': (route) => TabPage(
             child: JobsfrontPage(),
-            paths: ['all', 'picks'],
+            paths: ['all', 'premium'],
             pageBuilder: (child) => NoAnimationPage(child: child),
           ),
       '/jobs/all': (route) => NoAnimationPage(
             child: JobsfrontListPage(mode: 'all'),
           ),
-      '/jobs/picks': (route) => NoAnimationPage(
-            child: JobsfrontListPage(mode: 'picks'),
+      '/jobs/premium': (route) => NoAnimationPage(
+            child: JobsfrontListPage(mode: 'premium'),
           ),
       '/job/:id': (route) =>
           NoAnimationPage(child: JobsPage(slug: route.pathParameters['id'])),
