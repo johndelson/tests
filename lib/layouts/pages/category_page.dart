@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:holedo/main.dart';
 import 'package:holedo/models/holedoapi/article_category.dart';
 import 'package:holedo/models/holedoapi/article.dart';
 

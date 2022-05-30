@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:holedo/models/holedoapi/article.dart';
 import 'package:holedo/models/holedoapi/article_category.dart';
 import 'package:routemaster/routemaster.dart';
-import 'package:holedo/layouts/cards/holedo_cards.dart';
 import 'package:holedo/models/models.dart';
 
 class NewsfrontPage extends StatelessWidget {
