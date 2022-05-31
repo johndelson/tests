@@ -120,7 +120,7 @@ class User {
   Country? country;
   Company? company;
   Role? role;
-  List<dynamic>? timeline;
+//  List<dynamic>? timeline;
   String? embedSrc;
   String? fullName;
   String? expertiseString;
@@ -234,7 +234,7 @@ class User {
     this.country,
     this.company,
     this.role,
-    this.timeline,
+    // this.timeline,
     this.embedSrc,
     this.fullName,
     this.expertiseString,
@@ -393,10 +393,9 @@ class User {
         role: json['role'] == null
             ? null
             : Role.fromJson(json['role'] as Map<String, dynamic>),
-        timeline: json['timeline'] == null
-            ? null
-            : json['timeline'] as List<dynamic>?,
-        /**/
+        /* // timeline: json['timeline'] == null ? null
+      //      : json['timeline'] as List<dynamic>?,
+      */
         embedSrc: json['embed_src'] as String?,
         fullName: json['full_name'] as String?,
         expertiseString: json['expertise_string'] as String?,
@@ -513,7 +512,7 @@ class User {
         'country': country?.toJson(),
         'company': company?.toJson(),
         'role': role?.toJson(),
-        'timeline': timeline,
+        //'timeline': timeline,
         /**/
         'embed_src': embedSrc,
         'full_name': fullName,

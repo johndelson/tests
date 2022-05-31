@@ -13,7 +13,8 @@ class ProfilePage extends StatelessWidget {
     return PageScaffold(
         title: "Job Content",
         body: FutureBuilder(
-            future: controller.getProfileData(slug: slug, id: id),
+            future:
+                controller.getProfileData(context: context, slug: slug, id: id),
             builder: (context, AsyncSnapshot<User?> snapshot) {
               if (!snapshot.hasData) {
                 return Center(
@@ -27,7 +28,7 @@ class ProfilePage extends StatelessWidget {
                     child: ListTile(
                       contentPadding: const EdgeInsets.all(10),
                       title: Text(snapshot.data!.fullName.toString()),
-                      subtitle: Text(snapshot.data!.toJson().toString()),
+                      subtitle: Text(snapshot.data!.email.toString()),
                     ),
                   ),
                 );

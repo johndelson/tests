@@ -255,7 +255,11 @@ class UsersController extends GetxController {
     }
   }
 
-  Future<User> getProfileData({String? slug, String? id, String? token}) async {
+  Future<User> getProfileData(
+      {String? slug,
+      String? id,
+      String? token,
+      required BuildContext context}) async {
     try {
       isLoading(true);
       var user = new User();
@@ -264,8 +268,11 @@ class UsersController extends GetxController {
         print('natch: ${slug} token: ${model.token}');
         token = model.token;
       }
-      var response = await _api.GET(
-          target: '/users/get', data: {'id': id, 'slug': slug, 'token': token});
+      var params = {'id': id, 'slug': slug, 'token': token};
+      params.removeWhere((k, v) => v == null);
+
+      var response = await _api.GET(target: '/users/get/', data: params);
+      print('log: ${response.data}');
       user = response.data?.user as User;
       print('log: ${user.firstName}');
 
@@ -345,45 +352,9 @@ class NewsController extends GetxController {
     }
   }
 
-  Future<List<Article>> fetchArticlesType(
-      {String? category, String? type, int? limit, int? page}) async {
-    try {
-      isLoading(true);
-      var params = {
-        'category': category,
-        'type': type,
-        'limit': limit == null ? this.limit : limit,
-        'page': page == null ? this.page : page
-      };
-      print('type: ${type} cat: ${category}');
-      var response = await _api.GET(target: '/articles/index', data: params);
-
-      if (response.success == true) {
-        var list = response.data!.articles as List<Article>;
-        dataList.value = list;
-
-        //print('log: ${list}');
-        for (final data in list) {
-          //articleList.add(data);
-          // print('c ${data.id} ${(articleList.any((e) => e.id == data.id))}');
-
-          if ((articleList.any((e) => e.id == data.id)) != true) {
-            // print('adding ${data.id}');
-            articleList.add(data);
-          }
-        }
-        print(
-            'localcache: count: ${articleList.length} ${articleList.toString()}');
-      }
-      return dataList.value as List<Article>;
-    } finally {
-      isLoading(false);
-      return dataList.value as List<Article>;
-    }
-  }
-
   Future<List<Article>> fetchArticles(
       {String? category,
+      String? keyword,
       String? type,
       int? limit,
       int? page,
@@ -393,9 +364,12 @@ class NewsController extends GetxController {
       var params = {
         'category': category,
         'type': type,
+        'keyword': keyword,
         'limit': limit == null ? this.limit : limit,
         'page': page == null ? this.page : page
       };
+      params.removeWhere((k, v) => v == null);
+
       print('context: ${context} type: ${type} cat: ${category}');
       var response = await _api.GET(target: '/articles/index', data: params);
 
@@ -448,19 +422,39 @@ class JobsController extends GetxController {
   }
 
   Future<List<Job>> fetchJobs(
-      {String? category, String? type, int? limit, int? page}) async {
+      {String? category,
+      String? keyword,
+      String? type,
+      int? limit,
+      int? page,
+      required BuildContext context}) async {
     try {
       isLoading(true);
-      print('wtf ::... ${type}');
-      var response = await _api.getJobsList(
-          category: category,
-          type: type,
-          limit: limit == null ? this.limit : limit,
-          page: page == null ? this.page : page);
 
-      dataList.value = response;
+      var params = {
+        'category': category,
+        'type': type,
+        'keyword': keyword,
+        'limit': limit == null ? this.limit : limit,
+        'page': page == null ? this.page : page
+      };
+      params.removeWhere((k, v) => v == null);
 
-      return response;
+      print('context: ${context} type: ${type} cat: ${category}');
+      var response = await _api.GET(target: '/jobs/index', data: params);
+
+      if (response.success == true) {
+        var list = response.data!.jobs as List<Job>;
+        dataList.value = list;
+        for (final data in list) {
+          if ((jobList.any((e) => e.id == data.id)) != true) {
+            // print('adding ${data.id}');
+            jobList.add(data);
+          }
+        }
+        print('localcache: count: ${jobList.length}');
+      }
+      return dataList.value as List<Job>;
     } finally {
       isLoading(false);
     }

@@ -22,41 +22,52 @@ class NewsPage extends StatelessWidget {
                 );
               } else
                 return ListView.builder(
-                  itemCount: 1,
-                  itemBuilder: (BuildContext context, index) => Card(
-                    margin: const EdgeInsets.all(10),
-                    child: Wrap(children: [
-                      Container(
-                        decoration: BoxDecoration(
-                          image: DecorationImage(
-                            image: NetworkImage(
-                                snapshot.data!.bannerImage.toString()),
-                            fit: BoxFit.cover,
-                            repeat: ImageRepeat.noRepeat,
+                    itemCount: 1,
+                    itemBuilder: (BuildContext context, index) => Card(
+                          margin: const EdgeInsets.all(10),
+                          child: Padding(
+                            padding: const EdgeInsets.all(20),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.stretch,
+                              children: [
+                                Container(
+                                  decoration: BoxDecoration(
+                                    image: DecorationImage(
+                                      image: NetworkImage(snapshot
+                                          .data!.bannerImage
+                                          .toString()),
+                                      fit: BoxFit.cover,
+                                      repeat: ImageRepeat.noRepeat,
+                                    ),
+                                    color: Colors.white,
+                                    borderRadius: BorderRadius.circular(0),
+                                  ),
+                                  height: 300,
+                                  child: snapshot.data!.bannerImage != null
+                                      ? null
+                                      : Icon(
+                                          CupertinoIcons.news,
+                                          size: 55,
+                                          color: Colors.grey,
+                                        ),
+                                ),
+                                SizedBox(height: 20),
+                                Text(
+                                  snapshot.data!.title.toString(),
+                                  style: TextStyle(
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                                SizedBox(height: 20),
+                                SingleChildScrollView(
+                                    child: Html(
+                                  data: snapshot.data!.content,
+                                )),
+                              ],
+                            ),
                           ),
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(0),
-                        ),
-                        height: 300,
-                        child: snapshot.data!.bannerImage != null
-                            ? null
-                            : Icon(
-                                CupertinoIcons.news,
-                                size: 55,
-                                color: Colors.grey,
-                              ),
-                      ),
-                      SizedBox(width: 20),
-                      Text(snapshot.data!.title.toString(),
-                          style: TextStyle(fontSize: 18)),
-                      SizedBox(width: 20),
-                      Expanded(
-                          child: Html(
-                        data: snapshot.data!.content,
-                      ))
-                    ]),
-                  ),
-                );
+                        ));
             }));
   }
 }

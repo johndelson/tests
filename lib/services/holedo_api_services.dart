@@ -74,8 +74,9 @@ class ApiServices {
         model = Holedoapi.fromJson(response.data as Map<String, dynamic>);
       }
       return model;
-    } on dio.DioError catch (e) {
-      throw Exception(e);
+    } catch (e) {
+      print('e: ${e.toString()}');
+      throw Exception();
     }
   }
 

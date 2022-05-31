@@ -59,7 +59,8 @@ class JobsfrontListPage extends StatelessWidget {
 
     return Scaffold(
         body: FutureBuilder(
-            future: controller.fetchJobs(type: mode),
+            future: controller.fetchJobs(
+                context: context, type: mode == 'all' ? null : mode),
             builder: (context, AsyncSnapshot<List<Job>> snapshot) {
               if (!snapshot.hasData) {
                 return Center(

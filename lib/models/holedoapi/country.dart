@@ -20,8 +20,8 @@ class Country {
   String? tld;
   String? region;
   String? subRegion;
-  int? latitude;
-  int? longitude;
+  double? latitude;
+  double? longitude;
   String? cca2;
   String? ccn3;
   String? cca3;
@@ -79,8 +79,8 @@ class Country {
         tld: json['tld'] as String?,
         region: json['region'] as String?,
         subRegion: json['sub_region'] as String?,
-        latitude: json['latitude'] as int?,
-        longitude: json['longitude'] as int?,
+        latitude: json['latitude'] as double?,
+        longitude: json['longitude'] as double?,
         cca2: json['cca2'] as String?,
         ccn3: json['ccn3'] as String?,
         cca3: json['cca3'] as String?,

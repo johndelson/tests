@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:holedo/models/holedoapi/article.dart';
+import 'package:holedo/models/holedoapi/job.dart';
 import 'package:routemaster/routemaster.dart';
 import 'package:collection/collection.dart';
 
@@ -53,7 +55,10 @@ class SearchPage extends StatelessWidget {
     final articleCategory = Get.put(HoledoDatabase()).articleCategories;
     final categoryMatches = articleCategory.where((category) =>
         category.title!.toLowerCase().contains(query.toLowerCase()));
-
+    final newsSearch = Get.put(HoledoDatabase().news);
+    newsSearch.fetchArticles(context: context, keyword: query.toLowerCase());
+    final jobsSearch = Get.put(HoledoDatabase().jobs);
+    jobsSearch.fetchJobs(context: context, keyword: query.toLowerCase());
     return PageScaffold(
       title: 'Search Results',
       searchQuery: query,
@@ -104,23 +109,67 @@ class SearchPage extends StatelessWidget {
             ]
           ],
           Text(
-            'News',
+            'News Articles',
             style: Theme.of(context).textTheme.headline5,
           ),
-          if (books.isEmpty)
-            Padding(
-              padding: const EdgeInsets.all(30),
-              child: Text('No results found'),
-            )
-          else
-            for (final book in books)
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20),
-                child: BookCard(
-                  book: book,
-                  showReleaseDate: true,
-                ),
-              )
+          SizedBox(
+            height: 350,
+            child: Obx(() {
+              if (newsSearch.isLoading.value) {
+                return Center(child: CircularProgressIndicator());
+              } else {
+                if (newsSearch.dataList.isEmpty)
+                  return Padding(
+                    padding: const EdgeInsets.all(30),
+                    child: Text('No results found'),
+                  );
+                else
+                  return AlignedGridView.count(
+                    crossAxisCount: 2,
+                    itemCount: newsSearch.dataList.length,
+                    crossAxisSpacing: 16,
+                    mainAxisSpacing: 16,
+                    itemBuilder: (context, index) {
+                      return NewsCard(
+                          article: newsSearch.dataList[index] as Article);
+                    },
+
+                    //TileBuilder: (index) => StaggeredTile.fit(1),
+                  );
+              }
+            }),
+          ),
+          SizedBox(height: 20),
+          Text(
+            'Jobs',
+            style: Theme.of(context).textTheme.headline5,
+          ),
+          SizedBox(
+            height: 350,
+            child: Obx(() {
+              if (jobsSearch.isLoading.value) {
+                return Center(child: CircularProgressIndicator());
+              } else {
+                if (jobsSearch.dataList.isEmpty)
+                  return Padding(
+                    padding: const EdgeInsets.all(30),
+                    child: Text('No results found'),
+                  );
+                else
+                  return AlignedGridView.count(
+                    crossAxisCount: 2,
+                    itemCount: jobsSearch.dataList.length,
+                    crossAxisSpacing: 16,
+                    mainAxisSpacing: 16,
+                    itemBuilder: (context, index) {
+                      return JobsCard(data: jobsSearch.dataList[index] as Job);
+                    },
+
+                    //TileBuilder: (index) => StaggeredTile.fit(1),
+                  );
+              }
+            }),
+          ),
         ],
       ),
     );
