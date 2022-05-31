@@ -202,34 +202,6 @@ class ApiServices {
     //}
   }
 
-  Future<List<User>> getUsersList(
-      {String? category,
-      String? type,
-      required int limit,
-      required int page}) async {
-    var url = "${baseUrl}" +
-        "/users/index?keyword=john&limit=${limit}&page=${page}&category=${category}&type=${type}";
-    var token = 'Bearer ${Get.put(HoledoDatabase()).token}';
-    dio.Response response = await _dio.get(url,
-        options: dio.Options(
-          headers: {
-            'Content-Type': 'application/json; charset=UTF-8',
-            'Accept': 'application/json',
-          },
-        ));
-    print('URL: ${url}');
-    // print('token ${token} : ${response.data['data']['users']}');
-    if (response.statusCode == 200 && response.data['success'] == true) {
-      var data = response.data as Map<String, dynamic>;
-
-      var list = getUsers(data['data']['users'] as Iterable<dynamic>);
-
-      return list;
-    } else {
-      throw Exception();
-    }
-  }
-
   Future<User> getUserData({
     String? slug,
     String? id,
