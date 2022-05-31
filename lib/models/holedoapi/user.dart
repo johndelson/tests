@@ -1,27 +1,28 @@
+import 'dart:convert';
+
+import 'achievement.dart';
 import 'company.dart';
-import 'connectee.dart';
-import 'connector.dart';
+import 'company_role.dart';
 import 'country.dart';
 import 'current_membership_grade.dart';
-import 'expertise.dart';
-import 'given_reference.dart';
-import 'job_application.dart';
-import 'language.dart';
+import 'education.dart';
+import 'experience.dart';
 import 'next_membership_grade.dart';
-import 'pending_connection.dart';
-import 'request_reference.dart';
-import 'requested_connection.dart';
 import 'role.dart';
-import 'user_languages_proficiency.dart';
+import 'timeline.dart';
 import 'user_tag.dart';
 import 'user_title_type.dart';
 
+List<User> getUsers(Iterable<dynamic> data) =>
+    List<User>.from(data.map((x) => User.fromJson(x as Map<String, dynamic>)));
+List<Timeline> getTimeline(Iterable<dynamic> data) => List<Timeline>.from(
+    data.map((x) => Timeline.fromJson(x as Map<String, dynamic>)));
+
 class User {
-  String? className;
   int? id;
   int? companyId;
   int? roleId;
-  dynamic companyRoleId;
+  int? companyRoleId;
   int? countryId;
   int? userTitleTypesId;
   dynamic currencyId;
@@ -37,7 +38,7 @@ class User {
   int? emailVisibility;
   dynamic dateOfBirth;
   String? avatar;
-  dynamic banner;
+  String? banner;
   String? professionalTitle;
   String? area;
   String? contactNumber;
@@ -45,30 +46,30 @@ class User {
   int? contactableWhatsapp;
   int? contactableSms;
   dynamic website;
-  dynamic websiteVisibility;
+  bool? websiteVisibility;
   dynamic skype;
   bool? skypeVisibility;
-  dynamic facebook;
-  dynamic facebookVisibility;
-  dynamic twitter;
-  dynamic twitterVisibility;
-  dynamic google;
-  dynamic googleVisibility;
-  dynamic xing;
-  dynamic xingVisibility;
-  dynamic linkedin;
-  dynamic linkedinVisibility;
+  String? facebook;
+  bool? facebookVisibility;
+  String? twitter;
+  bool? twitterVisibility;
+  String? google;
+  bool? googleVisibility;
+  String? xing;
+  bool? xingVisibility;
+  String? linkedin;
+  bool? linkedinVisibility;
   dynamic proxycurlWhodis;
-  dynamic allowRecruiterAccess;
+  bool? allowRecruiterAccess;
   dynamic address1;
   dynamic address2;
   dynamic addressPostalCode;
   dynamic addressArea;
   dynamic workPermits;
-  dynamic relocate;
+  bool? relocate;
   dynamic nextJob;
   dynamic salaryExpectation;
-  dynamic profileSummary;
+  String? profileSummary;
   bool? active;
   String? profileVideoTitle;
   String? profileVideoDescription;
@@ -77,52 +78,54 @@ class User {
   int? membershipGradeNeededLeaderPoints;
   int? membershipGradePercentAccomplished;
   bool? membershipGradeEligibility;
-  String? matrixUid;
-  String? matrixRoomSync;
+  dynamic matrixUid;
+  dynamic matrixRoomSync;
   bool? allowApiLogin;
   List<dynamic>? savedSearches;
   NextMembershipGrade? nextMembershipGrade;
   CurrentMembershipGrade? currentMembershipGrade;
-  List<Language>? languages;
+  List<dynamic>? languages;
   List<dynamic>? badges;
   List<dynamic>? awards;
   List<dynamic>? recommendees;
   List<dynamic>? recommenders;
-  List<RequestedConnection>? requestedConnections;
-  List<PendingConnection>? pendingConnections;
+  List<dynamic>? requestedConnections;
+  List<dynamic>? pendingConnections;
   List<dynamic>? approvedConnections;
-  List<Connectee>? connectees;
-  List<Connector>? connectors;
+  List<dynamic>? connectees;
+  List<dynamic>? connectors;
   List<dynamic>? userNationalities;
   List<dynamic>? userDesiredLocations;
-  List<RequestReference>? requestReferences;
+  List<dynamic>? requestReferences;
   List<dynamic>? requestedReferences;
-  List<GivenReference>? givenReferences;
+  List<dynamic>? givenReferences;
   List<dynamic>? receivedReferences;
   List<dynamic>? testimonials;
   List<dynamic>? recommendations;
   List<dynamic>? posts;
   List<dynamic>? likes;
-  List<JobApplication>? jobApplications;
+  List<dynamic>? jobApplications;
   List<dynamic>? invites;
-  Country? country;
-  Company? company;
-  Role? role;
   dynamic gender;
   dynamic maritalStatus;
   List<UserTag>? userTags;
-  List<dynamic>? achievements;
-  List<Expertise>? expertise;
+  List<Achievement>? achievements;
+  List<dynamic>? expertise;
   List<dynamic>? comments;
+  List<dynamic>? articles;
   dynamic contactNumberType;
   dynamic currency;
   UserTitleType? userTitleType;
-  dynamic companyRole;
-  List<dynamic>? experiences;
+  CompanyRole? companyRole;
+  List<Experience>? experiences;
   dynamic currentExperience;
-  List<dynamic>? educations;
-  List<UserLanguagesProficiency>? userLanguagesProficiencies;
-  List<dynamic>? timeline;
+  List<Education>? educations;
+  List<dynamic>? userLanguagesProficiencies;
+  Country? country;
+  Company? company;
+  Role? role;
+  //List<Timeline>? timeline;
+//  List<dynamic>? timeline;
   String? embedSrc;
   String? fullName;
   String? expertiseString;
@@ -131,7 +134,6 @@ class User {
   String? holedoUrl;
 
   User({
-    this.className,
     this.id,
     this.companyId,
     this.roleId,
@@ -219,15 +221,13 @@ class User {
     this.likes,
     this.jobApplications,
     this.invites,
-    this.country,
-    this.company,
-    this.role,
     this.gender,
     this.maritalStatus,
     this.userTags,
     this.achievements,
     this.expertise,
     this.comments,
+    this.articles,
     this.contactNumberType,
     this.currency,
     this.userTitleType,
@@ -236,7 +236,10 @@ class User {
     this.currentExperience,
     this.educations,
     this.userLanguagesProficiencies,
-    this.timeline,
+    this.country,
+    this.company,
+    this.role,
+    //this.timeline,
     this.embedSrc,
     this.fullName,
     this.expertiseString,
@@ -246,11 +249,10 @@ class User {
   });
 
   factory User.fromJson(Map<String, dynamic> json) => User(
-        className: json['__className'] as String?,
         id: json['id'] as int?,
         companyId: json['company_id'] as int?,
         roleId: json['role_id'] as int?,
-        companyRoleId: json['company_role_id'] as dynamic,
+        companyRoleId: json['company_role_id'] as int?,
         countryId: json['country_id'] as int?,
         userTitleTypesId: json['user_title_types_id'] as int?,
         currencyId: json['currency_id'] as dynamic,
@@ -266,7 +268,7 @@ class User {
         emailVisibility: json['email_visibility'] as int?,
         dateOfBirth: json['date_of_birth'] as dynamic,
         avatar: json['avatar'] as String?,
-        banner: json['banner'] as dynamic,
+        banner: json['banner'] as String?,
         professionalTitle: json['professional_title'] as String?,
         area: json['area'] as String?,
         contactNumber: json['contact_number'] as String?,
@@ -274,30 +276,30 @@ class User {
         contactableWhatsapp: json['contactable_whatsapp'] as int?,
         contactableSms: json['contactable_sms'] as int?,
         website: json['website'] as dynamic,
-        websiteVisibility: json['website_visibility'] as dynamic,
+        websiteVisibility: json['website_visibility'] as bool?,
         skype: json['skype'] as dynamic,
         skypeVisibility: json['skype_visibility'] as bool?,
-        facebook: json['facebook'] as dynamic,
-        facebookVisibility: json['facebook_visibility'] as dynamic,
-        twitter: json['twitter'] as dynamic,
-        twitterVisibility: json['twitter_visibility'] as dynamic,
-        google: json['google'] as dynamic,
-        googleVisibility: json['google_visibility'] as dynamic,
-        xing: json['xing'] as dynamic,
-        xingVisibility: json['xing_visibility'] as dynamic,
-        linkedin: json['linkedin'] as dynamic,
-        linkedinVisibility: json['linkedin_visibility'] as dynamic,
+        facebook: json['facebook'] as String?,
+        facebookVisibility: json['facebook_visibility'] as bool?,
+        twitter: json['twitter'] as String?,
+        twitterVisibility: json['twitter_visibility'] as bool?,
+        google: json['google'] as String?,
+        googleVisibility: json['google_visibility'] as bool?,
+        xing: json['xing'] as String?,
+        xingVisibility: json['xing_visibility'] as bool?,
+        linkedin: json['linkedin'] as String?,
+        linkedinVisibility: json['linkedin_visibility'] as bool?,
         proxycurlWhodis: json['proxycurl_whodis'] as dynamic,
-        allowRecruiterAccess: json['allow_recruiter_access'] as dynamic,
+        allowRecruiterAccess: json['allow_recruiter_access'] as bool?,
         address1: json['address_1'] as dynamic,
         address2: json['address_2'] as dynamic,
         addressPostalCode: json['address_postal_code'] as dynamic,
         addressArea: json['address_area'] as dynamic,
         workPermits: json['work_permits'] as dynamic,
-        relocate: json['relocate'] as dynamic,
+        relocate: json['relocate'] as bool?,
         nextJob: json['next_job'] as dynamic,
         salaryExpectation: json['salary_expectation'] as dynamic,
-        profileSummary: json['profile_summary'] as dynamic,
+        profileSummary: json['profile_summary'] as String?,
         active: json['active'] as bool?,
         profileVideoTitle: json['profile_video_title'] as String?,
         profileVideoDescription: json['profile_video_description'] as String?,
@@ -310,8 +312,8 @@ class User {
             json['membership_grade_percent_accomplished'] as int?,
         membershipGradeEligibility:
             json['membership_grade_eligibility'] as bool?,
-        matrixUid: json['matrix_uid'] as String?,
-        matrixRoomSync: json['matrix_room_sync'] as String?,
+        matrixUid: json['matrix_uid'] as dynamic,
+        matrixRoomSync: json['matrix_room_sync'] as dynamic,
         allowApiLogin: json['allow_api_login'] as bool?,
         savedSearches: json['saved_searches'] as List<dynamic>?,
         nextMembershipGrade: json['next_membership_grade'] == null
@@ -322,45 +324,71 @@ class User {
             ? null
             : CurrentMembershipGrade.fromJson(
                 json['current_membership_grade'] as Map<String, dynamic>),
-        languages: (json['languages'] as List<dynamic>?)
-            ?.map((e) => Language.fromJson(e as Map<String, dynamic>))
-            .toList(),
+        languages: json['languages'] as List<dynamic>?,
         badges: json['badges'] as List<dynamic>?,
         awards: json['awards'] as List<dynamic>?,
         recommendees: json['recommendees'] as List<dynamic>?,
         recommenders: json['recommenders'] as List<dynamic>?,
-        requestedConnections: (json['requested_connections'] as List<dynamic>?)
-            ?.map(
-                (e) => RequestedConnection.fromJson(e as Map<String, dynamic>))
-            .toList(),
-        pendingConnections: (json['pending_connections'] as List<dynamic>?)
-            ?.map((e) => PendingConnection.fromJson(e as Map<String, dynamic>))
-            .toList(),
+        requestedConnections: json['requested_connections'] as List<dynamic>?,
+        pendingConnections: json['pending_connections'] as List<dynamic>?,
         approvedConnections: json['approved_connections'] as List<dynamic>?,
-        connectees: (json['connectees'] as List<dynamic>?)
-            ?.map((e) => Connectee.fromJson(e as Map<String, dynamic>))
-            .toList(),
-        connectors: (json['connectors'] as List<dynamic>?)
-            ?.map((e) => Connector.fromJson(e as Map<String, dynamic>))
-            .toList(),
+        connectees: json['connectees'] as List<dynamic>?,
+        connectors: json['connectors'] as List<dynamic>?,
         userNationalities: json['user_nationalities'] as List<dynamic>?,
         userDesiredLocations: json['user_desired_locations'] as List<dynamic>?,
-        requestReferences: (json['request_references'] as List<dynamic>?)
-            ?.map((e) => RequestReference.fromJson(e as Map<String, dynamic>))
-            .toList(),
+        requestReferences: json['request_references'] as List<dynamic>?,
         requestedReferences: json['requested_references'] as List<dynamic>?,
-        givenReferences: (json['given_references'] as List<dynamic>?)
-            ?.map((e) => GivenReference.fromJson(e as Map<String, dynamic>))
-            .toList(),
+        givenReferences: json['given_references'] as List<dynamic>?,
         receivedReferences: json['received_references'] as List<dynamic>?,
         testimonials: json['testimonials'] as List<dynamic>?,
         recommendations: json['recommendations'] as List<dynamic>?,
         posts: json['posts'] as List<dynamic>?,
         likes: json['likes'] as List<dynamic>?,
-        jobApplications: (json['job_applications'] as List<dynamic>?)
-            ?.map((e) => JobApplication.fromJson(e as Map<String, dynamic>))
-            .toList(),
+        jobApplications: json['job_applications'] as List<dynamic>?,
         invites: json['invites'] as List<dynamic>?,
+        gender: json['gender'] as dynamic,
+        maritalStatus: json['marital_status'] as dynamic,
+        userTags: json['user_tags'] == null
+            ? null
+            : (json['user_tags'] as List<dynamic>?)
+                ?.map((e) => UserTag.fromJson(e as Map<String, dynamic>))
+                .toList(),
+        achievements: (json['achievements'] as List<dynamic>?)
+            ?.map((e) => Achievement.fromJson(e as Map<String, dynamic>))
+            .toList(),
+        expertise: json['expertise'] == null
+            ? null
+            : json['expertise'] as List<dynamic>?,
+        comments: json['comments'] == null
+            ? null
+            : json['comments'] as List<dynamic>?,
+        articles: json['articles'] == null
+            ? null
+            : json['articles'] as List<dynamic>?,
+        contactNumberType: json['contact_number_type'] as dynamic,
+        currency: json['currency'] as dynamic,
+        userTitleType: json['user_title_type'] == null
+            ? null
+            : UserTitleType.fromJson(
+                json['user_title_type'] as Map<String, dynamic>),
+        companyRole: json['company_role'] == null
+            ? null
+            : CompanyRole.fromJson(
+                json['company_role'] as Map<String, dynamic>),
+        experiences: json['experiences'] == null
+            ? null
+            : (json['experiences'] as List<dynamic>?)
+                ?.map((e) => Experience.fromJson(e as Map<String, dynamic>))
+                .toList(),
+        currentExperience: json['current_experience'] as dynamic,
+        educations: json['educations'] == null
+            ? null
+            : (json['educations'] as List<dynamic>?)
+                ?.map((e) => Education.fromJson(e as Map<String, dynamic>))
+                .toList(),
+        userLanguagesProficiencies: json['user_languages_proficiencies'] == null
+            ? null
+            : json['user_languages_proficiencies'] as List<dynamic>?,
         country: json['country'] == null
             ? null
             : Country.fromJson(json['country'] as Map<String, dynamic>),
@@ -370,32 +398,11 @@ class User {
         role: json['role'] == null
             ? null
             : Role.fromJson(json['role'] as Map<String, dynamic>),
-        gender: json['gender'] as dynamic,
-        maritalStatus: json['marital_status'] as dynamic,
-        userTags: (json['user_tags'] as List<dynamic>?)
-            ?.map((e) => UserTag.fromJson(e as Map<String, dynamic>))
-            .toList(),
-        achievements: json['achievements'] as List<dynamic>?,
-        expertise: (json['expertise'] as List<dynamic>?)
-            ?.map((e) => Expertise.fromJson(e as Map<String, dynamic>))
-            .toList(),
-        comments: json['comments'] as List<dynamic>?,
-        contactNumberType: json['contact_number_type'] as dynamic,
-        currency: json['currency'] as dynamic,
-        userTitleType: json['user_title_type'] == null
+        /*timeline: json['timeline'] == null &&
+                json['timeline'].runtimeType == '_JsonMap'
             ? null
-            : UserTitleType.fromJson(
-                json['user_title_type'] as Map<String, dynamic>),
-        companyRole: json['company_role'] as dynamic,
-        experiences: json['experiences'] as List<dynamic>?,
-        currentExperience: json['current_experience'] as dynamic,
-        educations: json['educations'] as List<dynamic>?,
-        userLanguagesProficiencies: (json['user_languages_proficiencies']
-                as List<dynamic>?)
-            ?.map((e) =>
-                UserLanguagesProficiency.fromJson(e as Map<String, dynamic>))
-            .toList(),
-        timeline: json['timeline'] as List<dynamic>?,
+            : getTimeline(Map.from(json!['timeline']) as Iterable),*/
+        //timeline: null,
         embedSrc: json['embed_src'] as String?,
         fullName: json['full_name'] as String?,
         expertiseString: json['expertise_string'] as String?,
@@ -405,7 +412,6 @@ class User {
       );
 
   Map<String, dynamic> toJson() => {
-        '__className': className,
         'id': id,
         'company_id': companyId,
         'role_id': roleId,
@@ -473,50 +479,47 @@ class User {
         'saved_searches': savedSearches,
         'next_membership_grade': nextMembershipGrade?.toJson(),
         'current_membership_grade': currentMembershipGrade?.toJson(),
-        'languages': languages?.map((e) => e.toJson()).toList(),
+        'languages': languages,
         'badges': badges,
         'awards': awards,
         'recommendees': recommendees,
         'recommenders': recommenders,
-        'requested_connections':
-            requestedConnections?.map((e) => e.toJson()).toList(),
-        'pending_connections':
-            pendingConnections?.map((e) => e.toJson()).toList(),
+        'requested_connections': requestedConnections,
+        'pending_connections': pendingConnections,
         'approved_connections': approvedConnections,
-        'connectees': connectees?.map((e) => e.toJson()).toList(),
-        'connectors': connectors?.map((e) => e.toJson()).toList(),
+        'connectees': connectees,
+        'connectors': connectors,
         'user_nationalities': userNationalities,
         'user_desired_locations': userDesiredLocations,
-        'request_references':
-            requestReferences?.map((e) => e.toJson()).toList(),
+        'request_references': requestReferences,
         'requested_references': requestedReferences,
-        'given_references': givenReferences?.map((e) => e.toJson()).toList(),
+        'given_references': givenReferences,
         'received_references': receivedReferences,
         'testimonials': testimonials,
         'recommendations': recommendations,
         'posts': posts,
         'likes': likes,
-        'job_applications': jobApplications?.map((e) => e.toJson()).toList(),
+        'job_applications': jobApplications,
         'invites': invites,
-        'country': country?.toJson(),
-        'company': company?.toJson(),
-        'role': role?.toJson(),
         'gender': gender,
         'marital_status': maritalStatus,
         'user_tags': userTags?.map((e) => e.toJson()).toList(),
-        'achievements': achievements,
-        'expertise': expertise?.map((e) => e.toJson()).toList(),
+        'achievements': achievements?.map((e) => e.toJson()).toList(),
+        'expertise': expertise,
         'comments': comments,
+        'articles': articles,
         'contact_number_type': contactNumberType,
         'currency': currency,
         'user_title_type': userTitleType?.toJson(),
-        'company_role': companyRole,
-        'experiences': experiences,
+        'company_role': companyRole?.toJson(),
+        'experiences': experiences?.map((e) => e.toJson()).toList(),
         'current_experience': currentExperience,
-        'educations': educations,
-        'user_languages_proficiencies':
-            userLanguagesProficiencies?.map((e) => e.toJson()).toList(),
-        'timeline': timeline,
+        'educations': educations?.map((e) => e.toJson()).toList(),
+        'user_languages_proficiencies': userLanguagesProficiencies,
+        'country': country?.toJson(),
+        'company': company?.toJson(),
+        'role': role?.toJson(),
+        //"timeline": timeline,
         'embed_src': embedSrc,
         'full_name': fullName,
         'expertise_string': expertiseString,
