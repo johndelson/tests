@@ -12,7 +12,7 @@ class RecruitmentPage extends StatelessWidget {
     return PageScaffold(
         title: "User List Home",
         body: FutureBuilder(
-            future: controller.fetchUsers(),
+            future: controller.fetchUsers(context: context),
             builder: (context, AsyncSnapshot<List<User>?> snapshot) {
               if (!snapshot.hasData) {
                 return Center(

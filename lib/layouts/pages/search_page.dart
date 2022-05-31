@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:holedo/models/holedoapi/article.dart';
 import 'package:holedo/models/holedoapi/job.dart';
+import 'package:holedo/models/holedoapi/user.dart';
 import 'package:routemaster/routemaster.dart';
-import 'package:collection/collection.dart';
 
 import 'package:holedo/models/models.dart';
 import 'package:holedo/layouts/page_scaffold.dart';
@@ -41,24 +41,19 @@ class SearchPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final books = HoledoDatabase()
-        .books
-        .where(
-          (book) => book.title.toLowerCase().contains(query.toLowerCase()),
-        )
-        .toList()
-        .sorted(
-          (a, b) => sortOrder == SortOrder.name
-              ? a.title.compareTo(b.title)
-              : a.releaseDate.compareTo(b.releaseDate),
-        );
     final articleCategory = Get.put(HoledoDatabase()).articleCategories;
     final categoryMatches = articleCategory.where((category) =>
         category.title!.toLowerCase().contains(query.toLowerCase()));
+
     final newsSearch = Get.put(HoledoDatabase().news);
     newsSearch.fetchArticles(context: context, keyword: query.toLowerCase());
+
     final jobsSearch = Get.put(HoledoDatabase().jobs);
     jobsSearch.fetchJobs(context: context, keyword: query.toLowerCase());
+
+    final usersSearch = Get.put(HoledoDatabase().users);
+    usersSearch.fetchUsers(context: context, keyword: query.toLowerCase());
+
     return PageScaffold(
       title: 'Search Results',
       searchQuery: query,
@@ -163,6 +158,38 @@ class SearchPage extends StatelessWidget {
                     mainAxisSpacing: 16,
                     itemBuilder: (context, index) {
                       return JobsCard(data: jobsSearch.dataList[index] as Job);
+                    },
+
+                    //TileBuilder: (index) => StaggeredTile.fit(1),
+                  );
+              }
+            }),
+          ),
+          SizedBox(height: 20),
+          Text(
+            'Users',
+            style: Theme.of(context).textTheme.headline5,
+          ),
+          SizedBox(
+            height: 350,
+            child: Obx(() {
+              if (usersSearch.isLoading.value) {
+                return Center(child: CircularProgressIndicator());
+              } else {
+                if (usersSearch.userList.isEmpty)
+                  return Padding(
+                    padding: const EdgeInsets.all(30),
+                    child: Text('No results found'),
+                  );
+                else
+                  return AlignedGridView.count(
+                    crossAxisCount: 2,
+                    itemCount: usersSearch.userList.length,
+                    crossAxisSpacing: 16,
+                    mainAxisSpacing: 16,
+                    itemBuilder: (context, index) {
+                      return UserCard(
+                          data: usersSearch.userList[index] as User);
                     },
 
                     //TileBuilder: (index) => StaggeredTile.fit(1),

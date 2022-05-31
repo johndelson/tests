@@ -241,7 +241,7 @@ class UserCard extends StatelessWidget {
                   data.fullName as String,
                   style: TextStyle(fontSize: 16),
                 ),
-                Text('${data.avatarCdn}'),
+                Text('${data.email}'),
                 Text(data.dateOfBirth != null
                     ? _formatter.format(data.dateOfBirth as DateTime)
                     : '')
