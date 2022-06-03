@@ -185,6 +185,13 @@ class _PageScaffoldState extends State<PageScaffold> {
                       ],
                     ),
                   ),
+                  Expanded(
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: _buildNavBarChildren(inDrawer: false),
+                    ),
+                  ),
                   SizedBox(width: 20),
                   if (appState.isLoggedIn)
                     Text(
@@ -222,7 +229,7 @@ class _PageScaffoldState extends State<PageScaffold> {
             Expanded(
               child: Row(
                 children: [
-                  if (!isMobile)
+                  /*if (!isMobile)
                     Container(
                       width: 200,
                       color: Color(0xFF232f3e),
@@ -230,7 +237,7 @@ class _PageScaffoldState extends State<PageScaffold> {
                         crossAxisAlignment: CrossAxisAlignment.stretch,
                         children: _buildNavBarChildren(inDrawer: false),
                       ),
-                    ),
+                    ),*/
                   Expanded(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
