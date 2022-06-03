@@ -7,9 +7,9 @@ class ProfileEdit {
   static Padding buildProfileEdit({
     required double width,
     required double height,
-    required popUpEdit,
+    required VoidCallback  popUpEdit,
     required bool showAddButton,
-    popUpAdd,
+    VoidCallback?  popUpAdd,
   }) {
     return Padding(
       padding: const EdgeInsets.all(8.0),
@@ -22,10 +22,10 @@ class ProfileEdit {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               CircleAvatar(
-                backgroundColor: Colors.blue,
+                backgroundColor: ColorPicker.kBlueLight1,
                 radius: 30,
                 child: IconButton(
-                  onPressed: popUpEdit,
+                  onPressed: popUpEdit ,
                   icon: const Icon(
                     Icons.edit,
                     color: Colors.white,
@@ -35,7 +35,7 @@ class ProfileEdit {
               SizedBox(width: 6),
               showAddButton
                   ? CircleAvatar(
-                      backgroundColor: Colors.blue,
+                      backgroundColor: ColorPicker.kBlueLight1,
                       radius: 30,
                       child: IconButton(
                         onPressed: popUpAdd,
@@ -99,6 +99,7 @@ class _EditButtonState extends State<EditButton> {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
+        print('tap it');
         widget.onChanged(widget.isEditable);
 
         widget.callBackHeader(

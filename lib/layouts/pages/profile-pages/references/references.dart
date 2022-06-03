@@ -40,8 +40,8 @@ class _ReferencesState extends State<References> {
         Padding(
           padding: const EdgeInsets.all(8.0),
           child: Container(
-            key: referenceCardKey,
-            width: SS.sW(context) * .30,
+            key: referenceCardKey as Key,
+            width: SS.sW(context) * .30 as double,
             padding: const EdgeInsets.all(6),
             color: Colors.white,
             child: Column(
@@ -107,9 +107,9 @@ class _ReferencesState extends State<References> {
             ),
           ),
         ),
-        widget.isEditable
+        widget.isEditable as bool
             ? ProfileEdit.buildProfileEdit(
-                width: SS.sW(context) * .30,
+                width: SS.sW(context) * .30 as double ,
                 height: 177,
                 popUpEdit: () {
                   PopUpHeadMenu.buildReferencesCardPopUp(context);
@@ -223,7 +223,7 @@ class _ReferencesState extends State<References> {
     return Container(
       child: Padding(
         padding: EdgeInsets.symmetric(
-            horizontal: SS.sW(context) * 0.070, vertical: SS.sH(context) * .02),
+            horizontal: SS.sW(context) * 0.070 as double, vertical: SS.sH(context) * .02 as double),
         child: SingleChildScrollView(
           child: Column(
             children: [
@@ -235,7 +235,7 @@ class _ReferencesState extends State<References> {
                     child: StaggeredGrid.count(
                       crossAxisCount: 2,
                       children: List.generate(
-                        widget.referenceCardKey.length,
+                        widget.referenceCardKey.length as int,
                         (index) => buildReferencesCard(
                             'https://images.pexels.com/photos/712521/pexels-photo-712521.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500',
                             'Sarah Lee ',

@@ -36,8 +36,7 @@ class ProfileOverview extends StatefulWidget {
   final profileOverviewSec2Languages_H;
   final profileOverviewSec2Languages_W;
   final pOApiData;
-
-  final editProfileBtn;
+  final VoidCallback? editProfileBtn;
 
   const ProfileOverview({
     Key? key,
@@ -78,14 +77,13 @@ class ProfileOverview extends StatefulWidget {
 class _ProfileOverviewState extends State<ProfileOverview> {
   bool isHovering = false;
 
-
   @override
   Widget build(BuildContext context) {
     return Responsive.isDesktop(context)
         ? Padding(
             padding: EdgeInsets.symmetric(
-                horizontal: SS.sW(context)! * 0.070,
-                vertical: SS.sH(context) * .02),
+                horizontal: SS.sW(context)! * 0.070 as double,
+                vertical: SS.sH(context) * .02 as double),
             // Profile Overview Rows
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -96,25 +94,25 @@ class _ProfileOverviewState extends State<ProfileOverview> {
                     profileOverviewSec1ProSummKey:
                         widget.profileOverviewSec1ProSummKey,
                     profileOverviewSec1ProSumm_H:
-                        widget.profileOverviewSec1ProSumm_H,
+                        widget.profileOverviewSec1ProSumm_H as double,
                     profileOverviewSec1ProSumm_W:
-                        widget.profileOverviewSec1ProSumm_W,
+                        widget.profileOverviewSec1ProSumm_W as double,
                     profileOverviewSec1AreaOfExpKey:
                         widget.profileOverviewSec1AreaOfExpKey,
                     profileOverviewSec1AreaOfExp_H:
-                        widget.profileOverviewSec1AreaOfExp_H,
+                        widget.profileOverviewSec1AreaOfExp_H as double,
                     profileOverviewSec1AreaOfExp_W:
-                        widget.profileOverviewSec1AreaOfExp_W,
+                        widget.profileOverviewSec1AreaOfExp_W as double,
                     profileOverviewSec1ReferencesKey:
                         widget.profileOverviewSec1ReferencesKey,
                     profileOverviewSec1References_H:
-                        widget.profileOverviewSec1References_H,
+                        widget.profileOverviewSec1References_H as double,
                     profileOverviewSec1References_W:
-                        widget.profileOverviewSec1References_W,
+                        widget.profileOverviewSec1References_W as double,
                     pOApiDataSec1: widget.pOApiData,
                   ),
                 ),
-                SS.sB(0, SS.sW(context) * 0.01),
+                SS.sB(0, SS.sW(context) * 0.01 as double),
                 Expanded(
                   child: ProfileOverviewSec2(
                     sec2IsEditable: widget.isEditable,
@@ -145,7 +143,7 @@ class _ProfileOverviewState extends State<ProfileOverview> {
                     pOApiDataSec2: widget.pOApiData,
                   ),
                 ),
-                SS.sB(0, SS.sW(context) * 0.01),
+                SS.sB(0, SS.sW(context) * 0.01 as double),
                 StatefulBuilder(builder: (context, setState) {
                   return Expanded(
                     child: Column(
@@ -156,7 +154,7 @@ class _ProfileOverviewState extends State<ProfileOverview> {
                         Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: Container(
-                            width: SS.sW(context),
+                            width: SS.sW(context) as double,
                             color: ColorPicker.kBlueLight3,
                             child: Padding(
                               padding: const EdgeInsets.all(25.0),
@@ -210,21 +208,21 @@ class _ProfileOverviewState extends State<ProfileOverview> {
                   profileOverviewSec1ProSummKey:
                       widget.profileOverviewSec1ProSummKey,
                   profileOverviewSec1ProSumm_H:
-                      widget.profileOverviewSec1ProSumm_H,
+                      widget.profileOverviewSec1ProSumm_H as double,
                   profileOverviewSec1ProSumm_W:
-                      widget.profileOverviewSec1ProSumm_W,
+                      widget.profileOverviewSec1ProSumm_W as double,
                   profileOverviewSec1AreaOfExpKey:
                       widget.profileOverviewSec1AreaOfExpKey,
                   profileOverviewSec1AreaOfExp_H:
-                      widget.profileOverviewSec1AreaOfExp_H,
+                      widget.profileOverviewSec1AreaOfExp_H as double,
                   profileOverviewSec1AreaOfExp_W:
-                      widget.profileOverviewSec1AreaOfExp_W,
+                      widget.profileOverviewSec1AreaOfExp_W as double,
                   profileOverviewSec1ReferencesKey:
                       widget.profileOverviewSec1ReferencesKey,
                   profileOverviewSec1References_H:
-                      widget.profileOverviewSec1References_H,
+                      widget.profileOverviewSec1References_H as double,
                   profileOverviewSec1References_W:
-                      widget.profileOverviewSec1References_W,
+                      widget.profileOverviewSec1References_W as double,
                   pOApiDataSec1: widget.pOApiData,
                 ),
                 ProfileOverviewSec2(

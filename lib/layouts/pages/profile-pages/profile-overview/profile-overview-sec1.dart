@@ -195,10 +195,10 @@ class _ProfileOverviewSec1State extends State<ProfileOverviewSec1> {
           child: Container(
             color: ColorPicker.kGreyLight3,
             width: Responsive.isDesktop(context)
-                ? SS.sW(context) * .50
+                ? SS.sW(context) * .50 as double
                 : Responsive.isMobile(context)
-                ? SS.sW(context) * .90
-                : SS.sW(context) * .60,
+                ? SS.sW(context) * .90 as double
+                : SS.sW(context) * .60 as double,
             child: SingleChildScrollView(
               child: Column(
                 children: [
@@ -289,17 +289,17 @@ class _ProfileOverviewSec1State extends State<ProfileOverviewSec1> {
               child: Container(
                 color: ColorPicker.kGreyLight8,
                 width: Responsive.isDesktop(context)
-                    ? SS.sW(context) * .50
+                    ? SS.sW(context) * .50 as double
                     : Responsive.isMobile(context)
-                    ? SS.sW(context) * .90
-                    : SS.sW(context) * .60,
+                    ? SS.sW(context) * .90 as double
+                    : SS.sW(context) * .60 as double,
                 // height: 375,
                 child: SingleChildScrollView(
                   child: Column(
                     children: [
                       PopUpHeadMenu.popUpHead('Expertise', context),
                       SizedBox(
-                        height: SS.sH(context) * .05,
+                        height: SS.sH(context) * .05 as double,
                       ),
                       Padding(
                         padding:  EdgeInsets.all(16.0),
@@ -393,7 +393,7 @@ class _ProfileOverviewSec1State extends State<ProfileOverviewSec1> {
                                                         color: ColorPicker
                                                             .kBlueLight3)),
                                                 alignment: Alignment.center,
-                                                width: SS.sW(context) * .091,
+                                                width: SS.sW(context) * .091as double,
                                                 height: 36,
                                                 child: Text(
                                                   'Add to list',
@@ -431,7 +431,7 @@ class _ProfileOverviewSec1State extends State<ProfileOverviewSec1> {
                                               padding: EdgeInsets.symmetric(
                                                   vertical: 15, horizontal: 5),
                                               shape: RoundedRectangleBorder(),
-                                              label: Text(i),
+                                              label: Text(i.toString()),
                                               deleteIcon: Icon(
                                                 Icons.close,
                                                 color: ColorPicker.kBlueLight1,
@@ -498,7 +498,7 @@ class _ProfileOverviewSec1State extends State<ProfileOverviewSec1> {
             Padding(
               padding:  EdgeInsets.all(8.0),
               child: Container(
-                key: widget.profileOverviewSec1ProSummKey,
+                key: widget.profileOverviewSec1ProSummKey as Key,
                 color: Colors.white,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -527,7 +527,7 @@ class _ProfileOverviewSec1State extends State<ProfileOverviewSec1> {
                 ),
               ),
             ),
-            widget.sec1IsEditable
+            widget.sec1IsEditable as bool
                 ? ProfileEdit.buildProfileEdit(
                     width: widget.profileOverviewSec1ProSumm_W,
                     height: widget.profileOverviewSec1ProSumm_H,
@@ -549,12 +549,12 @@ class _ProfileOverviewSec1State extends State<ProfileOverviewSec1> {
             Padding(
               padding:  EdgeInsets.all(8),
               child: Container(
-                key: widget.profileOverviewSec1AreaOfExpKey,
+                key: widget.profileOverviewSec1AreaOfExpKey as Key,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Container(
-                      width: SS.sW(context),
+                      width: SS.sW(context) as double,
                       color: Colors.white,
                       child: Padding(
                         padding: EdgeInsets.only(
@@ -608,7 +608,7 @@ class _ProfileOverviewSec1State extends State<ProfileOverviewSec1> {
                 ),
               ),
             ),
-            widget.sec1IsEditable
+            widget.sec1IsEditable as bool
                 ? ProfileEdit.buildProfileEdit(
                     width: widget.profileOverviewSec1AreaOfExp_W,
                     height: widget.profileOverviewSec1AreaOfExp_H,
@@ -630,7 +630,7 @@ class _ProfileOverviewSec1State extends State<ProfileOverviewSec1> {
             Padding(
               padding:  EdgeInsets.all(8.0),
               child: Container(
-                key: widget.profileOverviewSec1ReferencesKey,
+                key: widget.profileOverviewSec1ReferencesKey as Key,
                 color: ColorPicker.kWhite,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -670,7 +670,7 @@ class _ProfileOverviewSec1State extends State<ProfileOverviewSec1> {
                 ),
               ),
             ),
-            widget.sec1IsEditable
+            widget.sec1IsEditable as bool
                 ? ProfileEdit.buildProfileEdit(
                     width: widget.profileOverviewSec1References_W,
                     height: widget.profileOverviewSec1References_H,
