@@ -198,7 +198,7 @@ class UsersController extends GetxController {
       var user = new User();
       //var response = await _api.login(email: email, password: password);
 
-      var response = await _api.GET(
+      var response = await _api.POST(
           target: '/users/login', data: {'email': email, 'password': password});
 
       if (response.success == true) {
