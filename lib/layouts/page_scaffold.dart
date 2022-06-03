@@ -238,11 +238,11 @@ class _PageScaffoldState extends State<PageScaffold> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        if (ModalRoute.of(context)?.canPop == true)
-                          CupertinoNavigationBarBackButton(),
+                        //if (ModalRoute.of(context)?.canPop == true)
+                        //  CupertinoNavigationBarBackButton(),
                         Expanded(
                           child: Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 20),
+                            padding: const EdgeInsets.symmetric(horizontal: 0),
                             child: widget.body,
                           ),
                         ),
