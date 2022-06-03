@@ -174,42 +174,6 @@ class HoledoDatabase extends GetxController {
       isLoading(false);
     }
   }
-
-  final Iterable<Book> books = List.unmodifiable([
-    Book(
-      id: '1',
-      title: 'Hummingbirds for Dummies',
-      description: "Find out all about Hummingbirds, and how awesome they are.",
-      releaseDate: DateTime(1985, 3, 23),
-      categories: [BookCategory.nonFiction],
-      isStaffPick: true,
-    ),
-    Book(
-      id: '2',
-      title: "Of Hummingbirds And Men",
-      description: "blah blah blha",
-      releaseDate: DateTime(1923, 1, 1),
-      categories: [BookCategory.fiction],
-      isStaffPick: false,
-    ),
-    Book(
-      id: '3',
-      title: "Gone With The Hummingbirds",
-      description:
-          "Set in the American South, this book tells the story of Dash O'Bird, the strong-willed daughter...",
-      releaseDate: DateTime(1936, 6, 30),
-      categories: [BookCategory.fiction],
-      isStaffPick: false,
-    ),
-    Book(
-      id: '4',
-      title: "Harry Potter and the Chamber of Hummingbirds",
-      description: "Wizard and Hummingbirds! What more could you want?",
-      releaseDate: DateTime(1998, 7, 2),
-      categories: [BookCategory.fiction],
-      isStaffPick: true,
-    ),
-  ]);
 }
 
 class UsersController extends GetxController {
@@ -288,16 +252,26 @@ class UsersController extends GetxController {
   }
 
   Future<List<User>?> fetchUsers(
-      {String? category, String? type, int? limit, int? page}) async {
+      {String? category,
+      String? type,
+      int? limit,
+      int? page,
+      required BuildContext context,
+      String? keyword}) async {
     try {
       isLoading(true);
 
-      var response = await _api.GET(target: '/users/index', data: {
+      var params = {
         'category': category,
+        'keyword': keyword,
         'type': type,
         'limit': limit == null ? this.limit : limit,
         'page': page == null ? this.page : page
-      });
+      };
+
+      params.removeWhere((k, v) => v == null);
+      print('context: ${context} type: ${type} cat: ${category}');
+      var response = await _api.GET(target: '/users/index', data: params);
 
       userList.value = response.data!.users as List<User>;
 
