@@ -6,7 +6,7 @@ import 'package:holedo/constant/fontStyle/font_style.dart';
 import 'package:holedo/constant/sizedbox.dart';
 import '../../../../responsive/responsive.dart';
 import '../../../../services/holedo_api_services.dart';
-import '../profile-edit/profile-edit.dart';
+import '../profile-edit/profile_edit.dart';
 
 class ProfileOverviewSec1 extends StatefulWidget {
   final sec1IsEditable;

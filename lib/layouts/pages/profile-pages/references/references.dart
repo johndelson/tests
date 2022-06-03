@@ -3,8 +3,8 @@ import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:holedo/constant/sizedbox.dart';
 import '../../../../common/popUpHeadMenu.dart';
 import '../../../../constant/fontStyle/font_style.dart';
-import '../profile-edit/profile-edit.dart';
-import '../profile-overview/profile-overview-sec3.dart';
+import '../profile-edit/profile_edit.dart';
+import '../profile-overview/profile_overview_sec3.dart';
 
 class References extends StatefulWidget {
   final isEditable;

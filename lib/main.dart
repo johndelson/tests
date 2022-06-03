@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:holedo/layouts/page_scaffold.dart';
 import 'package:holedo/models/models.dart';
-
 import 'package:provider/provider.dart';
 import 'package:routemaster/routemaster.dart';
-
 import 'includes/url_strategy.dart';
 
 void main() async {

@@ -8,7 +8,7 @@ import '../../../../common/textfield_fieldname.dart';
 import '../../../../constant/colorPicker/color_picker.dart';
 import '../../../../constant/sizedbox.dart';
 import '../../../../responsive/responsive.dart';
-import '../profile-edit/profile-edit.dart';
+import '../profile-edit/profile_edit.dart';
 
 class ProfileOverviewSec2 extends StatefulWidget {
   final sec2IsEditable;
@@ -54,7 +54,8 @@ class _ProfileOverviewSec2State extends State<ProfileOverviewSec2> {
   bool isHovering = false;
   bool isShowingPopUpCard = false;
 
-  Widget buildProfileSec2Cards(sec2Key,
+  Widget buildProfileSec2Cards(
+      sec2Key,
       sec2_H,
       sec2_W,
       _width,
@@ -101,43 +102,43 @@ class _ProfileOverviewSec2State extends State<ProfileOverviewSec2> {
                           children: [
                             showIcon
                                 ? StatefulBuilder(builder: (context, set) {
-                              return InkWell(
-                                onTap: () {
-                                  set(() {
-                                    isShowingPopUpCard =
-                                    !isShowingPopUpCard;
-                                    print(isShowingPopUpCard);
-                                  });
-                                },
-                                onHover: (value) {
-                                  setState(() {
-                                    isHovering = value;
-                                  });
-                                },
-                                child: Padding(
-                                  padding:
-                                  EdgeInsets.only(top: 13, right: 20),
-                                  child: Container(
-                                    decoration: BoxDecoration(
-                                        borderRadius: isHovering
-                                            ? BorderRadius.circular(3)
-                                            : BorderRadius.circular(0),
-                                        border: isHovering
-                                            ? Border.all(
-                                            width: 1,
-                                            color: Colors.grey)
-                                            : Border.all(
-                                            width: 0,
-                                            color:
-                                            Colors.transparent)),
-                                    child: Icon(
-                                      Icons.arrow_drop_down_sharp,
-                                      color: ColorPicker.kBlueDark1,
-                                    ),
-                                  ),
-                                ),
-                              );
-                            })
+                                    return InkWell(
+                                      onTap: () {
+                                        set(() {
+                                          isShowingPopUpCard =
+                                              !isShowingPopUpCard;
+                                          print(isShowingPopUpCard);
+                                        });
+                                      },
+                                      onHover: (value) {
+                                        setState(() {
+                                          isHovering = value;
+                                        });
+                                      },
+                                      child: Padding(
+                                        padding:
+                                            EdgeInsets.only(top: 13, right: 20),
+                                        child: Container(
+                                          decoration: BoxDecoration(
+                                              borderRadius: isHovering
+                                                  ? BorderRadius.circular(3)
+                                                  : BorderRadius.circular(0),
+                                              border: isHovering
+                                                  ? Border.all(
+                                                      width: 1,
+                                                      color: Colors.grey)
+                                                  : Border.all(
+                                                      width: 0,
+                                                      color:
+                                                          Colors.transparent)),
+                                          child: Icon(
+                                            Icons.arrow_drop_down_sharp,
+                                            color: ColorPicker.kBlueDark1,
+                                          ),
+                                        ),
+                                      ),
+                                    );
+                                  })
                                 : Container(),
                           ],
                         ),
@@ -251,15 +252,15 @@ class _ProfileOverviewSec2State extends State<ProfileOverviewSec2> {
         }),
         widget.sec2IsEditable as bool
             ? ProfileEdit.buildProfileEdit(
-            width: sec2_W as double,
-            height: sec2_H as double,
-            popUpEdit: () {
-              popUpEditCards();
-            },
-            showAddButton: true,
-            popUpAdd: () {
-              popUpAddCards();
-            })
+                width: sec2_W as double,
+                height: sec2_H as double,
+                popUpEdit: () {
+                  popUpEditCards();
+                },
+                showAddButton: true,
+                popUpAdd: () {
+                  popUpAddCards();
+                })
             : Container()
       ],
     );
@@ -274,8 +275,8 @@ class _ProfileOverviewSec2State extends State<ProfileOverviewSec2> {
   bool isExperienceShowCard = false;
   int indexExp = 1;
 
-  Widget buildExpInnerCard(bool isExperienceEditable, bool isExperienceShowCard,
-      int indexExp) {
+  Widget buildExpInnerCard(
+      bool isExperienceEditable, bool isExperienceShowCard, int indexExp) {
     return StatefulBuilder(builder: (context, setState) {
       return Padding(
         padding: EdgeInsets.all(16.0),
@@ -283,8 +284,8 @@ class _ProfileOverviewSec2State extends State<ProfileOverviewSec2> {
           width: Responsive.isDesktop(context)
               ? SS.sW(context) * .50 as double
               : Responsive.isMobile(context)
-              ? SS.sW(context) * .90 as double
-              : SS.sW(context) * .60 as double,
+                  ? SS.sW(context) * .90 as double
+                  : SS.sW(context) * .60 as double,
           color: ColorPicker.kWhite,
           child: SingleChildScrollView(
             child: Column(
@@ -305,76 +306,76 @@ class _ProfileOverviewSec2State extends State<ProfileOverviewSec2> {
                   subtitle: Text(''),
                   trailing: isExperienceEditable
                       ? IconButton(
-                    onPressed: () {
-                      setState(() {
-                        isExperienceShowCard = !isExperienceShowCard;
-                      });
-                    },
-                    icon: Icon(
-                      Icons.edit,
-                      size: 10,
-                      color: ColorPicker.kBlueLight1,
-                    ),
-                  )
+                          onPressed: () {
+                            setState(() {
+                              isExperienceShowCard = !isExperienceShowCard;
+                            });
+                          },
+                          icon: Icon(
+                            Icons.edit,
+                            size: 10,
+                            color: ColorPicker.kBlueLight1,
+                          ),
+                        )
                       : null,
                 ),
                 isExperienceShowCard
                     ? SingleChildScrollView(
-                  child: Column(
-                    children: [
-                      Divider(
-                        height: SS.sH(context) * 0.01 as double,
-                        color: ColorPicker.kGreyLight3,
-                      ),
-                      Padding(
-                        padding: EdgeInsets.all(16.0),
                         child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            TextFieldAndFieldName.buildFieldName(
-                                'Title / position', '*') as Widget,
-                            TextFieldAndFieldName.buildTextField(
-                                'General manager') as Widget,
-                            TextFieldAndFieldName.buildFieldName(
-                                'Company name', '*') as Widget,
-                            TextFieldAndFieldName.buildTextField(
-                                'Fairmont Zimbali Resort') as Widget,
-                            TextFieldAndFieldName.buildFieldName(
-                                'Company website') as Widget,
-                            TextFieldAndFieldName.buildTextField(
-                                'www.fairmontzimbali.com') as Widget,
-                            TextFieldAndFieldName.buildFieldName(
-                                'Job description') as Widget,
-                            Padding(
-                              padding: EdgeInsets.all(8.0),
-                              child: TextField(
-                                autocorrect: true,
-                                minLines: 4,
-                                maxLines: 6,
-                                decoration: InputDecoration(
-                                  border: OutlineInputBorder(
-                                    borderSide: BorderSide(),
-                                  ),
-                                ),
-                              ),
+                            Divider(
+                              height: SS.sH(context) * 0.01 as double,
+                              color: ColorPicker.kGreyLight3,
                             ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.end,
-                              children: [
-                                OutlinedButton(
-                                    onPressed: () {},
-                                    child: Text('Cancel')),
-                                SS.sB(0, 10),
-                                ElevatedButton(
-                                    onPressed: () {}, child: Text('Save'))
-                              ],
+                            Padding(
+                              padding: EdgeInsets.all(16.0),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  TextFieldAndFieldName.buildFieldName(
+                                      'Title / position', '*') as Widget,
+                                  TextFieldAndFieldName.buildTextField(
+                                      'General manager') as Widget,
+                                  TextFieldAndFieldName.buildFieldName(
+                                      'Company name', '*') as Widget,
+                                  TextFieldAndFieldName.buildTextField(
+                                      'Fairmont Zimbali Resort') as Widget,
+                                  TextFieldAndFieldName.buildFieldName(
+                                      'Company website') as Widget,
+                                  TextFieldAndFieldName.buildTextField(
+                                      'www.fairmontzimbali.com') as Widget,
+                                  TextFieldAndFieldName.buildFieldName(
+                                      'Job description') as Widget,
+                                  Padding(
+                                    padding: EdgeInsets.all(8.0),
+                                    child: TextField(
+                                      autocorrect: true,
+                                      minLines: 4,
+                                      maxLines: 6,
+                                      decoration: InputDecoration(
+                                        border: OutlineInputBorder(
+                                          borderSide: BorderSide(),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.end,
+                                    children: [
+                                      OutlinedButton(
+                                          onPressed: () {},
+                                          child: Text('Cancel')),
+                                      SS.sB(0, 10),
+                                      ElevatedButton(
+                                          onPressed: () {}, child: Text('Save'))
+                                    ],
+                                  ),
+                                ],
+                              ),
                             ),
                           ],
                         ),
-                      ),
-                    ],
-                  ),
-                )
+                      )
                     : Container()
               ],
             ),
@@ -396,8 +397,8 @@ class _ProfileOverviewSec2State extends State<ProfileOverviewSec2> {
                 width: Responsive.isDesktop(context)
                     ? SS.sW(context) * .50 as double
                     : Responsive.isMobile(context)
-                    ? SS.sW(context) * .90 as double
-                    : SS.sW(context) * .60 as double,
+                        ? SS.sW(context) * .90 as double
+                        : SS.sW(context) * .60 as double,
                 child: SingleChildScrollView(
                   child: Column(
                     children: [
@@ -405,24 +406,24 @@ class _ProfileOverviewSec2State extends State<ProfileOverviewSec2> {
                       isVisibleExperience
                           ? buildExpInnerCard(false, true, indexExp)
                           : Padding(
-                        padding: EdgeInsets.all(8.0),
-                        child: CircleAvatar(
-                          radius: 30,
-                          backgroundColor: ColorPicker.kGreenNeon,
-                          child: IconButton(
-                            color: ColorPicker.kWhite,
-                            onPressed: () {
-                              setState(
-                                    () {
-                                  isVisibleExperience =
-                                  !isVisibleExperience;
-                                },
-                              );
-                            },
-                            icon: Icon(Icons.add),
-                          ),
-                        ),
-                      ),
+                              padding: EdgeInsets.all(8.0),
+                              child: CircleAvatar(
+                                radius: 30,
+                                backgroundColor: ColorPicker.kGreenNeon,
+                                child: IconButton(
+                                  color: ColorPicker.kWhite,
+                                  onPressed: () {
+                                    setState(
+                                      () {
+                                        isVisibleExperience =
+                                            !isVisibleExperience;
+                                      },
+                                    );
+                                  },
+                                  icon: Icon(Icons.add),
+                                ),
+                              ),
+                            ),
                       buildExpInnerCard(true, isExperienceShowCard, indexExp),
                       buildExpInnerCard(true, isExperienceShowCard, indexExp),
                     ],
@@ -445,21 +446,21 @@ class _ProfileOverviewSec2State extends State<ProfileOverviewSec2> {
   bool isEducationShowCard = false;
   int indexEdu = 1;
 
-  Widget buildEduInnerCard(bool isEducationEditable, bool isEducationShowCard,
-      int indexEdu) {
+  Widget buildEduInnerCard(
+      bool isEducationEditable, bool isEducationShowCard, int indexEdu) {
     return StatefulBuilder(builder: (context, setState) {
       List<Widget> eduTextFieldGenerate = List.generate(
           indexEdu,
-              (int i) =>
-          TextFieldAndFieldName.buildTextField('Course name') as Widget);
+          (int i) =>
+              TextFieldAndFieldName.buildTextField('Course name') as Widget);
       return Padding(
         padding: EdgeInsets.all(16.0),
         child: Container(
           width: Responsive.isDesktop(context)
               ? SS.sW(context) * .50 as double
               : Responsive.isMobile(context)
-              ? SS.sW(context) * .90 as double
-              : SS.sW(context) * .60 as double,
+                  ? SS.sW(context) * .90 as double
+                  : SS.sW(context) * .60 as double,
           color: ColorPicker.kWhite,
           child: SingleChildScrollView(
             child: Column(
@@ -481,78 +482,80 @@ class _ProfileOverviewSec2State extends State<ProfileOverviewSec2> {
                   subtitle: Text(''),
                   trailing: isEducationEditable
                       ? IconButton(
-                    onPressed: () {
-                      setState(() {
-                        isEducationShowCard = !isEducationShowCard;
-                      });
-                    },
-                    icon: Icon(Icons.edit),
-                  )
+                          onPressed: () {
+                            setState(() {
+                              isEducationShowCard = !isEducationShowCard;
+                            });
+                          },
+                          icon: Icon(Icons.edit),
+                        )
                       : null,
                 ),
                 isEducationShowCard
                     ? SingleChildScrollView(
-                  child: Column(
-                    children: [
-                      Divider(
-                        height: SS.sH(context) * 0.01 as double,
-                        color: ColorPicker.kGreyLight3,
-                      ),
-                      Padding(
-                        padding: EdgeInsets.all(16.0),
                         child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            TextFieldAndFieldName.buildFieldName(
-                                'Educational institution', '*') as Widget,
-                            TextFieldAndFieldName.buildTextField() as Widget,
-                            TextFieldAndFieldName.buildFieldName(
-                                'Course duration') as Widget,
-                            TextFieldAndFieldName.buildFieldName(
-                                'Qualification title') as Widget,
-                            TextFieldAndFieldName.buildTextField() as Widget,
-                            TextFieldAndFieldName.buildFieldName(
-                                'Description') as Widget,
-                            TextField(
-                              autocorrect: true,
-                              minLines: 4,
-                              maxLines: 6,
-                              decoration: InputDecoration(
-                                border: OutlineInputBorder(
-                                  borderSide: BorderSide(),
-                                ),
+                            Divider(
+                              height: SS.sH(context) * 0.01 as double,
+                              color: ColorPicker.kGreyLight3,
+                            ),
+                            Padding(
+                              padding: EdgeInsets.all(16.0),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  TextFieldAndFieldName.buildFieldName(
+                                      'Educational institution', '*') as Widget,
+                                  TextFieldAndFieldName.buildTextField()
+                                      as Widget,
+                                  TextFieldAndFieldName.buildFieldName(
+                                      'Course duration') as Widget,
+                                  TextFieldAndFieldName.buildFieldName(
+                                      'Qualification title') as Widget,
+                                  TextFieldAndFieldName.buildTextField()
+                                      as Widget,
+                                  TextFieldAndFieldName.buildFieldName(
+                                      'Description') as Widget,
+                                  TextField(
+                                    autocorrect: true,
+                                    minLines: 4,
+                                    maxLines: 6,
+                                    decoration: InputDecoration(
+                                      border: OutlineInputBorder(
+                                        borderSide: BorderSide(),
+                                      ),
+                                    ),
+                                  ),
+                                  SS.sB(18),
+                                  TextFieldAndFieldName.buildFieldName(
+                                      'Course outline') as Widget,
+                                  Column(children: eduTextFieldGenerate),
+                                  TextButton.icon(
+                                    onPressed: () {
+                                      setState(() {
+                                        indexEdu++;
+                                      });
+                                    },
+                                    icon: Icon(Icons.add),
+                                    label: Text('Add another'),
+                                  ),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.end,
+                                    children: [
+                                      OutlinedButton(
+                                          onPressed: () {},
+                                          child: Text('Cancel')),
+                                      SS.sB(0, 10),
+                                      ElevatedButton(
+                                          onPressed: () {}, child: Text('Save'))
+                                    ],
+                                  )
+                                ],
                               ),
-                            ),
-                            SS.sB(18),
-                            TextFieldAndFieldName.buildFieldName(
-                                'Course outline') as Widget,
-                            Column(children: eduTextFieldGenerate),
-                            TextButton.icon(
-                              onPressed: () {
-                                setState(() {
-                                  indexEdu++;
-                                });
-                              },
-                              icon: Icon(Icons.add),
-                              label: Text('Add another'),
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.end,
-                              children: [
-                                OutlinedButton(
-                                    onPressed: () {},
-                                    child: Text('Cancel')),
-                                SS.sB(0, 10),
-                                ElevatedButton(
-                                    onPressed: () {}, child: Text('Save'))
-                              ],
                             )
                           ],
                         ),
                       )
-                    ],
-                  ),
-                )
                     : Container()
               ],
             ),
@@ -574,8 +577,8 @@ class _ProfileOverviewSec2State extends State<ProfileOverviewSec2> {
                   width: Responsive.isDesktop(context)
                       ? SS.sW(context) * .50 as double
                       : Responsive.isMobile(context)
-                      ? SS.sW(context) * .90 as double
-                      : SS.sW(context) * .60 as double,
+                          ? SS.sW(context) * .90 as double
+                          : SS.sW(context) * .60 as double,
                   child: SingleChildScrollView(
                     child: Column(
                       children: [
@@ -583,21 +586,21 @@ class _ProfileOverviewSec2State extends State<ProfileOverviewSec2> {
                         isVisibleEducation as bool
                             ? buildEduInnerCard(false, true, indexEdu)
                             : Padding(
-                          padding: EdgeInsets.all(8.0),
-                          child: CircleAvatar(
-                            radius: 30,
-                            backgroundColor: ColorPicker.kGreenNeon,
-                            child: IconButton(
-                                color: ColorPicker.kWhite,
-                                onPressed: () {
-                                  setState(() {
-                                    isVisibleEducation =
-                                    !isVisibleEducation;
-                                  });
-                                },
-                                icon: Icon(Icons.add)),
-                          ),
-                        ),
+                                padding: EdgeInsets.all(8.0),
+                                child: CircleAvatar(
+                                  radius: 30,
+                                  backgroundColor: ColorPicker.kGreenNeon,
+                                  child: IconButton(
+                                      color: ColorPicker.kWhite,
+                                      onPressed: () {
+                                        setState(() {
+                                          isVisibleEducation =
+                                              !isVisibleEducation;
+                                        });
+                                      },
+                                      icon: Icon(Icons.add)),
+                                ),
+                              ),
                         buildEduInnerCard(true, isEducationShowCard, indexEdu),
                         buildEduInnerCard(true, isEducationShowCard, indexEdu),
                       ],
@@ -629,8 +632,8 @@ class _ProfileOverviewSec2State extends State<ProfileOverviewSec2> {
           width: Responsive.isDesktop(context)
               ? SS.sW(context) * .50 as double
               : Responsive.isMobile(context)
-              ? SS.sW(context) * .90 as double
-              : SS.sW(context) * .60 as double,
+                  ? SS.sW(context) * .90 as double
+                  : SS.sW(context) * .60 as double,
           color: ColorPicker.kWhite,
           child: SingleChildScrollView(
             child: Column(
@@ -652,67 +655,70 @@ class _ProfileOverviewSec2State extends State<ProfileOverviewSec2> {
                   subtitle: Text(''),
                   trailing: isArchiveEditable
                       ? IconButton(
-                    onPressed: () {
-                      setState(() {
-                        isArchiveShowCard = !isArchiveShowCard;
-                      });
-                    },
-                    icon: Icon(Icons.edit),
-                  )
+                          onPressed: () {
+                            setState(() {
+                              isArchiveShowCard = !isArchiveShowCard;
+                            });
+                          },
+                          icon: Icon(Icons.edit),
+                        )
                       : null,
                 ),
                 isArchiveShowCard
                     ? Column(
-                  children: [
-                    Divider(
-                      height: SS.sH(context) * 0.01 as double,
-                      color: ColorPicker.kGreyLight3,
-                    ),
-                    Padding(
-                      padding: EdgeInsets.all(16.0),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          TextFieldAndFieldName.buildFieldName(
-                              'Achievement type', '*') as Widget,
-                          DropDownButton(
-                              menuList: achiveList,
-                              hintText: 'Presentation'),
-                          TextFieldAndFieldName.buildFieldName(
-                              'Achievement title') as Widget,
-                          TextFieldAndFieldName.buildTextField() as Widget,
-                          TextFieldAndFieldName.buildFieldName(
-                              'Issuing entity') as Widget,
-                          TextFieldAndFieldName.buildTextField() as Widget,
-                          TextFieldAndFieldName.buildFieldName(
-                              'Award/Website link') as Widget,
-                          TextFieldAndFieldName.buildTextField() as Widget,
-                          TextFieldAndFieldName.buildFieldName(
-                              'Date received') as Widget,
-                          SizedBox(
-                            width: 100,
-                            child: DropDownButton(
-                              menuList: achiveYearList,
-                              hintText: 'Year',
+                          Divider(
+                            height: SS.sH(context) * 0.01 as double,
+                            color: ColorPicker.kGreyLight3,
+                          ),
+                          Padding(
+                            padding: EdgeInsets.all(16.0),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                TextFieldAndFieldName.buildFieldName(
+                                    'Achievement type', '*') as Widget,
+                                DropDownButton(
+                                    menuList: achiveList,
+                                    hintText: 'Presentation'),
+                                TextFieldAndFieldName.buildFieldName(
+                                    'Achievement title') as Widget,
+                                TextFieldAndFieldName.buildTextField()
+                                    as Widget,
+                                TextFieldAndFieldName.buildFieldName(
+                                    'Issuing entity') as Widget,
+                                TextFieldAndFieldName.buildTextField()
+                                    as Widget,
+                                TextFieldAndFieldName.buildFieldName(
+                                    'Award/Website link') as Widget,
+                                TextFieldAndFieldName.buildTextField()
+                                    as Widget,
+                                TextFieldAndFieldName.buildFieldName(
+                                    'Date received') as Widget,
+                                SizedBox(
+                                  width: 100,
+                                  child: DropDownButton(
+                                    menuList: achiveYearList,
+                                    hintText: 'Year',
+                                  ),
+                                ),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.end,
+                                  children: [
+                                    OutlinedButton(
+                                        onPressed: () {},
+                                        child: Text('Cancel')),
+                                    SS.sB(0, 10),
+                                    ElevatedButton(
+                                        onPressed: () {}, child: Text('Save'))
+                                  ],
+                                )
+                              ],
                             ),
                           ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            children: [
-                              OutlinedButton(
-                                  onPressed: () {},
-                                  child: Text('Cancel')),
-                              SS.sB(0, 10),
-                              ElevatedButton(
-                                  onPressed: () {}, child: Text('Save'))
-                            ],
-                          )
                         ],
-                      ),
-                    ),
-                  ],
-                )
+                      )
                     : Container()
               ],
             ),
@@ -733,8 +739,8 @@ class _ProfileOverviewSec2State extends State<ProfileOverviewSec2> {
                 width: Responsive.isDesktop(context)
                     ? SS.sW(context) * .50 as double
                     : Responsive.isMobile(context)
-                    ? SS.sW(context) * .90 as double
-                    : SS.sW(context) * .60 as double,
+                        ? SS.sW(context) * .90 as double
+                        : SS.sW(context) * .60 as double,
                 child: SingleChildScrollView(
                   child: Column(
                     children: [
@@ -742,21 +748,21 @@ class _ProfileOverviewSec2State extends State<ProfileOverviewSec2> {
                       isVisibleAchivement
                           ? buildAchiveInnerCard(false, true)
                           : Padding(
-                        padding: EdgeInsets.all(8.0),
-                        child: CircleAvatar(
-                          radius: 30,
-                          backgroundColor: ColorPicker.kGreenNeon,
-                          child: IconButton(
-                              color: ColorPicker.kWhite,
-                              onPressed: () {
-                                setState(() {
-                                  isVisibleAchivement =
-                                  !isVisibleAchivement;
-                                });
-                              },
-                              icon: Icon(Icons.add)),
-                        ),
-                      ),
+                              padding: EdgeInsets.all(8.0),
+                              child: CircleAvatar(
+                                radius: 30,
+                                backgroundColor: ColorPicker.kGreenNeon,
+                                child: IconButton(
+                                    color: ColorPicker.kWhite,
+                                    onPressed: () {
+                                      setState(() {
+                                        isVisibleAchivement =
+                                            !isVisibleAchivement;
+                                      });
+                                    },
+                                    icon: Icon(Icons.add)),
+                              ),
+                            ),
                       buildAchiveInnerCard(true, isArchiveShowCard),
                       buildAchiveInnerCard(true, isArchiveShowCard),
                     ],
@@ -781,17 +787,16 @@ class _ProfileOverviewSec2State extends State<ProfileOverviewSec2> {
   // String? selectValue;
   int langIndex = 2;
 
-  Future<String?> buildLanguagePopUp(langIndex) {
+  Future<String?> buildLanguagePopUp(int langIndex) {
     return showDialog(
         context: context,
         builder: (BuildContext context) {
           return StatefulBuilder(builder: (BuildContext context, setState) {
-            List<Widget> textField = List.generate(
-                langIndex , (int i) => TextFieldAndFieldName.buildTextField() as Widget);
+            List<Widget> textField = List.generate(langIndex,
+                (int i) => TextFieldAndFieldName.buildTextField() as Widget);
             List<Widget> menuItem = List.generate(
                 langIndex,
-                    (int i) =>
-                    DropDownButton(
+                (int i) => DropDownButton(
                       menuList: langItem,
                       hintText: 'Native or bilingual profiency',
                     ));
@@ -801,8 +806,8 @@ class _ProfileOverviewSec2State extends State<ProfileOverviewSec2> {
                 width: Responsive.isDesktop(context)
                     ? SS.sW(context) * .50 as double
                     : Responsive.isMobile(context)
-                    ? SS.sW(context) * .90 as double
-                    : SS.sW(context) * .60 as double,
+                        ? SS.sW(context) * .90 as double
+                        : SS.sW(context) * .60 as double,
                 child: SingleChildScrollView(
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.start,
@@ -814,8 +819,8 @@ class _ProfileOverviewSec2State extends State<ProfileOverviewSec2> {
                           width: Responsive.isDesktop(context)
                               ? SS.sW(context) * .50 as double
                               : Responsive.isMobile(context)
-                              ? SS.sW(context) * .90 as double
-                              : SS.sW(context) * .60 as double,
+                                  ? SS.sW(context) * .90 as double
+                                  : SS.sW(context) * .60 as double,
                           color: ColorPicker.kWhite,
                           child: Row(
                             crossAxisAlignment: CrossAxisAlignment.start,
@@ -828,7 +833,7 @@ class _ProfileOverviewSec2State extends State<ProfileOverviewSec2> {
                                   padding: EdgeInsets.all(8.0),
                                   child: Column(
                                     crossAxisAlignment:
-                                    CrossAxisAlignment.start,
+                                        CrossAxisAlignment.start,
                                     children: [
                                       TextFieldAndFieldName.buildFieldName(
                                           'Language', '*') as Widget,
@@ -855,7 +860,7 @@ class _ProfileOverviewSec2State extends State<ProfileOverviewSec2> {
                                   padding: EdgeInsets.all(8.0),
                                   child: Column(
                                     crossAxisAlignment:
-                                    CrossAxisAlignment.start,
+                                        CrossAxisAlignment.start,
                                     mainAxisAlignment: MainAxisAlignment.start,
                                     children: [
                                       TextFieldAndFieldName.buildFieldName(
@@ -866,7 +871,7 @@ class _ProfileOverviewSec2State extends State<ProfileOverviewSec2> {
                                       ),
                                       Row(
                                         mainAxisAlignment:
-                                        MainAxisAlignment.end,
+                                            MainAxisAlignment.end,
                                         children: [
                                           OutlinedButton(
                                               onPressed: () {},
@@ -1011,7 +1016,7 @@ class _ProfileOverviewSec2State extends State<ProfileOverviewSec2> {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              AutoSizeText('English',
+                              Text(widget.pOApiDataSec2.toString(),
                                   style: FontTextStyle.kBlueDark116W700SSP),
                               SS.sB(5),
                               Text(
@@ -1079,15 +1084,15 @@ class _ProfileOverviewSec2State extends State<ProfileOverviewSec2> {
             ),
             widget.sec2IsEditable as bool
                 ? ProfileEdit.buildProfileEdit(
-                width: widget.profileOverviewSec2Languages_W as double,
-                height: widget.profileOverviewSec2Languages_H as double,
-                popUpEdit: () {
-                  buildLanguagePopUp(langIndex);
-                },
-                showAddButton: true,
-                popUpAdd: () {
-                  buildLanguagePopUp(langIndex);
-                })
+                    width: widget.profileOverviewSec2Languages_W as double,
+                    height: widget.profileOverviewSec2Languages_H as double,
+                    popUpEdit: () {
+                      buildLanguagePopUp(langIndex);
+                    },
+                    showAddButton: true,
+                    popUpAdd: () {
+                      buildLanguagePopUp(langIndex);
+                    })
                 : Container(),
           ],
         ),

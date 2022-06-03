@@ -5,20 +5,16 @@ import 'package:provider/provider.dart';
 import 'package:routemaster/routemaster.dart';
 export 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 export 'package:holedo/layouts/cards/holedo_cards.dart';
-
 export 'package:holedo/layouts/pages/home_page.dart';
 export 'package:holedo/layouts/pages/recruitment_page.dart';
-
 export 'package:holedo/layouts/pages/profile_page.dart';
 export 'package:holedo/layouts/pages/category_page.dart';
 export 'package:holedo/layouts/pages/search_page.dart';
 export 'package:holedo/layouts/pages/login_page.dart';
 export 'package:holedo/layouts/pages/newsfront_page.dart';
 export 'package:holedo/layouts/pages/news_page.dart';
-
 export 'package:holedo/layouts/pages/jobsfront_page.dart';
 export 'package:holedo/layouts/pages/jobs_page.dart';
-
 import 'appbar/appbar.dart';
 
 class PageScaffold extends StatefulWidget {

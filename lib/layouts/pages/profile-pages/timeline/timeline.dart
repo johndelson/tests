@@ -3,7 +3,7 @@ import 'package:holedo/constant/fontStyle/font_style.dart';
 import 'package:holedo/constant/sizedbox.dart';
 import 'package:timeline_tile/timeline_tile.dart';
 import '../../../../constant/colorPicker/color_picker.dart';
-import '../profile-overview/profile-overview-sec3.dart';
+import '../profile-overview/profile_overview_sec3.dart';
 
 class TimeLine extends StatefulWidget {
   const TimeLine({Key? key}) : super(key: key);

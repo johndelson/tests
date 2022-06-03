@@ -10,7 +10,7 @@ import '../../../../common/dropDownButton.dart';
 import '../../../../constant/colorPicker/color_picker.dart';
 import '../../../../constant/sizedbox.dart';
 import '../../../../services/holedo_api_services.dart';
-import '../profile-edit/profile-edit.dart';
+import '../profile-edit/profile_edit.dart';
 //Header card
 
 class HeaderCard extends StatefulWidget {
@@ -1566,7 +1566,7 @@ class _HeaderCardState extends State<HeaderCard> {
                                   onPressed: () {
                                     buildSendConnReqPopUpCard();
                                   },
-                                  icon: const Icon(Icons.person_add),
+                                  icon: const Icon(Icons.person_add,size: 10,color: ColorPicker.kWhite,),
                                   label: const Padding(
                                     padding: EdgeInsets.symmetric(
                                         vertical: 14, horizontal: 18),
