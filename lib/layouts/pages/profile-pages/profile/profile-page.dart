@@ -218,13 +218,6 @@ class _UserProfilePageState extends State<UserProfilePage>
   Widget build(BuildContext context) {
     // final UsersController controller = Get.put(HoledoDatabase().users);
 
-    // return FutureBuilder<Holedoapi>(
-    //     future: _apiServices.GET(),
-    //     builder: (context, AsyncSnapshot snapshot) {
-    //       if (snapshot.hasData) {
-    //         localStorage.writeInMemory('userData', snapshot.data!.data!.user!);
-    //         final userProfileData = localStorage.read('userData');
-    //   final userProfileData = snapshot.data!.data!.user!;
     return Responsive.isDesktop(context)
         ? Container(
             decoration: BoxDecoration(color: ColorPicker.kBG),
