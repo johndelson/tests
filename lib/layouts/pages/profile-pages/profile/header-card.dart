@@ -1117,7 +1117,7 @@ class _HeaderCardState extends State<HeaderCard> {
                     child: Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Container(
-                        key: widget.headerCardKey  as Key,
+                        key: widget.headerCardKey as Key,
                         width: SS.sW(context) * .4 as double,
                         color: ColorPicker.kWhite,
                         child: Column(
@@ -1377,7 +1377,7 @@ class _HeaderCardState extends State<HeaderCard> {
                       padding: EdgeInsets.all(8),
                       child: Container(
                         width: SS.sW(context) as double,
-                        key: widget.headerCardKey as Key ,
+                        key: widget.headerCardKey as Key,
                         color: ColorPicker.kWhite,
                         child: SingleChildScrollView(
                           child: Column(

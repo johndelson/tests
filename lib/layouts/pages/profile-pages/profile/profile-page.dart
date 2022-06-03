@@ -1,10 +1,40 @@
 import 'package:flutter/material.dart';
 import 'package:holedo/layouts/pages/profile-pages/profile/header-card.dart';
+import 'package:routemaster/routemaster.dart';
 import '../../../../constant/colorPicker/color_picker.dart';
 import '../../../../constant/fontStyle/font_style.dart';
 import '../../../../constant/sizedbox.dart';
 import '../../../../responsive/responsive.dart';
 import '../profile-edit/profile-edit.dart';
+import '../profile-overview/profile-overview.dart';
+
+
+
+class GlobalKeys {
+  static final refKey = GlobalKey();
+}
+
+class Item {
+  Item({
+    required this.expandedValue,
+    required this.headerValue,
+    this.isExpanded = false,
+  });
+
+  String expandedValue;
+  String headerValue;
+  bool isExpanded;
+}
+
+List<Item> generateItems(int numberOfItems) {
+  return List<Item>.generate(numberOfItems, (int index) {
+    return Item(
+      headerValue: 'Panel $index',
+      expandedValue: 'This is item number $index',
+    );
+  });
+}
+
 
 class UserProfilePage extends StatefulWidget {
   final userProfileData;
@@ -17,10 +47,10 @@ class UserProfilePage extends StatefulWidget {
 
 class _UserProfilePageState extends State<UserProfilePage> {
   bool isEditable = false;
-  TabController? _tabController;
+
 
   ///Common widgets
-  Widget buildEditButton(bool isEditable) {
+  Widget buildEditButton() {
     return EditButton(
       onChanged: (value) {
         setState(() {
@@ -143,11 +173,26 @@ class _UserProfilePageState extends State<UserProfilePage> {
       profileOverviewSec2Languages_W = profileOverviewSec2LanguagesKey.width;
     });
   }
-
+///Mobile Functionality
+  final List<Item> _data = generateItems(1);
+ Widget buildMobileMenuDropDownButton(String btnName) {
+    return InkWell(
+      onTap: () {},
+      child: Container(
+        alignment: Alignment.center,
+        height: 44,
+        child: Text(
+          btnName,
+          style: FontTextStyle.kBlueLight114W400SSP,
+        ),
+      ),
+    );
+  }
 
 
   @override
   Widget build(BuildContext context) {
+
     return Responsive.isDesktop(context)
         ? Container(
             decoration: BoxDecoration(color: ColorPicker.kBG),
@@ -202,15 +247,163 @@ class _UserProfilePageState extends State<UserProfilePage> {
                             ],
                           ),
 
-                          buildEditButton(isEditable),
+                          buildEditButton(),
                         ],
                       ),
                     ),
                   ),
+
+
                 ],
               ),
             ),
           )
-        : Container();
+        :
+    SingleChildScrollView(
+      child: Column(
+        children: [
+          HeaderCard(
+              isEditable: isEditable,
+              headerCardKey: headerCardKey,
+              headerCard_H: headerCard_H,
+              headerCard_W: headerCard_W,
+              hCardApiData: widget.userProfileData),
+          Padding(
+            padding: EdgeInsets.all(8.0),
+            child: ExpansionPanelList(
+              expansionCallback: (int index, bool isExpanded) {
+                setState(() {
+                  _data[index].isExpanded = !isExpanded;
+                });
+              },
+              children: _data.map<ExpansionPanel>((Item item) {
+                return ExpansionPanel(
+                  headerBuilder:
+                      (BuildContext context, bool isExpanded) {
+                    return Column(
+                      children: [
+                        ListTile(
+                          leading: Container(
+                            height: 26,
+                            width: 26,
+                            decoration: BoxDecoration(
+                              image: DecorationImage(
+                                image: NetworkImage(
+                                  widget.userProfileData.avatar
+                                      .toString(),
+                                ),
+                              ),
+                            ),
+                          ),
+                          title: Row(
+                            children: [
+                              Text(
+                                widget.userProfileData.fullName
+                                    .toString(),
+                                textAlign: TextAlign.center,
+                                style: FontTextStyle
+                                    .kBlueDark116W700SSP,
+                              ),
+                              SS.sB(0, 2),
+                              Text(
+                                widget.userProfileData.userTitleTypesId
+                                    .toString(),
+                                textAlign: TextAlign.center,
+                                style: FontTextStyle
+                                    .kBlueDark112W700SSP,
+                              ),
+                            ],
+                          ),
+                        ),
+                        isExpanded
+                            ? Container()
+                            : buildEditButton()
+                      ],
+                    );
+                  },
+                  body: Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Padding(
+                        padding: EdgeInsets.all(8.0),
+                        child: Column(
+                          crossAxisAlignment:
+                          CrossAxisAlignment.start,
+                          children: [
+                            buildMobileMenuDropDownButton(
+                                'Profile Overview'),
+                            buildMobileMenuDropDownButton(
+                                'Timeline'),
+                            buildMobileMenuDropDownButton(
+                                'Articles'),
+                            buildMobileMenuDropDownButton(
+                                'Activity'),
+                            buildMobileMenuDropDownButton(
+                                'References'),
+                            buildEditButton()
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                  isExpanded: item.isExpanded,
+                );
+              }).toList(),
+            ),
+          ),
+          ProfileOverview(
+              isEditable: isEditable,
+
+              //section1 edit functionality
+              profileOverviewSec1ProSummKey:
+              profileOverviewSec1ProSummKey,
+              profileOverviewSec1ProSumm_H:
+              profileOverviewSec1ProSumm_H,
+              profileOverviewSec1ProSumm_W:
+              profileOverviewSec1ProSumm_W,
+              profileOverviewSec1AreaOfExpKey:
+              profileOverviewSec1AreaOfExpKey,
+              profileOverviewSec1AreaOfExp_H:
+              profileOverviewSec1AreaOfExp_H,
+              profileOverviewSec1AreaOfExp_W:
+              profileOverviewSec1AreaOfExp_W,
+              profileOverviewSec1ReferencesKey:
+              profileOverviewSec1ReferencesKey,
+              profileOverviewSec1References_H:
+              profileOverviewSec1References_H,
+              profileOverviewSec1References_W:
+              profileOverviewSec1References_W,
+
+              //section2 edit functionality
+
+              profileOverviewSec2WorkExpKey:
+              profileOverviewSec2WorkExpKey,
+              profileOverviewSec2WorkExp_H:
+              profileOverviewSec2WorkExp_H,
+              profileOverviewSec2WorkExp_W:
+              profileOverviewSec2WorkExp_W,
+              profileOverviewSec2EducationKey:
+              profileOverviewSec2EducationKey,
+              profileOverviewSec2Education_H:
+              profileOverviewSec2Education_H,
+              profileOverviewSec2Education_W:
+              profileOverviewSec2Education_W,
+              profileOverviewSec2AchievementKey:
+              profileOverviewSec2AchievementKey,
+              profileOverviewSec2Achievement_H:
+              profileOverviewSec2Achievement_H,
+              profileOverviewSec2Achievement_W:
+              profileOverviewSec2Achievement_W,
+              profileOverviewSec2LanguagesKey:
+              profileOverviewSec2LanguagesKey,
+              profileOverviewSec2Languages_H:
+              profileOverviewSec2Languages_H,
+              profileOverviewSec2Languages_W:
+              profileOverviewSec2Languages_W,
+              pOApiData: widget.userProfileData,
+              editProfileBtn: buildEditButton),
+        ],
+      ),
+    );
   }
 }
