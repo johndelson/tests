@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:holedo/models/holedoapi/job.dart';
 import 'package:holedo/models/holedoapi/article.dart';
 import 'package:holedo/models/holedoapi/article_category.dart';
@@ -65,6 +66,38 @@ class SmallCard extends StatelessWidget {
             onTap: onTap,
             child: Padding(
               padding: const EdgeInsets.all(16),
+              child: child,
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class LinkCard extends StatelessWidget {
+  final Widget child;
+  final void Function() onTap;
+
+  const LinkCard({
+    Key? key,
+    required this.onTap,
+    required this.child,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(2.0),
+      child: SizedBox(
+        width: 250,
+        child: Material(
+          color: Colors.transparent, // Color.fromARGB(255, 13, 20, 117),
+          clipBehavior: Clip.antiAlias,
+          child: InkWell(
+            onTap: onTap,
+            child: Padding(
+              padding: const EdgeInsets.all(4),
               child: child,
             ),
           ),
@@ -447,7 +480,7 @@ class FooterLinkCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SmallCard(
+    return LinkCard(
       onTap: () {
         Routemaster.of(context).push(pathBuilder != null
             ? pathBuilder!('${path}' as String)
@@ -462,7 +495,8 @@ class FooterLinkCard extends StatelessWidget {
               children: [
                 Text(
                   title,
-                  style: TextStyle(fontSize: 16),
+                  style: TextStyle(
+                      fontSize: 16, color: Color.fromARGB(255, 255, 255, 255)),
                 ),
               ],
             ),

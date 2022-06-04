@@ -156,70 +156,113 @@ class _PageScaffoldState extends State<PageScaffold> {
 
   Widget _buildFooter() {
     return Container(
-        height: 650,
-        decoration: BoxDecoration(
-          image: DecorationImage(
-            image: AssetImage('assets/images/Background.png'),
-            fit: BoxFit.fitWidth,
-            alignment: Alignment.bottomRight,
-            repeat: ImageRepeat.noRepeat,
-          ),
-          color: Color.fromARGB(255, 215, 215, 224),
+      height: 650,
+      decoration: BoxDecoration(
+        image: DecorationImage(
+          image: AssetImage('assets/images/Background.png'),
+          fit: BoxFit.fitWidth,
+          alignment: Alignment.bottomRight,
+          repeat: ImageRepeat.noRepeat,
         ),
+        color: Color.fromARGB(255, 215, 215, 224),
+      ),
+      child: Center(
+        heightFactor: 10,
         child: Container(
           height: 450,
           width: maxWidth,
-          padding: const EdgeInsets.only(top: 45),
+          padding: const EdgeInsets.only(top: 15),
           alignment: Alignment.center,
           child: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               Container(
-                  width: Get.width / 5,
-                  padding: const EdgeInsets.only(top: 15),
-                  child: Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Text('Holedo Links',
-                            style: FontTextStyle.kWhite16W400SSP),
-                        Container(
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: _buildNavBarChildren(inDrawer: false),
-                          ),
-                        ),
-                      ])),
+                padding: const EdgeInsets.only(top: 5),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Container(
+                      width: Get.width * 0.10,
+                      decoration: BoxDecoration(
+                          border: Border(
+                              bottom: BorderSide(
+                                  color: ColorPicker.kPrimaryLight, width: 3))),
+                      padding: const EdgeInsets.only(left: 5),
+                      child: Text('Holedo Links',
+                          style: FontTextStyle.kWhite16W400SSP),
+                    ),
+                    SizedBox(
+                      height: 5,
+                    ),
+                    for (final pages in Get.put(HoledoDatabase()).pages)
+                      FooterLinkCard(
+                          title: pages.title.toString(),
+                          path: '/pages/${pages.slug}'),
+                  ],
+                ),
+              ),
               SizedBox(
                 width: Get.width * 0.02,
               ),
               Container(
-                  padding: const EdgeInsets.only(top: 15),
-                  child: Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Text('Holedo Pages',
-                            style: FontTextStyle.kWhite16W400SSP),
-                        Container(
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              for (final pages
-                                  in Get.put(HoledoDatabase()).pages)
-                                FooterLinkCard(
-                                    title: pages.title.toString(),
-                                    path: '/pages/${pages.slug}'),
-                            ],
-                          ),
-                        ),
-                      ])),
+                padding: const EdgeInsets.only(top: 5),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Container(
+                      width: Get.width * 0.10,
+                      decoration: BoxDecoration(
+                          border: Border(
+                              bottom: BorderSide(
+                                  color: ColorPicker.kPrimaryLight, width: 3))),
+                      padding: const EdgeInsets.only(left: 5),
+                      child: Text('Holedo Pages',
+                          style: FontTextStyle.kWhite16W400SSP),
+                    ),
+                    SizedBox(
+                      height: 5,
+                    ),
+                    for (final pages in Get.put(HoledoDatabase()).pages)
+                      FooterLinkCard(
+                          title: pages.title.toString(),
+                          path: '/pages/${pages.slug}'),
+                  ],
+                ),
+              ),
               SizedBox(
                 width: Get.width * 0.02,
               ),
-              Flexible(
-                  child: Text('asd', style: FontTextStyle.kWhite36W400SSP)),
+              Container(
+                padding: const EdgeInsets.only(top: 5),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Container(
+                      width: Get.width * 0.10,
+                      decoration: BoxDecoration(
+                          border: Border(
+                              bottom: BorderSide(
+                                  color: ColorPicker.kPrimaryLight, width: 3))),
+                      padding: const EdgeInsets.only(left: 5),
+                      child: Text('Holedo Pages',
+                          style: FontTextStyle.kWhite16W400SSP),
+                    ),
+                    SizedBox(
+                      height: 5,
+                    ),
+                    for (final pages in Get.put(HoledoDatabase()).pages)
+                      FooterLinkCard(
+                          title: pages.title.toString(),
+                          path: '/pages/${pages.slug}'),
+                  ],
+                ),
+              ),
             ],
           ),
-        ));
+        ),
+      ),
+    );
   }
 
   Widget _buildAppBar() {
