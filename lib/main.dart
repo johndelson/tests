@@ -59,6 +59,11 @@ RouteMap _buildRouteMap(BuildContext context) {
           ? NoAnimationPage(
               child: ContentPage(slug: route.pathParameters['slug']!))
           : NotFound(),
+
+      '/:slug': (route) => _isValidPage(route.pathParameters['slug'])
+          ? NoAnimationPage(
+              child: ContentPage(slug: route.pathParameters['slug']!))
+          : Redirect('/'),
       '/login': (route) => NoAnimationPage(
             child: LoginPage(
               redirectTo: route.queryParameters['redirectTo'],

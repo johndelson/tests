@@ -28,30 +28,33 @@ class ContentPage extends StatelessWidget {
                           child: Padding(
                             padding: const EdgeInsets.all(20),
                             child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.stretch,
                               children: [
-                                Container(
-                                  decoration: BoxDecoration(
-                                    image: DecorationImage(
-                                      image: NetworkImage(snapshot
-                                          .data!.bannerImage
-                                          .toString()),
-                                      fit: BoxFit.cover,
-                                      repeat: ImageRepeat.noRepeat,
+                                if (snapshot.data?.bannerImage!.length != 0)
+                                  Container(
+                                    decoration: BoxDecoration(
+                                      image: DecorationImage(
+                                        image: NetworkImage(snapshot
+                                            .data!.bannerImage
+                                            .toString()),
+                                        fit: BoxFit.cover,
+                                        repeat: ImageRepeat.noRepeat,
+                                      ),
+                                      borderRadius: BorderRadius.circular(0),
+                                      color: Colors.white,
                                     ),
-                                    color: Colors.white,
-                                    borderRadius: BorderRadius.circular(0),
+                                    height: 300,
+                                    child: snapshot.data?.bannerImage != null
+                                        ? null
+                                        : Icon(
+                                            CupertinoIcons.news,
+                                            size: 55,
+                                            color: Colors.grey,
+                                          ),
                                   ),
-                                  height: 300,
-                                  child: snapshot.data!.bannerImage != null
-                                      ? null
-                                      : Icon(
-                                          CupertinoIcons.news,
-                                          size: 55,
-                                          color: Colors.grey,
-                                        ),
-                                ),
-                                SizedBox(height: 20),
+                                SizedBox(
+                                    height: snapshot.data?.bannerImage == null
+                                        ? 5
+                                        : 15),
                                 Text(
                                   snapshot.data!.title.toString(),
                                   style: TextStyle(

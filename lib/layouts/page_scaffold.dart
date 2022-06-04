@@ -245,7 +245,7 @@ class _PageScaffoldState extends State<PageScaffold> {
                               bottom: BorderSide(
                                   color: ColorPicker.kPrimaryLight, width: 3))),
                       padding: const EdgeInsets.only(left: 5),
-                      child: Text('Holedo Pages',
+                      child: Text('Holedo Direct Links',
                           style: FontTextStyle.kWhite16W400SSP),
                     ),
                     SizedBox(
@@ -254,7 +254,7 @@ class _PageScaffoldState extends State<PageScaffold> {
                     for (final pages in Get.put(HoledoDatabase()).pages)
                       FooterLinkCard(
                           title: pages.title.toString(),
-                          path: '/pages/${pages.slug}'),
+                          path: '/${pages.slug}'),
                   ],
                 ),
               ),
