@@ -159,7 +159,7 @@ class _PageScaffoldState extends State<PageScaffold> {
         height: 650,
         decoration: BoxDecoration(
           image: DecorationImage(
-            image: AssetImage('images/Background.png'),
+            image: AssetImage('assets/images/Background.png'),
             fit: BoxFit.fitWidth,
             alignment: Alignment.bottomRight,
             repeat: ImageRepeat.noRepeat,
