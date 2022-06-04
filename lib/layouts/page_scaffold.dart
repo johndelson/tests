@@ -233,7 +233,7 @@ class _PageScaffoldState extends State<PageScaffold> {
             Padding(
               padding: const EdgeInsets.all(4.0),
               child: Image(
-                image: AssetImage('icons/logo1.png'),
+                image: AssetImage('assets/icons/logo1.png'),
               ),
             ),
             SB.SW10(),
