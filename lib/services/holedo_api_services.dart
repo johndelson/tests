@@ -14,11 +14,9 @@ final baseUrl = 'https://${Get.put(HoledoDatabase()).apiHost}/rest';
 class ApiServices {
   dio.Dio _dio = dio.Dio();
 
-
-  Future <Holedoapi?>updateUserProfile()async{
+  Future<Holedoapi?> updateUserProfile() async {
     return null;
   }
-
 
   Future<Holedoapi> POST(
       {String? target,

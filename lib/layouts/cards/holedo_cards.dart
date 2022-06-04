@@ -382,3 +382,93 @@ class NewsCategoryCard extends StatelessWidget {
     );
   }
 }
+
+class FooterCard extends StatelessWidget {
+  final String Function(String id)? pathBuilder;
+
+  const FooterCard({
+    Key? key,
+    this.pathBuilder,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return SmallCard(
+      onTap: () {
+        Routemaster.of(context).push(pathBuilder != null
+            ? pathBuilder!('aa' as String)
+            : '/news/all/aa/');
+      },
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Container(
+            decoration: BoxDecoration(
+              color: Color.fromARGB(255, 0, 0, 0),
+              borderRadius: BorderRadius.circular(3),
+            ),
+            height: 30,
+            width: 25,
+            child: Icon(
+              CupertinoIcons.news,
+              size: 15,
+              color: Colors.grey,
+            ),
+          ),
+          SizedBox(width: 20),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  'aaa',
+                  style: TextStyle(fontSize: 16),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class FooterLinkCard extends StatelessWidget {
+  final String title;
+  final String path;
+  final String Function(String id)? pathBuilder;
+
+  const FooterLinkCard({
+    Key? key,
+    required this.title,
+    required this.path,
+    this.pathBuilder,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return SmallCard(
+      onTap: () {
+        Routemaster.of(context).push(pathBuilder != null
+            ? pathBuilder!('${path}' as String)
+            : '${path}');
+      },
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  title,
+                  style: TextStyle(fontSize: 16),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}

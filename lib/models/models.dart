@@ -7,6 +7,7 @@ import 'package:get/get.dart';
 
 import 'package:holedo/models/holedoapi/article.dart';
 import 'package:holedo/models/holedoapi/article_category.dart';
+import 'package:holedo/models/holedoapi/page.dart';
 
 import 'package:holedo/models/holedoapi/user.dart';
 import 'package:holedo/models/holedoapi/job.dart';
@@ -101,6 +102,7 @@ class HoledoDatabase extends GetxController {
   DataModel? settingsList;
   List<ArticleCategory> articleCategories = [];
   List<Article> articles = [];
+  List<Page> pages = [];
   final List<String> articlePaths = [];
   final ApiServices _api = ApiServices();
   void getArticleCategories() async {
@@ -113,6 +115,7 @@ class HoledoDatabase extends GetxController {
 
   Future<void> init() async {
     await GetStorage.init();
+    this.resetModel();
     print('starting website... ');
 
     final model = await this.fetchSettings();
@@ -142,6 +145,23 @@ class HoledoDatabase extends GetxController {
         : new DataModel();
   }
 
+  Future<Page> getPage({required String slug}) async {
+    try {
+      isLoading(true);
+
+      var data = getModel();
+      var page = data.pages?.firstWhere(
+        (e) => e.slug == slug,
+      );
+      if (page != null) {
+        print('page: ${page.toString()} ');
+      }
+      return page as Page;
+    } finally {
+      isLoading(false);
+    }
+  }
+
   Future<dynamic> fetchSettings() async {
     try {
       isLoading(true);
@@ -150,6 +170,7 @@ class HoledoDatabase extends GetxController {
 
       if (data.articleCategories?.length != null) {
         print('cache articles cat: ${data.articleCategories?.length} ');
+        print('cache pages: ${data.pages!.length} ');
         print('cache test:  ${data.articleCategories?.first.slug} ');
       }
 
@@ -157,12 +178,12 @@ class HoledoDatabase extends GetxController {
         print('getting new settings: ${data}');
         var response = await _api.getSettings();
         data = response.data as DataModel;
-        print('set cache: ${data}');
+        print('set cache: ${data.pages.toString()}');
         this.setModel(data);
       }
 
       settingsList = data;
-
+      pages = data.pages as List<Page>;
       articleCategories = data.articleCategories as List<ArticleCategory>;
       for (final category
           in articleCategories.where((category) => category.menuItem == true)) {

@@ -1,3 +1,5 @@
+import 'package:auto_size_text/auto_size_text.dart';
+import 'package:holedo/layouts/cards/holedo_cards.dart';
 import 'package:holedo/models/models.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -17,6 +19,11 @@ export 'package:holedo/layouts/pages/jobsfront_page.dart';
 export 'package:holedo/layouts/pages/jobs_page.dart';
 import 'appbar/appbar.dart';
 
+import 'package:holedo/constant/colorPicker/color_picker.dart';
+import 'package:holedo/constant/fontStyle/font_style.dart';
+import 'package:holedo/constant/sizedbox.dart';
+import 'package:holedo/common/common_widget.dart';
+
 class PageScaffold extends StatefulWidget {
   final String title;
   final Widget body;
@@ -35,7 +42,7 @@ class PageScaffold extends StatefulWidget {
 
 class _PageScaffoldState extends State<PageScaffold> {
   final TextEditingController _searchController = TextEditingController();
-
+  final double maxWidth = 1280;
   @override
   void dispose() {
     _searchController.dispose();
@@ -122,140 +129,340 @@ class _PageScaffoldState extends State<PageScaffold> {
                 ),
               )
             : null,
-        appBar: AppBarTop(),
-        body: Column(
-          children: [
+        appBar: PreferredSize(
+          preferredSize: Size.fromHeight(46),
+          child: _buildAppBar(),
+        ),
+        body: SafeArea(
+          child: ListView(children: <Widget>[
             Container(
-              color: Color(0xFF232f3e),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  SizedBox(width: 20),
-                  SizedBox(
-                    width: 40,
-                    child: InkWell(
-                      onTap:
-                          canGoBack ? () => routemaster.history.back() : null,
-                      child: Icon(
-                        Icons.arrow_back_ios,
-                        color: canGoBack
-                            ? Colors.white
-                            : Colors.white.withAlpha(30),
-                      ),
-                    ),
-                  ),
-                  InkWell(
-                    onTap: canGoForward
-                        ? () => routemaster.history.forward()
-                        : null,
-                    child: SizedBox(
-                      width: 40,
-                      child: Icon(
-                        Icons.arrow_forward_ios,
-                        color: canGoForward
-                            ? Colors.white
-                            : Colors.white.withAlpha(30),
-                      ),
-                    ),
-                  ),
-                  Expanded(
-                    child: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Flexible(
-                          child: Container(
-                            width: 300,
-                            padding: EdgeInsets.all(16),
-                            child: CupertinoTextField(
-                              controller: _searchController,
-                              onSubmitted: (_) => _search(),
-                            ),
-                          ),
-                        ),
-                        SizedBox(width: 10),
-                        ElevatedButton(
-                          onPressed: _search,
-                          child: Text('Search'),
-                        ),
-                      ],
-                    ),
-                  ),
-                  Expanded(
-                    child: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: _buildNavBarChildren(inDrawer: false),
-                    ),
-                  ),
-                  SizedBox(width: 20),
-                  if (appState.isLoggedIn)
-                    Text(
-                      'Hello, ${appState.username}!',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    )
-                  else
-                    InkWell(
-                      onTap: () {
-                        Routemaster.of(context).push(
-                          '/login',
-                          queryParameters: {
-                            'redirectTo': RouteData.of(context).fullPath,
-                          },
-                        );
-                      },
+                height: constraints.maxHeight,
+                child: Column(
+                  children: [
+                    Expanded(
+                        child: Container(
                       child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Text(
-                          'Log in',
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            color: Colors.white,
-                          ),
-                        ),
-                      ),
-                    ),
-                  SizedBox(width: 20),
-                ],
-              ),
-            ),
-            Expanded(
-              child: Row(
-                children: [
-                  /*if (!isMobile)
-                    Container(
-                      width: 200,
-                      color: Color(0xFF232f3e),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.stretch,
-                        children: _buildNavBarChildren(inDrawer: false),
-                      ),
-                    ),*/
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        //if (ModalRoute.of(context)?.canPop == true)
-                        //  CupertinoNavigationBarBackButton(),
-                        Expanded(
-                          child: Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 0),
-                            child: widget.body,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ],
+                          padding: const EdgeInsets.symmetric(horizontal: 0),
+                          child: widget.body),
+                    )),
+                  ],
+                )),
+            _buildFooter(),
+          ]),
         ),
       );
     });
+  }
+
+  Widget _buildFooter() {
+    return Container(
+        height: 650,
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage('images/Background.png'),
+            fit: BoxFit.fitWidth,
+            alignment: Alignment.bottomRight,
+            repeat: ImageRepeat.noRepeat,
+          ),
+          color: Color.fromARGB(255, 215, 215, 224),
+        ),
+        child: Container(
+          height: 450,
+          width: maxWidth,
+          padding: const EdgeInsets.only(top: 45),
+          alignment: Alignment.center,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              Container(
+                  width: Get.width / 5,
+                  padding: const EdgeInsets.only(top: 15),
+                  child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Text('Holedo Links',
+                            style: FontTextStyle.kWhite16W400SSP),
+                        Container(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: _buildNavBarChildren(inDrawer: false),
+                          ),
+                        ),
+                      ])),
+              SizedBox(
+                width: Get.width * 0.02,
+              ),
+              Container(
+                  padding: const EdgeInsets.only(top: 15),
+                  child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Text('Holedo Pages',
+                            style: FontTextStyle.kWhite16W400SSP),
+                        Container(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              for (final pages
+                                  in Get.put(HoledoDatabase()).pages)
+                                FooterLinkCard(
+                                    title: pages.title.toString(),
+                                    path: '/pages/${pages.slug}'),
+                            ],
+                          ),
+                        ),
+                      ])),
+              SizedBox(
+                width: Get.width * 0.02,
+              ),
+              Flexible(
+                  child: Text('asd', style: FontTextStyle.kWhite36W400SSP)),
+            ],
+          ),
+        ));
+  }
+
+  Widget _buildAppBar() {
+    final appState = Provider.of<AppState>(context);
+    return Container(
+        height: 46,
+        color: ColorPicker.kPrimaryLight1,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(4.0),
+              child: Image(
+                image: AssetImage('icons/logo1.png'),
+              ),
+            ),
+            SB.SW10(),
+            // SizedBox(
+            //   width: 10,
+            // ),
+            Container(
+              width: Get.width * 0.2,
+              decoration: BoxDecoration(
+                  color: ColorPicker.kWhite,
+                  borderRadius: BorderRadius.circular(5)),
+              margin: EdgeInsets.all(3),
+              child: TextFormField(
+                cursorColor: ColorPicker.kWhite,
+                style: FontTextStyle.kWhite16W400SSP,
+                decoration: InputDecoration(
+                  hintStyle: FontTextStyle.kPrimaryLightBlue16W400SSP,
+                  filled: true,
+                  fillColor: ColorPicker.kPrimaryLight,
+                  hintText: "Search",
+                  border: OutlineInputBorder(
+                      borderSide: BorderSide(color: ColorPicker.kPrimary),
+                      borderRadius: BorderRadius.circular(5)),
+                  focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: ColorPicker.kPrimary),
+                      borderRadius: BorderRadius.circular(5)),
+                  enabledBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: ColorPicker.kPrimary),
+                      borderRadius: BorderRadius.circular(5)),
+                  prefixIcon: Icon(
+                    Icons.search,
+                    color: ColorPicker.kPrimaryLightBlue,
+                  ),
+                  suffixIcon: Container(
+                    margin: EdgeInsets.only(right: 5, bottom: 5, top: 5),
+                    height: 40,
+                    width: Get.width * 0.045,
+                    decoration: BoxDecoration(
+                      color: ColorPicker.kPrimaryLight1,
+                      borderRadius: BorderRadius.circular(5),
+                    ),
+                    child: Center(
+                      child: CommonWidget.text(
+                        'People',
+                        style: FontTextStyle.kPrimaryLightBlue16W400SSP,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            SizedBox(
+              width: Get.width * 0.02,
+            ),
+            Container(
+              width: 430,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: _buildNavBarChildren(inDrawer: false),
+              ),
+            ),
+            SizedBox(
+              width: Get.width * 0.02,
+            ),
+            Container(
+              width: Get.width * 0.05,
+              decoration: BoxDecoration(
+                  border: Border(
+                      left: BorderSide(
+                          color: ColorPicker.kPrimaryLight, width: 3),
+                      right: BorderSide(
+                          color: ColorPicker.kPrimaryLight, width: 3))),
+              child: Center(
+                  child: Stack(
+                //overflow: Overflow.visible,
+                children: [
+                  Icon(
+                    Icons.email,
+                    color: ColorPicker.kPrimaryLightBlue,
+                  ),
+                  Positioned(
+                    right: -5,
+                    top: -5,
+                    child: Container(
+                      height: 16,
+                      width: 16,
+                      decoration: BoxDecoration(
+                        color: ColorPicker.kRed,
+                        borderRadius: BorderRadius.circular(3),
+                      ),
+                      child: Center(
+                        child: CommonWidget.text(
+                          '2',
+                          style: FontTextStyle.kWhite12W700SSP,
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              )),
+            ),
+            Container(
+              width: Get.width * 0.05,
+              decoration: BoxDecoration(
+                  border: Border(
+                      right: BorderSide(
+                          color: ColorPicker.kPrimaryLight, width: 3))),
+              child: Center(
+                  child: Stack(
+                //overflow: Overflow.visible,
+                children: [
+                  Icon(
+                    Icons.flag,
+                    color: ColorPicker.kPrimaryLightBlue,
+                  ),
+                  Positioned(
+                    right: -5,
+                    top: -5,
+                    child: Container(
+                      height: 16,
+                      width: 16,
+                      decoration: BoxDecoration(
+                        color: ColorPicker.kRed,
+                        borderRadius: BorderRadius.circular(3),
+                      ),
+                      child: Center(
+                        child: CommonWidget.text(
+                          '2',
+                          style: FontTextStyle.kWhite12W700SSP,
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              )),
+            ),
+            Container(
+              width: 90,
+              decoration: BoxDecoration(
+                  border: Border(
+                      right: BorderSide(
+                          color: ColorPicker.kPrimaryLight, width: 3))),
+              child: Center(
+                  child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(
+                    Icons.person_add,
+                    color: ColorPicker.kPrimaryLightBlue,
+                  ),
+                  SizedBox(
+                    width: 5,
+                  ),
+                  Container(
+                    height: 20,
+                    width: 30,
+                    decoration: BoxDecoration(
+                      color: Color(0xff546088),
+                      borderRadius: BorderRadius.circular(3),
+                    ),
+                    child: Center(
+                      child: CommonWidget.text('352',
+                          style: FontTextStyle.kPrimaryLight10W700SSP),
+                    ),
+                  ),
+                ],
+              )),
+            ),
+
+            if (appState.isLoggedIn)
+              Container(
+                width: Get.width * 0.05,
+                decoration: BoxDecoration(
+                    border: Border(
+                        right: BorderSide(
+                            color: ColorPicker.kPrimaryLight, width: 3))),
+                child: Center(
+                  child: Container(
+                    height: 26,
+                    width: 26,
+                    child: appState.profile?.avatarCdn != null
+                        ? CircleAvatar(
+                            radius: 30,
+                            backgroundImage: NetworkImage(
+                                appState.profile!.avatarCdn.toString()),
+                          )
+                        : Icon(
+                            CupertinoIcons.profile_circled,
+                            size: 55,
+                            color: Colors.grey,
+                          ),
+                  ),
+                ),
+              )
+            else
+              InkWell(
+                onTap: () {
+                  Routemaster.of(context).push(
+                    '/login',
+                    queryParameters: {
+                      'redirectTo': RouteData.of(context).fullPath,
+                    },
+                  );
+                },
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text(
+                    'Log in',
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
+                    ),
+                  ),
+                ),
+              ),
+            SizedBox(width: 20),
+            /**/
+          ],
+        ));
+  }
+
+  List<DropdownMenuItem<String>> get dropdownItems {
+    List<DropdownMenuItem<String>> menuItems = [
+      DropdownMenuItem(child: Text("USA"), value: "USA"),
+      DropdownMenuItem(child: Text("Canada"), value: "Canada"),
+      DropdownMenuItem(child: Text("Brazil"), value: "Brazil"),
+      DropdownMenuItem(child: Text("England"), value: "England"),
+    ];
+    return menuItems;
   }
 
   List<Widget> _buildNavBarChildren({required bool inDrawer}) {
@@ -322,7 +529,7 @@ class NavigationLink extends StatelessWidget {
           Routemaster.of(context).push(path);
         },
         child: Padding(
-          padding: const EdgeInsets.all(20),
+          padding: const EdgeInsets.fromLTRB(12, 10, 12, 10),
           child: Text(
             title,
             style: TextStyle(color: Colors.white),

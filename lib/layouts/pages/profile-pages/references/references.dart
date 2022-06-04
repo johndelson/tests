@@ -109,7 +109,7 @@ class _ReferencesState extends State<References> {
         ),
         widget.isEditable as bool
             ? ProfileEdit.buildProfileEdit(
-                width: SS.sW(context) * .30 as double ,
+                width: SS.sW(context) * .30 as double,
                 height: 177,
                 popUpEdit: () {
                   PopUpHeadMenu.buildReferencesCardPopUp(context);
@@ -137,7 +137,7 @@ class _ReferencesState extends State<References> {
         });
   }
 
- Widget buildProfilePictureCard() {
+  Widget buildProfilePictureCard() {
     return Form(
       child: Container(
         color: Colors.white,
@@ -223,7 +223,8 @@ class _ReferencesState extends State<References> {
     return Container(
       child: Padding(
         padding: EdgeInsets.symmetric(
-            horizontal: SS.sW(context) * 0.070 as double, vertical: SS.sH(context) * .02 as double),
+            horizontal: SS.sW(context) * 0.070 as double,
+            vertical: SS.sH(context) * .02 as double),
         child: SingleChildScrollView(
           child: Column(
             children: [

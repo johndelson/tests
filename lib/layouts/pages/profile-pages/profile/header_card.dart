@@ -1566,7 +1566,11 @@ class _HeaderCardState extends State<HeaderCard> {
                                   onPressed: () {
                                     buildSendConnReqPopUpCard();
                                   },
-                                  icon: const Icon(Icons.person_add,size: 10,color: ColorPicker.kWhite,),
+                                  icon: const Icon(
+                                    Icons.person_add,
+                                    size: 10,
+                                    color: ColorPicker.kWhite,
+                                  ),
                                   label: const Padding(
                                     padding: EdgeInsets.symmetric(
                                         vertical: 14, horizontal: 18),
