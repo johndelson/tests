@@ -1,5 +1,6 @@
 import 'package:holedo/layouts/page_scaffold.dart';
 import 'package:flutter/material.dart';
+import 'package:holedo/models/holedoapi/company.dart';
 
 import 'package:holedo/models/holedoapi/job.dart';
 import 'package:routemaster/routemaster.dart';
@@ -17,6 +18,14 @@ class JobsfrontPage extends StatelessWidget {
       title: 'Jobsfronts',
       body: ListView(
         children: [
+          Wrap(
+            children: [
+              //for (final book in Get.put(HoledoDatabase()).books)
+              //  BookCard(book: book),
+              for (final company in Get.put(HoledoDatabase()).companies)
+                CompanyCard(data: company),
+            ],
+          ),
           Container(
             color: Color(0xff202f3f),
             height: 70,
@@ -47,11 +56,9 @@ class JobsfrontPage extends StatelessWidget {
 
 class JobsfrontListPage extends StatelessWidget {
   final String mode;
-
-  const JobsfrontListPage({
-    Key? key,
-    required this.mode,
-  }) : super(key: key);
+  final Company? company;
+  const JobsfrontListPage({Key? key, required this.mode, this.company})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -60,7 +67,9 @@ class JobsfrontListPage extends StatelessWidget {
     return Scaffold(
         body: FutureBuilder(
             future: controller.fetchJobs(
-                context: context, type: mode == 'all' ? null : mode),
+                context: context,
+                type: mode == 'all' ? null : mode,
+                company: company!.id.toString()),
             builder: (context, AsyncSnapshot<List<Job>> snapshot) {
               if (!snapshot.hasData) {
                 return Center(

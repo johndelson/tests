@@ -26,6 +26,12 @@ bool _isValidPage(String? slug) {
       );
 }
 
+bool _isValidCompany(String? slug) {
+  return Get.put(HoledoDatabase()).companies.any(
+        (e) => e.slug == slug,
+      );
+}
+
 bool _isValidBookId(String? id) {
   return true;
   //holedoDatabase.books.any((book) => book.id == id);
@@ -127,6 +133,16 @@ RouteMap _buildRouteMap(BuildContext context) {
       '/jobs/premium': (route) => NoAnimationPage(
             child: JobsfrontListPage(mode: 'premium'),
           ),
+      '/company/:slug': (route) => _isValidCompany(route.pathParameters['slug'])
+          ? NoAnimationPage(
+              child: JobsfrontListPage(
+                mode: 'all',
+                company: Get.put(HoledoDatabase()).companies.firstWhere(
+                      (e) => e.slug == route.pathParameters['slug'],
+                    ),
+              ),
+            )
+          : NotFound(),
       '/job/:id': (route) =>
           NoAnimationPage(child: JobsPage(slug: route.pathParameters['id'])),
       '/search': (route) => NoAnimationPage(

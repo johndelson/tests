@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:holedo/models/holedoapi/company.dart';
 import 'package:holedo/models/holedoapi/job.dart';
 
 import 'package:routemaster/routemaster.dart';
@@ -262,6 +263,63 @@ class FooterLinkCard extends StatelessWidget {
                   title,
                   style: TextStyle(
                       fontSize: 16, color: Color.fromARGB(255, 255, 255, 255)),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class CompanyCard extends StatelessWidget {
+  final Company data;
+  final String Function(String id)? pathBuilder;
+
+  const CompanyCard({
+    Key? key,
+    required this.data,
+    this.pathBuilder,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return SmallCard(
+      onTap: () {
+        Routemaster.of(context).push(pathBuilder != null
+            ? pathBuilder!(data.slug as String)
+            : '/company/${data.slug}/');
+      },
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Container(
+            decoration: BoxDecoration(
+              color: Color.fromARGB(255, 0, 0, 0),
+              borderRadius: BorderRadius.circular(3),
+            ),
+            height: 30,
+            width: 25,
+            child: data.computedLogo != null
+                ? CircleAvatar(
+                    radius: 30,
+                    backgroundImage: NetworkImage(data.computedLogo as String),
+                  )
+                : Icon(
+                    CupertinoIcons.building_2_fill,
+                    size: 55,
+                    color: Colors.grey,
+                  ),
+          ),
+          SizedBox(width: 20),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  data.name as String,
+                  style: TextStyle(fontSize: 16),
                 ),
               ],
             ),
