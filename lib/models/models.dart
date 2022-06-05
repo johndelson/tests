@@ -389,7 +389,7 @@ class JobsController extends GetxController {
   }
 
   Future<List<Job>> fetchJobs(
-      {String? company,
+      {int? company,
       String? keyword,
       String? type,
       int? limit,

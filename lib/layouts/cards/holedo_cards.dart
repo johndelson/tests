@@ -289,7 +289,7 @@ class CompanyCard extends StatelessWidget {
       onTap: () {
         Routemaster.of(context).push(pathBuilder != null
             ? pathBuilder!(data.slug as String)
-            : '/company/${data.slug}/');
+            : '/jobs/all/${data.slug}/');
       },
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -299,8 +299,8 @@ class CompanyCard extends StatelessWidget {
               color: Color.fromARGB(255, 0, 0, 0),
               borderRadius: BorderRadius.circular(3),
             ),
-            height: 30,
-            width: 25,
+            height: 100,
+            width: 100,
             child: data.computedLogo != null
                 ? CircleAvatar(
                     radius: 30,
@@ -308,21 +308,9 @@ class CompanyCard extends StatelessWidget {
                   )
                 : Icon(
                     CupertinoIcons.building_2_fill,
-                    size: 55,
+                    size: 100,
                     color: Colors.grey,
                   ),
-          ),
-          SizedBox(width: 20),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  data.name as String,
-                  style: TextStyle(fontSize: 16),
-                ),
-              ],
-            ),
           ),
         ],
       ),
