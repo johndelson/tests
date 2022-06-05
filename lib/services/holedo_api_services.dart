@@ -9,7 +9,7 @@ import 'package:dio/dio.dart' as dio;
 import 'package:dio_http_cache/dio_http_cache.dart';
 
 //import 'package:dio/dio.dart';
-final baseUrl = 'http://${Get.put(HoledoDatabase()).apiHost}/rest';
+final baseUrl = 'https://${Get.put(HoledoDatabase()).apiHost}/rest';
 
 class ApiServices {
   dio.Dio _dio = dio.Dio();

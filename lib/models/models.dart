@@ -52,7 +52,7 @@ class AppState extends ChangeNotifier {
 
 class HoledoDatabase extends GetxController {
   var isLoading = true.obs;
-  final apiHost = 'dev.holedo.com';
+  final apiHost = 'api.holedo.com';
   final apiKey = 'holedo_flutter_tests';
   final token =
       'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOjM2MDgsImV4cCI6MTk2NzU1MDk5MH0.TTXGrAWbFkpMgjzzh2kly0RqyLxc_NzPIlyr7nzvc_I';
