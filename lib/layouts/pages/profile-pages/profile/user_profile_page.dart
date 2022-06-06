@@ -1,5 +1,8 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:holedo/layouts/pages/profile-pages/profile/header_card.dart';
+import 'package:holedo/layouts/pages/profile-pages/timeline/timeline.dart';
 import 'package:holedo/models/holedoapi/user.dart';
 import 'package:routemaster/routemaster.dart';
 import '../../../../constant/colorPicker/color_picker.dart';
@@ -8,6 +11,7 @@ import '../../../../constant/sizedbox.dart';
 import '../../../../responsive/responsive.dart';
 import '../profile-edit/profile_edit.dart';
 import '../profile-overview/profile_overview.dart';
+import '../references/references.dart';
 
 class GlobalKeys {
   static final refKey = GlobalKey();
@@ -44,7 +48,8 @@ class UserProfilePage extends StatefulWidget {
   State<UserProfilePage> createState() => _UserProfilePageState();
 }
 
-class _UserProfilePageState extends State<UserProfilePage> {
+class _UserProfilePageState extends State<UserProfilePage>
+    with TickerProviderStateMixin {
   bool isEditable = false;
 
   ///Common widgets
@@ -189,9 +194,17 @@ class _UserProfilePageState extends State<UserProfilePage> {
     );
   }
 
+  int tabBar = 0;
+  TabController? _tabController;
+
+  @override
+  void initState() {
+    _tabController = TabController(length: 5, vsync: this);
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
-    // final tabState = TabPage.of(context);
     return Responsive.isDesktop(context)
         ? Container(
             decoration: BoxDecoration(color: ColorPicker.kBG),
@@ -245,33 +258,142 @@ class _UserProfilePageState extends State<UserProfilePage> {
                                   style: FontTextStyle.kBlueDark112W700SSP),
                             ],
                           ),
-                          // ListView(
-                          //   children: [
-                          //     Container(
-                          //       child: TabBar(
-                          //           controller: tabState.controller, tabs: [
-                          //         Tab(icon: Icon(Icons.list), text: 'All News'),
-                          //         Tab(icon: Icon(Icons.star), text: 'Featured'),
-                          //       ]),
-                          //     ),
-                          //     SizedBox(
-                          //       height: 500,
-                          //       child: TabBarView(
-                          //         controller: tabState.controller,
-                          //         children: <Widget>[
-                          //           PageStackNavigator(stack: tabState.stacks[0]),
-                          //           PageStackNavigator(stack: tabState.stacks[1]),
-                          //         ],
-                          //       ),
-                          //     ),
-                          //
-                          //   ],
-                          // ),
+                          Row(
+                            children: [
+                              TabBar(
+                                labelColor: ColorPicker.kBlueLight1,
+                                unselectedLabelColor: ColorPicker.kGreyLight7,
+                                indicatorColor: ColorPicker.kBlueLight1,
+                                indicatorPadding:
+                                    EdgeInsets.symmetric(horizontal: 10),
+                                controller: _tabController,
+                                physics: NeverScrollableScrollPhysics(),
+                                isScrollable: true,
+                                automaticIndicatorColorAdjustment: true,
+                                tabs: [
+                                  Padding(
+                                    padding: EdgeInsets.all(10.0),
+                                    child: Text(
+                                      'Profile overview',
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.w600,
+                                          fontFamily: 'SourceSansPro',
+                                          fontSize: 14),
+                                    ),
+                                  ),
+                                  Padding(
+                                      padding: EdgeInsets.all(10.0),
+                                      child: Text(
+                                        'Timeline',
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.w600,
+                                          fontFamily: 'SourceSansPro',
+                                          fontSize: 14,
+                                        ),
+                                      )),
+                                  Padding(
+                                    padding: EdgeInsets.all(10.0),
+                                    child: Text(
+                                      'Articles',
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.w600,
+                                          fontFamily: 'SourceSansPro',
+                                          fontSize: 14),
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: EdgeInsets.all(10.0),
+                                    child: Text(
+                                      'Activity',
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.w600,
+                                          fontFamily: 'SourceSansPro',
+                                          fontSize: 14),
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: EdgeInsets.all(10.0),
+                                    child: Text(
+                                      'References',
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.w600,
+                                          fontFamily: 'SourceSansPro',
+                                          fontSize: 14),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
                           buildEditButton(),
                         ],
                       ),
                     ),
                   ),
+                  SizedBox(height: SS.sH(context)*1.9 as double,
+                    child: TabBarView(controller: _tabController, children: <Widget>[
+                      ProfileOverview(
+                          isEditable: isEditable,
+
+                          //section1 edit functionality
+                          profileOverviewSec1ProSummKey:
+                              profileOverviewSec1ProSummKey,
+                          profileOverviewSec1ProSumm_H:
+                              profileOverviewSec1ProSumm_H,
+                          profileOverviewSec1ProSumm_W:
+                              profileOverviewSec1ProSumm_W,
+                          profileOverviewSec1AreaOfExpKey:
+                              profileOverviewSec1AreaOfExpKey,
+                          profileOverviewSec1AreaOfExp_H:
+                              profileOverviewSec1AreaOfExp_H,
+                          profileOverviewSec1AreaOfExp_W:
+                              profileOverviewSec1AreaOfExp_W,
+                          profileOverviewSec1ReferencesKey:
+                              profileOverviewSec1ReferencesKey,
+                          profileOverviewSec1References_H:
+                              profileOverviewSec1References_H,
+                          profileOverviewSec1References_W:
+                              profileOverviewSec1References_W,
+
+                          //section2 edit functionality
+
+                          profileOverviewSec2WorkExpKey:
+                              profileOverviewSec2WorkExpKey,
+                          profileOverviewSec2WorkExp_H:
+                              profileOverviewSec2WorkExp_H,
+                          profileOverviewSec2WorkExp_W:
+                              profileOverviewSec2WorkExp_W,
+                          profileOverviewSec2EducationKey:
+                              profileOverviewSec2EducationKey,
+                          profileOverviewSec2Education_H:
+                              profileOverviewSec2Education_H,
+                          profileOverviewSec2Education_W:
+                              profileOverviewSec2Education_W,
+                          profileOverviewSec2AchievementKey:
+                              profileOverviewSec2AchievementKey,
+                          profileOverviewSec2Achievement_H:
+                              profileOverviewSec2Achievement_H,
+                          profileOverviewSec2Achievement_W:
+                              profileOverviewSec2Achievement_W,
+                          profileOverviewSec2LanguagesKey:
+                              profileOverviewSec2LanguagesKey,
+                          profileOverviewSec2Languages_H:
+                              profileOverviewSec2Languages_H,
+                          profileOverviewSec2Languages_W:
+                              profileOverviewSec2Languages_W,
+                          pOApiData: widget.userProfileData,
+                          editProfileBtn: buildEditButton),
+                      TimeLine(),
+                      TimeLine(),
+                      TimeLine(),
+                      References(
+                        isEditable: isEditable,
+                        referenceCard_H: referenceCard_H,
+                        referenceCard_W: referenceCard_W,
+                        referenceCardKey: referenceCardKey,
+                      )
+                    ]),
+                  )
                 ],
               ),
             ),

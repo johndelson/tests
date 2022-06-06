@@ -38,16 +38,7 @@ class NewsfrontPage extends StatelessWidget {
               ],
             ),
           ),
-          SizedBox(
-            height: 500,
-            child: TabBarView(
-              controller: tabState.controller,
-              children: <Widget>[
-                PageStackNavigator(stack: tabState.stacks[0]),
-                PageStackNavigator(stack: tabState.stacks[1]),
-              ],
-            ),
-          ),
+
         ],
       ),
     );
