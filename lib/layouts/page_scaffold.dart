@@ -79,8 +79,8 @@ class _PageScaffoldState extends State<PageScaffold> {
   void showPurchaseDialog(BuildContext context) {
     showDialog(
         context: context,
-        barrierDismissible:
-            false, // disables popup to close if tapped outside popup (need a button to close)
+        barrierDismissible: false,
+        // disables popup to close if tapped outside popup (need a button to close)
         builder: (BuildContext context) {
           return AlertDialog(
             title: Text(
@@ -110,7 +110,6 @@ class _PageScaffoldState extends State<PageScaffold> {
 
     return LayoutBuilder(builder: (context, constraints) {
       final isMobile = constraints.maxWidth < 600;
-
       return Scaffold(
         drawer: isMobile
             ? Drawer(

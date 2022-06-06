@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:holedo/layouts/pages/profile-pages/profile/header_card.dart';
-
 import '../../../../constant/colorPicker/color_picker.dart';
 import '../../../../constant/fontStyle/font_style.dart';
 import '../../../../constant/sizedbox.dart';
 import '../../../../responsive/responsive.dart';
 import '../profile-edit/profile_edit.dart';
 import '../profile-overview/profile_overview.dart';
-
 
 
 class GlobalKeys {
