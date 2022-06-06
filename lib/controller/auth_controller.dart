@@ -87,7 +87,7 @@ class AuthController extends GetxController {
   Auth restoreModel() {
     //print('model: ${box.read('model')}');
     final map = box.read('model') ?? myJson;
-    return Auth.fromJson(map as Map) ;
+    return Auth.fromJson(map as Map);
   }
 }
 

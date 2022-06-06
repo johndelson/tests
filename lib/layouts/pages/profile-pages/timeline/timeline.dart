@@ -15,8 +15,15 @@ class TimeLine extends StatefulWidget {
 class _TimeLineState extends State<TimeLine> {
   bool isVisible = false;
 
- Widget buildTimelineCard(IconData icon, String title, String subtitle, String date,
-      String description, var _height, var _width, bool isVisible) {
+  Widget buildTimelineCard(
+      IconData icon,
+      String title,
+      String subtitle,
+      String date,
+      String description,
+      var _height,
+      var _width,
+      bool isVisible) {
     return StatefulBuilder(builder: (context, setState) {
       return Padding(
         padding: const EdgeInsets.all(8.0),
@@ -103,7 +110,8 @@ class _TimeLineState extends State<TimeLine> {
     });
   }
 
- Widget buildTimelineWithCard(String year, var _height, var _width, bool isVisible) {
+  Widget buildTimelineWithCard(
+      String year, var _height, var _width, bool isVisible) {
     return TimelineTile(
       hasIndicator: true,
       indicatorStyle: IndicatorStyle(
@@ -137,7 +145,8 @@ class _TimeLineState extends State<TimeLine> {
     return SingleChildScrollView(
       child: Padding(
         padding: EdgeInsets.symmetric(
-            horizontal: SS.sW(context) * 0.070 as double, vertical: SS.sH(context) * .02 as double) ,
+            horizontal: SS.sW(context) * 0.070 as double,
+            vertical: SS.sH(context) * .02 as double),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           crossAxisAlignment: CrossAxisAlignment.start,

@@ -26,8 +26,8 @@ class _HeaderState extends State<Header> {
   GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
   List drawerItem = ['Home', 'Profile', 'News', 'Jobs', 'Recruitment', 'Help'];
 
-  Widget buildHeaderGesture(
-      String menuName,TextStyle _fontStyle, BuildContext context, routeName,int index) {
+  Widget buildHeaderGesture(String menuName, TextStyle _fontStyle,
+      BuildContext context, routeName, int index) {
     return GestureDetector(
       onTap: () {
         _controller.setIndex(index);

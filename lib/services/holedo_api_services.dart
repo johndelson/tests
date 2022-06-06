@@ -14,11 +14,9 @@ final baseUrl = 'https://${Get.put(HoledoDatabase()).apiHost}/rest';
 class ApiServices {
   dio.Dio _dio = dio.Dio();
 
-
-  Future <Holedoapi?>updateUserProfile()async{
+  Future<Holedoapi?> updateUserProfile() async {
     return null;
   }
-
 
   Future<Holedoapi> POST(
       {String? target,
@@ -61,6 +59,7 @@ class ApiServices {
     try {
       var model = new Holedoapi();
       token = token == null ? Get.put(HoledoDatabase()).apiKey : token;
+      print('GET URL: ${baseUrl}${target} param: ${data}');
       dio.Response response = await _dio.get(
         '${baseUrl}${target}',
         options: dio.Options(
@@ -74,7 +73,6 @@ class ApiServices {
         ),
         queryParameters: data,
       );
-      print('GET URL: ${target} param: ${data}');
 
       if (response.statusCode == 200) {
         model = Holedoapi.fromJson(response.data as Map<String, dynamic>);

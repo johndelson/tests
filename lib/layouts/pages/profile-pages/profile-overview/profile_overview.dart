@@ -202,7 +202,6 @@ class _ProfileOverviewState extends State<ProfileOverview> {
             ))
         : Column(
             children: [
-
               ProfileOverviewSec1(
                 sec1IsEditable: widget.isEditable,
                 profileOverviewSec1ProSummKey:

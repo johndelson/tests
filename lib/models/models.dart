@@ -7,6 +7,8 @@ import 'package:get/get.dart';
 
 import 'package:holedo/models/holedoapi/article.dart';
 import 'package:holedo/models/holedoapi/article_category.dart';
+import 'package:holedo/models/holedoapi/company.dart';
+import 'package:holedo/models/holedoapi/page.dart';
 
 import 'package:holedo/models/holedoapi/user.dart';
 import 'package:holedo/models/holedoapi/job.dart';
@@ -48,49 +50,6 @@ class AppState extends ChangeNotifier {
   NewsController get news => Get.put(NewsController());
 }
 
-class Book {
-  final String id;
-  final String title;
-  final String description;
-  final DateTime releaseDate;
-  final List<BookCategory> categories;
-  final bool isStaffPick;
-
-  Book({
-    required this.id,
-    required this.title,
-    required this.description,
-    required this.releaseDate,
-    required this.categories,
-    required this.isStaffPick,
-  });
-}
-
-enum BookCategory {
-  fiction,
-  nonFiction,
-}
-
-extension BookCategoryExtension on BookCategory {
-  String get displayName {
-    switch (this) {
-      case BookCategory.fiction:
-        return 'Fiction';
-      case BookCategory.nonFiction:
-        return 'Non-fiction';
-    }
-  }
-
-  String get queryParam {
-    switch (this) {
-      case BookCategory.fiction:
-        return 'fiction';
-      case BookCategory.nonFiction:
-        return 'nonfiction';
-    }
-  }
-}
-
 class HoledoDatabase extends GetxController {
   var isLoading = true.obs;
   final apiHost = 'api.holedo.com';
@@ -101,8 +60,11 @@ class HoledoDatabase extends GetxController {
   DataModel? settingsList;
   List<ArticleCategory> articleCategories = [];
   List<Article> articles = [];
+  List<Page> pages = [];
+  List<Company> companies = [];
   final List<String> articlePaths = [];
   final ApiServices _api = ApiServices();
+
   void getArticleCategories() async {
     articleCategories = getModel().articleCategories as List<ArticleCategory>;
   }
@@ -113,6 +75,7 @@ class HoledoDatabase extends GetxController {
 
   Future<void> init() async {
     await GetStorage.init();
+    //this.resetModel();
     print('starting website... ');
 
     final model = await this.fetchSettings();
@@ -142,6 +105,23 @@ class HoledoDatabase extends GetxController {
         : new DataModel();
   }
 
+  Future<Page> getPage({required String slug}) async {
+    try {
+      isLoading(true);
+
+      var data = getModel();
+      var page = data.pages?.firstWhere(
+        (e) => e.slug == slug,
+      );
+      if (page != null) {
+        print('page: ${page.toString()} ');
+      }
+      return page as Page;
+    } finally {
+      isLoading(false);
+    }
+  }
+
   Future<dynamic> fetchSettings() async {
     try {
       isLoading(true);
@@ -149,25 +129,38 @@ class HoledoDatabase extends GetxController {
       var data = getModel();
 
       if (data.articleCategories?.length != null) {
-        print('cache articles cat: ${data.articleCategories?.length} ');
-        print('cache test:  ${data.articleCategories?.first.slug} ');
+        print(
+            'Cache articles cat: ${data.articleCategories?.length}  pages: ${data.pages?.length} companies: ${data.companies?.length} ');
       }
 
       if (data.articleCategories?.length == null) {
         print('getting new settings: ${data}');
-        var response = await _api.getSettings();
+        var response = await _api.GET(target: '/site-settings/?type=2');
         data = response.data as DataModel;
-        print('set cache: ${data}');
-        this.setModel(data);
       }
 
-      settingsList = data;
+      if (data.pages?.length == 0 || data.pages?.length == null) {
+        print('getting pages');
+        var response = await _api.GET(target: '/site-settings/pages?type=2');
+        data.pages = response.data!.pages;
+      }
 
+      if (data.companies?.length == 0 || data.companies?.length == null) {
+        print('getting companies');
+        var response =
+            await _api.GET(target: '/site-settings/companies?type=2');
+        data.companies = response.data!.companies;
+      }
+      pages = data.pages as List<Page>;
+      companies = data.companies as List<Company>;
       articleCategories = data.articleCategories as List<ArticleCategory>;
+
       for (final category
           in articleCategories.where((category) => category.menuItem == true)) {
         articlePaths.add(category.slug as String);
       }
+      settingsList = data;
+      this.setModel(data);
 
       return data;
     } finally {
@@ -396,7 +389,7 @@ class JobsController extends GetxController {
   }
 
   Future<List<Job>> fetchJobs(
-      {String? category,
+      {int? company,
       String? keyword,
       String? type,
       int? limit,
@@ -406,7 +399,7 @@ class JobsController extends GetxController {
       isLoading(true);
 
       var params = {
-        'category': category,
+        'company': company,
         'type': type,
         'keyword': keyword,
         'limit': limit == null ? this.limit : limit,
@@ -414,7 +407,7 @@ class JobsController extends GetxController {
       };
       params.removeWhere((k, v) => v == null);
 
-      print('context: ${context} type: ${type} cat: ${category}');
+      print('context: ${context} type: ${type} company: ${company}');
       var response = await _api.GET(target: '/jobs/index', data: params);
 
       if (response.success == true) {

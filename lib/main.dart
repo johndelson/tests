@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:holedo/layouts/page_scaffold.dart';
+import 'package:holedo/layouts/pages/content_page.dart';
 import 'package:holedo/models/models.dart';
 import 'package:provider/provider.dart';
 import 'package:routemaster/routemaster.dart';
@@ -16,6 +17,18 @@ void main() async {
 bool _isValidCategory(String? category) {
   return Get.put(HoledoDatabase()).articleCategories.any(
         (e) => e.slug == category,
+      );
+}
+
+bool _isValidPage(String? slug) {
+  return Get.put(HoledoDatabase()).pages.any(
+        (e) => e.slug == slug,
+      );
+}
+
+bool _isValidCompany(String? slug) {
+  return Get.put(HoledoDatabase()).companies.any(
+        (e) => e.slug == slug,
       );
 }
 
@@ -48,6 +61,15 @@ RouteMap _buildRouteMap(BuildContext context) {
       '/': (route) => NoAnimationPage(child: HomePage()),
       '/home': (route) => NoAnimationPage(child: HomePage()),
       '/help': (route) => NoAnimationPage(child: HomePage()),
+      '/pages/:slug': (route) => _isValidPage(route.pathParameters['slug'])
+          ? NoAnimationPage(
+              child: ContentPage(slug: route.pathParameters['slug']!))
+          : NotFound(),
+
+      '/:slug': (route) => _isValidPage(route.pathParameters['slug'])
+          ? NoAnimationPage(
+              child: ContentPage(slug: route.pathParameters['slug']!))
+          : Redirect('/'),
       '/login': (route) => NoAnimationPage(
             child: LoginPage(
               redirectTo: route.queryParameters['redirectTo'],
@@ -111,6 +133,28 @@ RouteMap _buildRouteMap(BuildContext context) {
       '/jobs/premium': (route) => NoAnimationPage(
             child: JobsfrontListPage(mode: 'premium'),
           ),
+      '/jobs/all/:slug': (route) =>
+          _isValidCompany(route.pathParameters['slug'])
+              ? NoAnimationPage(
+                  child: JobsfrontListPage(
+                    mode: 'all',
+                    company: Get.put(HoledoDatabase()).companies.firstWhere(
+                          (e) => e.slug == route.pathParameters['slug'],
+                        ),
+                  ),
+                )
+              : NotFound(),
+      '/jobs/premium/:slug': (route) =>
+          _isValidCompany(route.pathParameters['slug'])
+              ? NoAnimationPage(
+                  child: JobsfrontListPage(
+                    mode: 'premium',
+                    company: Get.put(HoledoDatabase()).companies.firstWhere(
+                          (e) => e.slug == route.pathParameters['slug'],
+                        ),
+                  ),
+                )
+              : NotFound(),
       '/job/:id': (route) =>
           NoAnimationPage(child: JobsPage(slug: route.pathParameters['id'])),
       '/search': (route) => NoAnimationPage(

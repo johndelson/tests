@@ -2,8 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:holedo/layouts/pages/profile-pages/profile/user_profile_page.dart';
 import 'package:holedo/models/holedoapi/user.dart';
 import 'package:holedo/layouts/page_scaffold.dart';
-
-import '../../services/holedo_api_services.dart';
+import 'package:holedo/models/models.dart';
 
 class ProfilePage extends StatefulWidget {
   final String? id;
@@ -16,24 +15,21 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
-  final ApiServices _apiServices = ApiServices();
-
   @override
   Widget build(BuildContext context) {
-    // final UsersController controller = Get.put(HoledoDatabase().users);
-    return PageScaffold(
-      title: "Job Content",
-      body: FutureBuilder<User>(
-          future: _apiServices.getUserData(id: widget.id, slug: widget.slug),
-          // controller.getProfileData(context: context, slug: slug, id: id),
-          builder: (context, AsyncSnapshot snapshot) {
-            if (!snapshot.hasData) {
-              return Center(
-                child: CircularProgressIndicator(),
-              );
-            } else
-              return UserProfilePage(userProfileData: snapshot.data!);
-          }),
-    );
+    final UsersController controller = Get.put(HoledoDatabase().users);
+    return FutureBuilder<User>(
+        future: controller.getProfileData(
+            context: context, slug: widget.slug, id: widget.id),
+        builder: (context, AsyncSnapshot<User> snapshot) {
+          if (!snapshot.hasData) {
+            return Center(
+              child: CircularProgressIndicator(),
+            );
+          } else
+            return PageScaffold(
+                title: snapshot.data!.fullName.toString(),
+                body: UserProfilePage(userProfileData: snapshot.data!));
+        });
   }
 }

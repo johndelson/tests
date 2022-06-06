@@ -7,9 +7,9 @@ class ProfileEdit {
   static Padding buildProfileEdit({
     required double width,
     required double height,
-    required VoidCallback  popUpEdit,
+    required VoidCallback popUpEdit,
     required bool showAddButton,
-    VoidCallback?  popUpAdd,
+    VoidCallback? popUpAdd,
   }) {
     return Padding(
       padding: const EdgeInsets.all(8.0),
@@ -25,7 +25,7 @@ class ProfileEdit {
                 backgroundColor: ColorPicker.kBlueLight1,
                 radius: 30,
                 child: IconButton(
-                  onPressed: popUpEdit ,
+                  onPressed: popUpEdit,
                   icon: const Icon(
                     Icons.edit,
                     color: Colors.white,

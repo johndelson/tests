@@ -18,6 +18,7 @@ class Company {
   dynamic computedBannerImage;
   String? combinedLineAddress;
   String? combinedCityCountry;
+  int? jobs_count;
 
   Company({
     this.id,
@@ -39,6 +40,7 @@ class Company {
     this.computedBannerImage,
     this.combinedLineAddress,
     this.combinedCityCountry,
+    this.jobs_count,
   });
 
   factory Company.fromJson(Map<String, dynamic> json) => Company(
@@ -65,6 +67,7 @@ class Company {
         computedBannerImage: json['computed_banner_image'] as dynamic,
         combinedLineAddress: json['combined_line_address'] as String?,
         combinedCityCountry: json['combined_city_country'] as String?,
+        jobs_count: json['jobs_count'] as int?,
       );
 
   Map<String, dynamic> toJson() => {
@@ -87,5 +90,6 @@ class Company {
         'computed_banner_image': computedBannerImage,
         'combined_line_address': combinedLineAddress,
         'combined_city_country': combinedCityCountry,
+        'jobs_count': jobs_count,
       };
 }

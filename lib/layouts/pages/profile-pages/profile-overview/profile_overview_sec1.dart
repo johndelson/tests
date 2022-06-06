@@ -21,7 +21,6 @@ class ProfileOverviewSec1 extends StatefulWidget {
   final profileOverviewSec1References_W;
   final pOApiDataSec1;
 
-
   ProfileOverviewSec1({
     Key? key,
     required this.sec1IsEditable,
@@ -35,7 +34,6 @@ class ProfileOverviewSec1 extends StatefulWidget {
     this.profileOverviewSec1References_H,
     this.profileOverviewSec1References_W,
     this.pOApiDataSec1,
-
   }) : super(key: key);
 
   @override

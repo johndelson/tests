@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:holedo/models/holedoapi/company.dart';
+import 'package:holedo/models/holedoapi/page.dart';
 import 'package:holedo/models/holedoapi/user.dart';
 
 import 'article.dart';
@@ -27,6 +29,8 @@ class DataModel {
   List<User>? users;
   User? user;
   String? token;
+  List<Page>? pages;
+  List<Company>? companies;
 
   DataModel(
       {this.settings,
@@ -39,7 +43,9 @@ class DataModel {
       this.job,
       this.users,
       this.user,
-      this.token});
+      this.token,
+      this.pages,
+      this.companies});
 
   factory DataModel.fromJson(Map<String, dynamic> json) => DataModel(
         settings: json['Settings'] == null
@@ -71,6 +77,16 @@ class DataModel {
             ? null
             : User.fromJson(json['user'] as Map<String, dynamic>),
         token: json['token'] == null ? null : json['token'] as String?,
+        pages: json['Pages'] == null
+            ? null
+            : (json['Pages'] as List<dynamic>?)
+                ?.map((e) => Page.fromJson(e as Map<String, dynamic>))
+                .toList(),
+        companies: json['Companies'] == null
+            ? null
+            : (json['Companies'] as List<dynamic>?)
+                ?.map((e) => Company.fromJson(e as Map<String, dynamic>))
+                .toList(),
       );
 
   Map<String, dynamic> toJson() => {
@@ -85,5 +101,7 @@ class DataModel {
         'users': users?.map((e) => e.toJson()).toList(),
         'user': user?.toJson(),
         'token': token,
+        'Pages': pages?.map((e) => e.toJson()).toList(),
+        'Companies': companies?.map((e) => e.toJson()).toList(),
       };
 }
