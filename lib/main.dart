@@ -115,12 +115,11 @@ RouteMap _buildRouteMap(BuildContext context) {
                   ),
                 )
               : NotFound(),
-      '/article/:category/:id': (route) =>
-          NoAnimationPage(child: NewsPage(slug: route.pathParameters['id'])),
-      '/news2/:category/:id': (route) => _isValidCategory(
-                  route.pathParameters['category']) &&
-              _isValidBookId(route.pathParameters['id'])
-          ? NoAnimationPage(child: NewsPage(id: route.pathParameters['id']!))
+      '/article/:category/:slug': (route) =>
+          NoAnimationPage(child: NewsPage(slug: route.pathParameters['slug'])),
+      '/news2/:category/:slug': (route) => _isValidCategory(
+              route.pathParameters['category'])
+          ? NoAnimationPage(child: NewsPage(id: route.pathParameters['slug']!))
           : NotFound(),
       '/jobs': (route) => TabPage(
             child: JobsfrontPage(),
