@@ -3,7 +3,6 @@ import 'package:holedo/models/holedoapi/article.dart';
 import 'package:holedo/models/holedoapi/job.dart';
 import 'package:holedo/models/holedoapi/user.dart';
 import 'package:routemaster/routemaster.dart';
-
 import 'package:holedo/models/models.dart';
 import 'package:holedo/layouts/page_scaffold.dart';
 

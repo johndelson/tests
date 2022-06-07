@@ -3,7 +3,6 @@ import 'package:holedo/layouts/pages/profile-pages/profile/user_profile_page.dar
 import 'package:holedo/models/holedoapi/user.dart';
 import 'package:holedo/layouts/page_scaffold.dart';
 import 'package:holedo/models/models.dart';
-import '../../services/holedo_api_services.dart';
 
 class ProfilePage extends StatefulWidget {
   final String? id;
@@ -16,8 +15,6 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
-  //final ApiServices _apiServices = ApiServices();
-
   @override
   Widget build(BuildContext context) {
     final UsersController controller = Get.put(HoledoDatabase().users);

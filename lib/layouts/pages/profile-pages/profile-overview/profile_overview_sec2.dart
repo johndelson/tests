@@ -1,4 +1,3 @@
-import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:holedo/common/dropDownButton.dart';
@@ -279,7 +278,7 @@ class _ProfileOverviewSec2State extends State<ProfileOverviewSec2> {
       bool isExperienceEditable, bool isExperienceShowCard, int indexExp) {
     return StatefulBuilder(builder: (context, setState) {
       return Padding(
-        padding: EdgeInsets.all(16.0),
+        padding: EdgeInsets.symmetric(vertical: 5, horizontal: 16),
         child: Container(
           width: Responsive.isDesktop(context)
               ? SS.sW(context) * .50 as double
@@ -403,6 +402,7 @@ class _ProfileOverviewSec2State extends State<ProfileOverviewSec2> {
                   child: Column(
                     children: [
                       PopUpHeadMenu.popUpHead('Work experience', context),
+                      SS.sB(15),
                       isVisibleExperience
                           ? buildExpInnerCard(false, true, indexExp)
                           : Padding(
@@ -426,6 +426,7 @@ class _ProfileOverviewSec2State extends State<ProfileOverviewSec2> {
                             ),
                       buildExpInnerCard(true, isExperienceShowCard, indexExp),
                       buildExpInnerCard(true, isExperienceShowCard, indexExp),
+                      SS.sB(15)
                     ],
                   ),
                 ),
@@ -454,7 +455,7 @@ class _ProfileOverviewSec2State extends State<ProfileOverviewSec2> {
           (int i) =>
               TextFieldAndFieldName.buildTextField('Course name') as Widget);
       return Padding(
-        padding: EdgeInsets.all(16.0),
+        padding: EdgeInsets.symmetric(vertical: 5, horizontal: 16),
         child: Container(
           width: Responsive.isDesktop(context)
               ? SS.sW(context) * .50 as double
@@ -583,6 +584,7 @@ class _ProfileOverviewSec2State extends State<ProfileOverviewSec2> {
                     child: Column(
                       children: [
                         PopUpHeadMenu.popUpHead('Education', context),
+                        SS.sB(15),
                         isVisibleEducation as bool
                             ? buildEduInnerCard(false, true, indexEdu)
                             : Padding(
@@ -603,6 +605,7 @@ class _ProfileOverviewSec2State extends State<ProfileOverviewSec2> {
                               ),
                         buildEduInnerCard(true, isEducationShowCard, indexEdu),
                         buildEduInnerCard(true, isEducationShowCard, indexEdu),
+                        SS.sB(15)
                       ],
                     ),
                   ),
@@ -627,7 +630,7 @@ class _ProfileOverviewSec2State extends State<ProfileOverviewSec2> {
       [String? title, String? subTitle, String? year]) {
     return StatefulBuilder(builder: (context, setState) {
       return Padding(
-        padding: EdgeInsets.all(16.0),
+        padding: EdgeInsets.symmetric(vertical: 5, horizontal: 16),
         child: Container(
           width: Responsive.isDesktop(context)
               ? SS.sW(context) * .50 as double
@@ -745,6 +748,7 @@ class _ProfileOverviewSec2State extends State<ProfileOverviewSec2> {
                   child: Column(
                     children: [
                       PopUpHeadMenu.popUpHead('Achievements', context),
+                      SS.sB(15),
                       isVisibleAchivement
                           ? buildAchiveInnerCard(false, true)
                           : Padding(
@@ -765,6 +769,7 @@ class _ProfileOverviewSec2State extends State<ProfileOverviewSec2> {
                             ),
                       buildAchiveInnerCard(true, isArchiveShowCard),
                       buildAchiveInnerCard(true, isArchiveShowCard),
+                      SS.sB(15)
                     ],
                   ),
                 ),

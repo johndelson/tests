@@ -43,6 +43,7 @@ class PageScaffold extends StatefulWidget {
 class _PageScaffoldState extends State<PageScaffold> {
   final TextEditingController _searchController = TextEditingController();
   final double maxWidth = 1280;
+
   @override
   void dispose() {
     _searchController.dispose();
@@ -86,8 +87,8 @@ class _PageScaffoldState extends State<PageScaffold> {
   void showPurchaseDialog(BuildContext context) {
     showDialog(
         context: context,
-        barrierDismissible:
-            false, // disables popup to close if tapped outside popup (need a button to close)
+        barrierDismissible: false,
+        // disables popup to close if tapped outside popup (need a button to close)
         builder: (BuildContext context) {
           return AlertDialog(
             title: Text(
@@ -117,7 +118,6 @@ class _PageScaffoldState extends State<PageScaffold> {
 
     return LayoutBuilder(builder: (context, constraints) {
       final isMobile = constraints.maxWidth < 600;
-
       return Scaffold(
         drawer: isMobile
             ? Drawer(
@@ -136,17 +136,19 @@ class _PageScaffoldState extends State<PageScaffold> {
         body: SafeArea(
           child: ListView(children: <Widget>[
             Container(
-                height: constraints.maxHeight,
-                child: Column(
-                  children: [
-                    Expanded(
-                        child: Container(
+              height: constraints.maxHeight,
+              child: Column(
+                children: [
+                  Expanded(
+                    child: Container(
                       child: Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 0),
                           child: widget.body),
-                    )),
-                  ],
-                )),
+                    ),
+                  ),
+                ],
+              ),
+            ),
             _buildFooter(),
           ]),
         ),
