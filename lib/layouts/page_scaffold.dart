@@ -43,6 +43,7 @@ class PageScaffold extends StatefulWidget {
 class _PageScaffoldState extends State<PageScaffold> {
   final TextEditingController _searchController = TextEditingController();
   final double maxWidth = 1280;
+
   @override
   void dispose() {
     _searchController.dispose();
@@ -135,17 +136,19 @@ class _PageScaffoldState extends State<PageScaffold> {
         body: SafeArea(
           child: ListView(children: <Widget>[
             Container(
-                height: constraints.maxHeight,
-                child: Column(
-                  children: [
-                    Expanded(
-                        child: Container(
+              height: constraints.maxHeight,
+              child: Column(
+                children: [
+                  Expanded(
+                    child: Container(
                       child: Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 0),
                           child: widget.body),
-                    )),
-                  ],
-                )),
+                    ),
+                  ),
+                ],
+              ),
+            ),
             _buildFooter(),
           ]),
         ),
