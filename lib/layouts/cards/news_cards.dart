@@ -100,7 +100,7 @@ class NewsCategoryCard extends StatelessWidget {
       onTap: () {
         Routemaster.of(context).push(pathBuilder != null
             ? pathBuilder!(category.slug as String)
-            : '/news/all/${category.slug}/');
+            : '/category/${category.slug}/');
       },
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
