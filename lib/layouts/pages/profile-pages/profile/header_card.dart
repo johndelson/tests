@@ -300,7 +300,11 @@ class _HeaderCardState extends State<HeaderCard> {
                                           Column(
                                             children: [
                                               ElevatedButton(
-                                                  onPressed: () {},
+                                                  onPressed: () {
+                                                    setState(() {
+
+                                                    });
+                                                  },
                                                   child: Text('Upload'))
                                             ],
                                           ),

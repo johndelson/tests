@@ -78,6 +78,7 @@ RouteMap _buildRouteMap(BuildContext context) {
       '/recruitments': (route) => NoAnimationPage(child: RecruitmentPage()),
       '/recruitments/:id': (route) =>
           NoAnimationPage(child: ProfilePage(id: route.pathParameters['id']!)),
+
       '/news': (route) => TabPage(
             child: NewsfrontPage(),
             paths: [
@@ -174,6 +175,7 @@ RouteMap _buildRouteMap(BuildContext context) {
       },
       '/profile/:id': (route) =>
           NoAnimationPage(child: ProfilePage(slug: route.pathParameters['id'])),
+
       //'/profile/add': (route) => AddProfilePage(),
       '/interactive/:id': (route) {
         final appState = Provider.of<AppState>(context, listen: false);
@@ -250,5 +252,5 @@ class BookStoreApp extends StatelessWidget {
     );
   }
 
-  //.profile = Get.put(HoledoDatabase()).getModel().user ?? null
+//.profile = Get.put(HoledoDatabase()).getModel().user ?? null
 }

@@ -1,4 +1,3 @@
-import 'package:auto_size_text/auto_size_text.dart';
 import 'package:holedo/layouts/cards/holedo_cards.dart';
 import 'package:holedo/models/models.dart';
 import 'package:flutter/cupertino.dart';
@@ -17,8 +16,6 @@ export 'package:holedo/layouts/pages/newsfront_page.dart';
 export 'package:holedo/layouts/pages/news_page.dart';
 export 'package:holedo/layouts/pages/jobsfront_page.dart';
 export 'package:holedo/layouts/pages/jobs_page.dart';
-import 'appbar/appbar.dart';
-
 import 'package:holedo/constant/colorPicker/color_picker.dart';
 import 'package:holedo/constant/fontStyle/font_style.dart';
 import 'package:holedo/constant/sizedbox.dart';
@@ -102,7 +99,7 @@ class _PageScaffoldState extends State<PageScaffold> {
                 onPressed: () {
                   Navigator.of(context).pop();
                 }, //closes popup
-              ),
+              ) ,
             ],
           );
         });
@@ -150,7 +147,7 @@ class _PageScaffoldState extends State<PageScaffold> {
               ),
             ),
             _buildFooter(),
-          ]),
+          ],),
         ),
       );
     });
