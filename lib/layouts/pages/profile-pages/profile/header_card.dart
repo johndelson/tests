@@ -316,7 +316,7 @@ class _HeaderCardState extends State<HeaderCard> {
                                             ),
                                           ),
                                         ),
-                                        SizedBox(height: 15),
+                                        SS.sB(15),
                                         Column(
                                           mainAxisAlignment:
                                               MainAxisAlignment.start,
@@ -600,20 +600,14 @@ class _HeaderCardState extends State<HeaderCard> {
         AutoSizeText(
           no,
           minFontSize: 10,
-          style: const TextStyle(
-              color: Color(0xFF32A3FD),
-              fontSize: 18,
-              fontWeight: FontWeight.w400),
+          style: FontTextStyle.kBlueLight120W400SSP,
           maxLines: 1,
         ),
-        const SizedBox(height: 3),
+        SS.sB(3),
         AutoSizeText(
           name,
           minFontSize: 8,
-          style: const TextStyle(
-              color: Color(0xFFB5BDC2),
-              fontSize: 12,
-              fontWeight: FontWeight.w400),
+          style: FontTextStyle.kGreyLight612W700SSP,
           textAlign: TextAlign.center,
         )
       ],
@@ -1492,7 +1486,7 @@ class _HeaderCardState extends State<HeaderCard> {
                                     child: Container(
                                       clipBehavior: Clip.antiAlias,
                                       height: SS.sH(context) * 0.050 as double,
-                                      width: SS.sW(context) * 0.032 as double,
+                                      width: SS.sW(context) * 0.033 as double,
                                       decoration: BoxDecoration(
                                           borderRadius: isHovering
                                               ? BorderRadius.circular(3)
@@ -1629,9 +1623,7 @@ class _HeaderCardState extends State<HeaderCard> {
                                     color: Color(0xFF32A3FD),
                                   ),
                                 ),
-                                SizedBox(
-                                  width: 2,
-                                ),
+                               SS.sB(0,2),
                                 OutlinedButton.icon(
                                   style: ButtonStyle(
                                     backgroundColor: MaterialStateProperty.all(
@@ -1662,9 +1654,7 @@ class _HeaderCardState extends State<HeaderCard> {
                                 ),
                               ],
                             ),
-                            const SizedBox(
-                              height: 30,
-                            ),
+                           SS.sB(30),
                             Divider(
                               height: 1,
                               color: Colors.grey.shade300,
@@ -1949,9 +1939,7 @@ class _HeaderCardState extends State<HeaderCard> {
                                       color: Color(0xFF32A3FD),
                                     ),
                                   ),
-                                  SizedBox(
-                                    width: 2,
-                                  ),
+                                 SS.sB(0,2),
                                   OutlinedButton.icon(
                                     style: ButtonStyle(
                                       backgroundColor:
@@ -1984,10 +1972,8 @@ class _HeaderCardState extends State<HeaderCard> {
                                   ),
                                 ],
                               ),
-                              const SizedBox(
-                                height: 30,
-                              ),
-                              const CircleAvatar(
+                              SS.sB(30),
+                               CircleAvatar(
                                 radius: 30,
                                 backgroundImage: NetworkImage(
                                     'https://cdn.pixabay.com/photo/2012/11/26/15/07/earth-67359__340.jpg'),
