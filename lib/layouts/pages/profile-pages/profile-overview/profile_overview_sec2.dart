@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:holedo/common/dropDownButton.dart';
 import 'package:holedo/constant/fontStyle/font_style.dart';
+import '../../../../common/clipper.dart';
 import '../../../../common/popUpHeadMenu.dart';
 import '../../../../common/textfield_fieldname.dart';
 import '../../../../constant/colorPicker/color_picker.dart';
@@ -54,201 +55,239 @@ class _ProfileOverviewSec2State extends State<ProfileOverviewSec2> {
   bool isShowingPopUpCard = false;
 
   Widget buildProfileSec2Cards(
-      sec2Key,
-      sec2_H,
-      sec2_W,
-      _width,
-      _height,
-      String cardName,
-      String cardTitle,
-      String cardSubTitle,
-      String cardDate,
-      String cardBtn,
-      String cardDetail,
-      IconData cardIcon,
-      popUpEditCards,
-      popUpAddCards,
-      bool isVisible,
-      String description,
-      bool showIcon,
-      bool isShowingPopUpCard) {
+    sec2Key,
+    sec2_H,
+    sec2_W,
+    _width,
+    _height,
+    String cardName,
+    String cardTitle,
+    String cardSubTitle,
+    String cardDate,
+    String cardBtn,
+    String cardDetail,
+    IconData cardIcon,
+    popUpEditCards,
+    popUpAddCards,
+    bool isVisible,
+    String description,
+    bool showIcon,
+  ) {
     return Stack(
       children: [
-        StatefulBuilder(builder: (context, setState) {
-          return Padding(
-            padding: EdgeInsets.all(8.0),
-            child: Container(
-              key: sec2Key as Key,
-              color: ColorPicker.kWhite,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  isShowingPopUpCard ? Text('showing') : Container(),
-                  Row(
-                    mainAxisSize: MainAxisSize.min,
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                      Expanded(
-                        child: Padding(
-                          padding: EdgeInsets.only(left: 20, top: 13),
-                          child: Text(cardName,
-                              style: FontTextStyle.kBlueDark120W400SSP),
-                        ),
+        Padding(
+          padding: EdgeInsets.all(8.0),
+          child: Container(
+            key: sec2Key as Key,
+            color: ColorPicker.kWhite,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  mainAxisSize: MainAxisSize.min,
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    Expanded(
+                      child: Padding(
+                        padding: EdgeInsets.only(left: 20, top: 13),
+                        child: Text(cardName,
+                            style: FontTextStyle.kBlueDark120W400SSP),
                       ),
-                      Expanded(
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          children: [
-                            showIcon
-                                ? StatefulBuilder(builder: (context, set) {
-                                    return InkWell(
-                                      onTap: () {
-                                        set(() {
-                                          isShowingPopUpCard =
-                                              !isShowingPopUpCard;
-                                          print(isShowingPopUpCard);
-                                        });
-                                      },
-                                      onHover: (value) {
-                                        setState(() {
-                                          isHovering = value;
-                                        });
-                                      },
-                                      child: Padding(
-                                        padding:
-                                            EdgeInsets.only(top: 13, right: 20),
-                                        child: Container(
-                                          decoration: BoxDecoration(
-                                              borderRadius: isHovering
-                                                  ? BorderRadius.circular(3)
-                                                  : BorderRadius.circular(0),
-                                              border: isHovering
-                                                  ? Border.all(
-                                                      width: 1,
-                                                      color: Colors.grey)
-                                                  : Border.all(
-                                                      width: 0,
-                                                      color:
-                                                          Colors.transparent)),
-                                          child: Icon(
-                                            Icons.arrow_drop_down_sharp,
-                                            color: ColorPicker.kBlueDark1,
-                                          ),
-                                        ),
+                    ),
+                    Expanded(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          showIcon
+                              ? InkWell(
+                                  onTap: () {
+                                    setState(() {
+                                      isShowingPopUpCard = !isShowingPopUpCard;
+                                      print(isShowingPopUpCard);
+                                    });
+                                  },
+                                  onHover: (value) {
+                                    setState(() {
+                                      isHovering = value;
+                                    });
+                                  },
+                                  child: Padding(
+                                    padding:
+                                        EdgeInsets.only(top: 13, right: 20),
+                                    child: Container(
+                                      decoration: BoxDecoration(
+                                          borderRadius: isHovering
+                                              ? BorderRadius.circular(3)
+                                              : BorderRadius.circular(0),
+                                          border: isHovering
+                                              ? Border.all(
+                                                  width: 1, color: Colors.grey)
+                                              : Border.all(
+                                                  width: 0,
+                                                  color: Colors.transparent)),
+                                      child: Icon(
+                                        Icons.arrow_drop_down_sharp,
+                                        color: ColorPicker.kBlueDark1,
                                       ),
-                                    );
-                                  })
-                                : Container(),
-                          ],
-                        ),
+                                    ),
+                                  ),
+                                )
+                              : Container(),
+                        ],
                       ),
-                    ],
-                  ),
-                  SS.sB(8),
-                  Divider(
-                    height: .5,
-                    color: Color(0xFFE5E5E5),
-                  ),
-                  SS.sB(10),
-                  Row(
+                    ),
+                  ],
+                ),
+                SS.sB(8),
+                Divider(
+                  height: .5,
+                  color: Color(0xFFE5E5E5),
+                ),
+                SS.sB(10),
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Expanded(
+                      child: Column(
+                        children: [
+                          Container(
+                            alignment: Alignment.center,
+                            height: 50,
+                            width: 50,
+                            color: ColorPicker.kBlueLight1,
+                            child: Icon(
+                              cardIcon,
+                              color: ColorPicker.kWhite,
+                              size: 16.67,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Expanded(
+                      flex: 3,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(cardTitle,
+                              style: FontTextStyle.kBlueDark116W700SSP),
+                          SS.sB(5),
+                          GestureDetector(
+                              child: Text(
+                                cardSubTitle,
+                                style: FontTextStyle.kBlueLight114W400SSP,
+                              ),
+                              onTap: () {}),
+                          SS.sB(5),
+                          Text(
+                            cardDate,
+                            style: FontTextStyle.kGreyLight5146W400SSP,
+                          ),
+                          SS.sB(5),
+                        ],
+                      ),
+                    ),
+                    SS.sB(0, 6),
+                  ],
+                ),
+                SS.sB(5),
+                SingleChildScrollView(
+                  child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Expanded(
-                        child: Column(
-                          children: [
-                            Container(
-                              alignment: Alignment.center,
-                              height: 50,
-                              width: 50,
-                              color: ColorPicker.kBlueLight1,
-                              child: Icon(
-                                cardIcon,
-                                color: ColorPicker.kWhite,
-                                size: 16.67,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      Expanded(
-                        flex: 3,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(cardTitle,
-                                style: FontTextStyle.kBlueDark116W700SSP),
-                            SS.sB(5),
-                            GestureDetector(
-                                child: Text(
-                                  cardSubTitle,
-                                  style: FontTextStyle.kBlueLight114W400SSP,
-                                ),
-                                onTap: () {}),
-                            SS.sB(5),
-                            Text(
-                              cardDate,
-                              style: FontTextStyle.kGreyLight5146W400SSP,
-                            ),
-                            SS.sB(5),
-                          ],
-                        ),
-                      ),
-                      SS.sB(0, 6),
-                    ],
-                  ),
-                  SS.sB(5),
-                  SingleChildScrollView(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        AnimatedContainer(
-                          height: isVisible ? 120 : 0,
-                          color: ColorPicker.kGreyLight2,
-                          duration: Duration(seconds: 1),
-                          alignment: isVisible
-                              ? Alignment.topCenter
-                              : Alignment.bottomCenter,
-                          curve: Curves.fastOutSlowIn,
-                          child: SingleChildScrollView(
-                            child: Padding(
-                              padding: EdgeInsets.all(8.0),
-                              child: Text(
-                                description,
-                                style: FontTextStyle.kGreyLight516W400SSP,
-                              ),
+                      AnimatedContainer(
+                        height: isVisible ? 120 : 0,
+                        color: ColorPicker.kGreyLight2,
+                        duration: Duration(seconds: 1),
+                        alignment: isVisible
+                            ? Alignment.topCenter
+                            : Alignment.bottomCenter,
+                        curve: Curves.fastOutSlowIn,
+                        child: SingleChildScrollView(
+                          child: Padding(
+                            padding: EdgeInsets.all(8.0),
+                            child: Text(
+                              description,
+                              style: FontTextStyle.kGreyLight516W400SSP,
                             ),
                           ),
                         ),
-                        Container(
-                          padding: EdgeInsets.all(5),
-                          color: ColorPicker.kGreyLight2,
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              TextButton.icon(
-                                onPressed: () {
-                                  setState(() {
-                                    isVisible = !isVisible;
-                                  });
-                                },
-                                icon: Icon(
-                                  isVisible ? Icons.remove : Icons.add,
-                                  color: ColorPicker.kBlueLight1,
-                                ),
-                                label: Text(isVisible ? 'Close' : cardBtn,
-                                    style: FontTextStyle.kBlueLight114W400SSP),
+                      ),
+                      Container(
+                        padding: EdgeInsets.all(5),
+                        color: ColorPicker.kGreyLight2,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            TextButton.icon(
+                              onPressed: () {
+                                setState(() {
+                                  isVisible = !isVisible;
+                                });
+                              },
+                              icon: Icon(
+                                isVisible ? Icons.remove : Icons.add,
+                                color: ColorPicker.kBlueLight1,
                               ),
+                              label: Text(isVisible ? 'Close' : cardBtn,
+                                  style: FontTextStyle.kBlueLight114W400SSP),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+        showIcon
+            ? Positioned(top: 50,right: 10,
+                child: Visibility(
+                visible: isShowingPopUpCard,
+                child: Column(
+                  children: [
+
+                    Align(
+                      alignment: Alignment(.35, 0),
+                      child: ClipPath(
+                        clipper: ArrowClipper(),
+                        child: Container(
+                          height: 15,
+                          width: 12,
+                          decoration: BoxDecoration(
+                            color: ColorPicker.kGreyLight7.withOpacity(0.5),
+                          ),
+                        ),
+                      ),
+                    ),
+                    Align(
+                      alignment: Alignment(.25, .12),
+                      child:Container(color: ColorPicker.kWhite,child: Column(children: [
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Row(
+                            children: [
+                              Icon(Icons.menu,color: ColorPicker.kBlueLight1,size: 10,),
+                              SS.sB(0,7.5),
+                              Text('View in timeline',style: FontTextStyle.kBlueLight114W400SSP,),
                             ],
                           ),
                         ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          );
-        }),
+                       Divider(height: 0.5,color: Colors.grey,),
+                       Padding(
+                         padding: const EdgeInsets.all(8.0),
+                         child: Row(children: [ Icon(Icons.menu,color: ColorPicker.kBlueLight1,size: 10,),SS.sB(0,7.5),
+                           Text('View in timeline',style: FontTextStyle.kBlueLight114W400SSP,),],),
+                       )
+                      ],),)
+
+                    )
+                  ],
+                ),
+              ))
+            : Container(),
         widget.sec2IsEditable as bool
             ? ProfileEdit.buildProfileEdit(
                 width: sec2_W as double,
@@ -260,7 +299,7 @@ class _ProfileOverviewSec2State extends State<ProfileOverviewSec2> {
                 popUpAdd: () {
                   popUpAddCards();
                 })
-            : Container()
+            : Container(),
       ],
     );
   }
@@ -794,9 +833,10 @@ class _ProfileOverviewSec2State extends State<ProfileOverviewSec2> {
 
   Future<String?> buildLanguagePopUp(int langIndex) {
     return showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return StatefulBuilder(builder: (BuildContext context, setState) {
+      context: context,
+      builder: (BuildContext context) {
+        return StatefulBuilder(
+          builder: (BuildContext context, setState) {
             List<Widget> textField = List.generate(langIndex,
                 (int i) => TextFieldAndFieldName.buildTextField() as Widget);
             List<Widget> menuItem = List.generate(
@@ -879,12 +919,18 @@ class _ProfileOverviewSec2State extends State<ProfileOverviewSec2> {
                                             MainAxisAlignment.end,
                                         children: [
                                           OutlinedButton(
-                                              onPressed: () {},
-                                              child: Text('Cancel')),
+                                            onPressed: () {},
+                                            child: Text(
+                                              'Cancel',
+                                            ),
+                                          ),
                                           SS.sB(0, 10),
                                           ElevatedButton(
-                                              onPressed: () {},
-                                              child: Text('Save'))
+                                            onPressed: () {},
+                                            child: Text(
+                                              'Save',
+                                            ),
+                                          ),
                                         ],
                                       )
                                     ],
@@ -900,8 +946,10 @@ class _ProfileOverviewSec2State extends State<ProfileOverviewSec2> {
                 ),
               ),
             );
-          });
-        });
+          },
+        );
+      },
+    );
   }
 
   /// Language pop up edit functionality end
@@ -917,62 +965,62 @@ class _ProfileOverviewSec2State extends State<ProfileOverviewSec2> {
     return Column(
       children: [
         buildProfileSec2Cards(
-            widget.profileOverviewSec2WorkExpKey,
-            widget.profileOverviewSec2WorkExp_H,
-            widget.profileOverviewSec2WorkExp_W,
-            SS.sW(context),
-            SS.sH(context),
-            'Work experience',
-            'Food and Beverage Manager',
-            'Marriott Hotels',
-            'February 2013 – 2014 (1 year 6 months)',
-            'Show more',
-            'Card-Details',
-            Icons.apartment_rounded,
-            buildWorkExpPopUp,
-            buildWorkExpPopUp,
-            isVisible,
-            description[0].toString(),
-            true,
-            isShowingPopUpCard),
+          widget.profileOverviewSec2WorkExpKey,
+          widget.profileOverviewSec2WorkExp_H,
+          widget.profileOverviewSec2WorkExp_W,
+          SS.sW(context),
+          SS.sH(context),
+          'Work experience',
+          'Food and Beverage Manager',
+          'Marriott Hotels',
+          'February 2013 – 2014 (1 year 6 months)',
+          'Show more',
+          'Card-Details',
+          Icons.apartment_rounded,
+          buildWorkExpPopUp,
+          buildWorkExpPopUp,
+          isVisible,
+          description[0].toString(),
+          true,
+        ),
         buildProfileSec2Cards(
-            widget.profileOverviewSec2EducationKey,
-            widget.profileOverviewSec2Education_H,
-            widget.profileOverviewSec2Education_W,
-            SS.sW(context),
-            SS.sH(context),
-            'Education',
-            'University of Cape Town',
-            'Postgraduate Degree in Business Science',
-            '2010 - 2013',
-            'Course outline',
-            'Card-Details',
-            Icons.school_rounded,
-            buildEducationPopUp,
-            buildEducationPopUp,
-            isVisible,
-            description[1].toString(),
-            false,
-            isShowingPopUpCard),
+          widget.profileOverviewSec2EducationKey,
+          widget.profileOverviewSec2Education_H,
+          widget.profileOverviewSec2Education_W,
+          SS.sW(context),
+          SS.sH(context),
+          'Education',
+          'University of Cape Town',
+          'Postgraduate Degree in Business Science',
+          '2010 - 2013',
+          'Course outline',
+          'Card-Details',
+          Icons.school_rounded,
+          buildEducationPopUp,
+          buildEducationPopUp,
+          isVisible,
+          description[1].toString(),
+          false,
+        ),
         buildProfileSec2Cards(
-            widget.profileOverviewSec2AchievementKey,
-            widget.profileOverviewSec2Achievement_H,
-            widget.profileOverviewSec2Achievement_W,
-            SS.sW(context),
-            SS.sH(context),
-            'Achievement',
-            'Marriott Hotel and Resorts employee of the year awards',
-            'www.mariiott.com/awards',
-            '',
-            ' More info',
-            'Card-Details',
-            Icons.verified_user_sharp,
-            buildAchivementPopUp,
-            buildAchivementPopUp,
-            isVisible,
-            description[2].toString(),
-            false,
-            isShowingPopUpCard),
+          widget.profileOverviewSec2AchievementKey,
+          widget.profileOverviewSec2Achievement_H,
+          widget.profileOverviewSec2Achievement_W,
+          SS.sW(context),
+          SS.sH(context),
+          'Achievement',
+          'Marriott Hotel and Resorts employee of the year awards',
+          'www.mariiott.com/awards',
+          '',
+          ' More info',
+          'Card-Details',
+          Icons.verified_user_sharp,
+          buildAchivementPopUp,
+          buildAchivementPopUp,
+          isVisible,
+          description[2].toString(),
+          false,
+        ),
         Stack(
           children: [
             Padding(
