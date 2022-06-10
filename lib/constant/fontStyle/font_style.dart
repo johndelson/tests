@@ -636,6 +636,12 @@ class FontTextStyle {
   static TextStyle kRed210W700SSP = TextStyle(
     fontSize: 10,
     color: ColorPicker.kRed2,
+    fontWeight: FontWeight.w700,
+    fontFamily: 'SourceSansPro',
+  );
+  static TextStyle kRed214W400SSP = TextStyle(
+    fontSize: 14,
+    color: ColorPicker.kRed2,
     fontWeight: FontWeight.w400,
     fontFamily: 'SourceSansPro',
   );
@@ -694,8 +700,6 @@ class FontTextStyle {
     fontWeight: FontWeight.w700,
     fontFamily: 'SourceSansPro',
   );
-
-
 
   static TextStyle kGreyLight514W400SSP = TextStyle(
     color: ColorPicker.kGreyLight5,
