@@ -225,59 +225,176 @@ class _HeaderCardState extends State<HeaderCard> {
                               color: ColorPicker.kGreyLight3,
                             ),
                             Padding(
-                              padding: const EdgeInsets.all(16.0),
-                              child: Row(
-                                children: [
-                                  Expanded(
-                                    flex: 1,
-                                    child: Column(
-                                      children: [
-                                        image != null
-                                            ? (Image.network(
-                                                image!.path,
-                                                height: 150,
-                                                width: 150,
-                                                fit: BoxFit.cover,
-                                              ))
-                                            : Image(
-                                                image: NetworkImage(widget
-                                                    .hCardApiData.avatar
-                                                    .toString()),
-                                                height: 150,
-                                                width: 150,
-                                                fit: BoxFit.cover,
-                                              ),
-                                        TextButton.icon(
-                                          onPressed: () {},
-                                          icon: Icon(
-                                            Icons.delete,
-                                            color: ColorPicker.kRed2,
-                                            size: 15,
-                                          ),
-                                          label: Text(
-                                            'Delete Photo',
-                                            style: FontTextStyle.kRed214W400SSP,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                  Expanded(
-                                    flex: 3,
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Container(
-                                          color: ColorPicker.kGreyLight9,
-                                          child: Padding(
-                                            padding: const EdgeInsets.symmetric(
-                                                vertical: 10, horizontal: 8),
-                                            child: Row(
+                                padding: const EdgeInsets.all(16.0),
+                                child: Responsive.isDesktop(context)
+                                    ? Row(
+                                        children: [
+                                          Expanded(
+                                            flex: 1,
+                                            child: Column(
                                               children: [
-                                                Expanded(
-                                                  flex: 3,
-                                                  child: Row(
+                                                image != null
+                                                    ? (Image.network(
+                                                        image!.path,
+                                                        height: 150,
+                                                        width: 150,
+                                                        fit: BoxFit.cover,
+                                                      ))
+                                                    : Image(
+                                                        image: NetworkImage(
+                                                            widget.hCardApiData
+                                                                .avatar
+                                                                .toString()),
+                                                        height: 150,
+                                                        width: 150,
+                                                        fit: BoxFit.cover,
+                                                      ),
+                                                TextButton.icon(
+                                                  onPressed: () {},
+                                                  icon: Icon(
+                                                    Icons.delete,
+                                                    color: ColorPicker.kRed2,
+                                                    size: 15,
+                                                  ),
+                                                  label: Text(
+                                                    'Delete Photo',
+                                                    style: FontTextStyle
+                                                        .kRed214W400SSP,
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                          Expanded(
+                                            flex: 3,
+                                            child: Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                Container(
+                                                  color:
+                                                      ColorPicker.kGreyLight9,
+                                                  child: Padding(
+                                                    padding: const EdgeInsets
+                                                            .symmetric(
+                                                        vertical: 10,
+                                                        horizontal: 8),
+                                                    child: Row(
+                                                      children: [
+                                                        Expanded(
+                                                          flex: 3,
+                                                          child: Row(
+                                                            mainAxisAlignment:
+                                                                MainAxisAlignment
+                                                                    .start,
+                                                            children: [
+                                                              OutlinedButton(
+                                                                onPressed: () {
+                                                                  _pickImage(
+                                                                      ImageSource
+                                                                          .gallery);
+                                                                },
+                                                                child: Text(
+                                                                  'Choose Pic',
+                                                                  style: FontTextStyle
+                                                                      .kBlueDark114W400SSP,
+                                                                ),
+                                                              ),
+                                                              SS.sB(0, 10),
+                                                              image != null
+                                                                  ? Text(image!
+                                                                      .name
+                                                                      .toString())
+                                                                  : Text(
+                                                                      'No file choosen',
+                                                                      style: FontTextStyle
+                                                                          .kGreyLight514W400SSP,
+                                                                    ),
+                                                            ],
+                                                          ),
+                                                        ),
+                                                        Expanded(
+                                                          flex: 1,
+                                                          child: ElevatedButton(
+                                                              onPressed: () {
+                                                                setState(() {});
+                                                              },
+                                                              child: Text(
+                                                                  'Upload')),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  ),
+                                                ),
+                                                SS.sB(15),
+                                                Column(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.start,
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
+                                                  children: [
+                                                    Text(
+                                                        '''Upload an image from your computer in either JPG, GIF or PNG format. Maximum file size can not exceed 3MB. Make sure you look good on Hospitality Leaders? Upload a photo that's at least 150px in width and height. ''',
+                                                        style: FontTextStyle
+                                                            .kGreyLight514W400SSP),
+                                                  ],
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        ],
+                                      )
+                                    : Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          image != null
+                                              ? (Image.network(
+                                                  image!.path,
+                                                  height: 150,
+                                                  width: 150,
+                                                  fit: BoxFit.cover,
+                                                ))
+                                              : Image(
+                                                  image: NetworkImage(widget
+                                                      .hCardApiData.avatar
+                                                      .toString()),
+                                                  height: 150,
+                                                  width: 150,
+                                                  fit: BoxFit.cover,
+                                                ),
+                                          SS.sB(5),
+                                          TextButton.icon(
+                                            onPressed: () {},
+                                            icon: Icon(
+                                              Icons.delete,
+                                              color: ColorPicker.kRed2,
+                                              size: 15,
+                                            ),
+                                            label: Text(
+                                              'Delete Photo',
+                                              style:
+                                                  FontTextStyle.kRed214W400SSP,
+                                            ),
+                                          ),
+                                          Container(
+                                            decoration: BoxDecoration(
+                                              border: Border.all(
+                                                  width: 0.4,
+                                                  color:
+                                                      ColorPicker.kGreyLight8),
+                                              borderRadius:
+                                                  BorderRadius.circular(4),
+                                              color: ColorPicker.kGreyLight9,
+                                            ),
+                                            child: Padding(
+                                              padding:
+                                                  const EdgeInsets.all(12.0),
+                                              child: Column(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                children: [
+                                                  Row(
                                                     mainAxisAlignment:
                                                         MainAxisAlignment.start,
                                                     children: [
@@ -303,38 +420,55 @@ class _HeaderCardState extends State<HeaderCard> {
                                                             ),
                                                     ],
                                                   ),
-                                                ),
-                                                Expanded(
-                                                  flex: 1,
-                                                  child: ElevatedButton(
-                                                      onPressed: () {
+                                                  SS.sB(5),
+                                                  GestureDetector(
+                                                      onTap: () {
                                                         setState(() {});
                                                       },
-                                                      child: Text('Upload')),
-                                                ),
-                                              ],
+                                                      child: Container(
+                                                        height: 35,
+                                                        decoration: BoxDecoration(
+                                                            color: ColorPicker
+                                                                .kBlueLight1,
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        4)),
+                                                        child: Padding(
+                                                          padding:
+                                                              const EdgeInsets
+                                                                  .all(8.0),
+                                                          child: Row(
+                                                            mainAxisAlignment:
+                                                                MainAxisAlignment
+                                                                    .center,
+                                                            children: [
+                                                              Text(
+                                                                'Upload',
+                                                                style: FontTextStyle
+                                                                    .kWhite14W400SSP,
+                                                                textAlign:
+                                                                    TextAlign
+                                                                        .center,
+                                                              ),
+                                                            ],
+                                                          ),
+                                                        ),
+                                                      )),
+
+                                                ],
+                                              ),
                                             ),
                                           ),
-                                        ),
-                                        SS.sB(15),
-                                        Column(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.start,
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            Text(
+                                          Padding(
+                                            padding: const EdgeInsets.all(8.0),
+                                            child: Text(
                                                 '''Upload an image from your computer in either JPG, GIF or PNG format. Maximum file size can not exceed 3MB. Make sure you look good on Hospitality Leaders? Upload a photo that's at least 150px in width and height. ''',
                                                 style: FontTextStyle
                                                     .kGreyLight514W400SSP),
-                                          ],
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
+                                          ),
+                                        ],
+                                      )),
                           ],
                         ),
                       ),
@@ -1623,7 +1757,7 @@ class _HeaderCardState extends State<HeaderCard> {
                                     color: Color(0xFF32A3FD),
                                   ),
                                 ),
-                               SS.sB(0,2),
+                                SS.sB(0, 2),
                                 OutlinedButton.icon(
                                   style: ButtonStyle(
                                     backgroundColor: MaterialStateProperty.all(
@@ -1654,7 +1788,7 @@ class _HeaderCardState extends State<HeaderCard> {
                                 ),
                               ],
                             ),
-                           SS.sB(30),
+                            SS.sB(30),
                             Divider(
                               height: 1,
                               color: Colors.grey.shade300,
@@ -1939,7 +2073,7 @@ class _HeaderCardState extends State<HeaderCard> {
                                       color: Color(0xFF32A3FD),
                                     ),
                                   ),
-                                 SS.sB(0,2),
+                                  SS.sB(0, 2),
                                   OutlinedButton.icon(
                                     style: ButtonStyle(
                                       backgroundColor:
@@ -1973,7 +2107,7 @@ class _HeaderCardState extends State<HeaderCard> {
                                 ],
                               ),
                               SS.sB(30),
-                               CircleAvatar(
+                              CircleAvatar(
                                 radius: 30,
                                 backgroundImage: NetworkImage(
                                     'https://cdn.pixabay.com/photo/2012/11/26/15/07/earth-67359__340.jpg'),
